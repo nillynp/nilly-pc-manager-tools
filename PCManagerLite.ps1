@@ -424,7 +424,7 @@ public static class NillyNative {
                         <Button x:Name="BtnNavHardware" Style="{StaticResource NavButton}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE950;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                <TextBlock Text="Hardware &amp; Specs" VerticalAlignment="Center"/>
+                                <TextBlock Text="Hardware (CPU/GPU-Z)" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
                         <Button x:Name="BtnNavTools" Style="{StaticResource NavButton}">
@@ -1472,8 +1472,8 @@ public static class NillyNative {
 
                 <DockPanel Grid.Row="0" Margin="0,0,0,10">
                     <StackPanel>
-                        <TextBlock Text="Hardware &amp; System Specs" FontSize="20" FontWeight="SemiBold" Foreground="#F8FAFC"/>
-                        <TextBlock Text="Ελαφριά αντικατάσταση CPU-Z &amp; GPU-Z · CPU, Μητρική, RAM Slots, GPU VRAM, Υγεία SSD &amp; IP" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
+                        <TextBlock Text="Hardware &amp; Specs (CPU-Z / GPU-Z)" FontSize="20" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                        <TextBlock Text="Πλήρης αντικατάσταση CPU-Z &amp; GPU-Z · CPU/Cache/Stepping, RAM SPD &amp; Channels, GPU VRAM/VBIOS/PCIe, SSD SMART &amp; IP" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
                         <Button x:Name="BtnHWCopy" Content="Copy Specs" Style="{StaticResource PrimaryButton}" Margin="0,0,8,0" Padding="14,8"/>
@@ -1484,9 +1484,9 @@ public static class NillyNative {
                 <ListView x:Name="ListHWSpecs" Grid.Row="1" Background="#131924" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="12">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Κατηγορία" Width="95" DisplayMemberBinding="{Binding Category}"/>
-                            <GridViewColumn Header="Στοιχείο" Width="155" DisplayMemberBinding="{Binding Item}"/>
-                            <GridViewColumn Header="Τιμή / Λεπτομέρειες" Width="360" DisplayMemberBinding="{Binding Value}"/>
+                            <GridViewColumn Header="Κατηγορία" Width="90" DisplayMemberBinding="{Binding Category}"/>
+                            <GridViewColumn Header="Στοιχείο" Width="175" DisplayMemberBinding="{Binding Item}"/>
+                            <GridViewColumn Header="Τιμή / Λεπτομέρειες" Width="390" DisplayMemberBinding="{Binding Value}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
