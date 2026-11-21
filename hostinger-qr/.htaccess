@@ -1,0 +1,14 @@
+# Nilly Dynamic QR Redirector (.htaccess for Hostinger / Apache / LiteSpeed)
+# created by Nilly graphics (Sotiris Christos) — https://nillygraphics.com/
+
+RewriteEngine On
+
+# Protect links.json and config.php from direct public access
+<FilesMatch "\.(json|log)$|^config\.php$">
+    Require all denied
+</FilesMatch>
+
+# Route clean slugs (e.g. /go/cafe-alpha) to index.php?s=cafe-alpha
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-zA-Z0-9_-]+)/?$ index.php?s=$1 [L,QSA]
