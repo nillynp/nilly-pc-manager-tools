@@ -1,6 +1,6 @@
-// Nilly Keyboard Chatter Blocker — Ultra-Light Pure Win32 Daemon (0 WinForms, 0 WPF, ~2 MB RAM!)
+// Nilly Keyboard Chatter Blocker — Ultra-Light Pure Win32 Daemon (0 WinForms, 0 WPF, ~0.5 MB WS RAM!)
+// Exact FreneticLLC KeyBlocker + QUNS_RUNNING_D3D_FULL_SCREEN algorithm with zero UI bloat.
 // created by Nilly graphics (Sotiris Christos) — https://nillygraphics.com/
-// Compiles natively on any Windows 10/11 PC with built-in .NET 4.8 csc.exe (mscorlib.dll ONLY!)
 
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ using System.Threading;
 namespace NillyChatterBlocker {
     internal static class Program {
         // =====================================================================
-        // Win32 Constants & Custom IPC Messages
+        // Win32 Constants & IPC Messages
         // =====================================================================
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN     = 0x0100;
@@ -21,10 +21,10 @@ namespace NillyChatterBlocker {
         private const int WM_SYSKEYDOWN  = 0x0104;
         private const int WM_SYSKEYUP    = 0x0105;
         private const int WM_DESTROY     = 0x0002;
-        private const int WM_COMMAND     = 0x0111;
         private const int WM_TIMER       = 0x0113;
         private const int WM_RBUTTONUP   = 0x0205;
         private const int WM_LBUTTONDBLCLK = 0x0203;
+        private const uint LLKHF_LOWER_IL_INJECTED = 0x02;
         private const uint LLKHF_INJECTED = 0x10;
 
         private const uint WM_TRAY       = 0x8000;
@@ -52,11 +52,10 @@ namespace NillyChatterBlocker {
         private const uint IDM_RELOAD   = 1003;
         private const uint IDM_EXIT     = 1004;
 
-        private const uint IMAGE_ICON       = 1;
-        private const uint LR_LOADFROMFILE  = 0x0010;
-        private const uint LR_DEFAULTSIZE   = 0x0040;
-        private const uint MONITOR_DEFAULTTONEAREST = 2;
+        private const uint IMAGE_ICON      = 1;
+        private const uint LR_LOADFROMFILE = 0x0010;
         private const uint PROCESS_QUERY_LIMITED_INFORMATION = 0x1000;
+        private const int  QUNS_RUNNING_D3D_FULL_SCREEN = 3;
 
         // =====================================================================
         // Win32 Structs & Delegates
@@ -70,14 +69,11 @@ namespace NillyChatterBlocker {
             public uint scanCode;
             public uint flags;
             public uint time;
-            public UIntPtr dwExtraInfo;
+            public IntPtr dwExtraInfo;
         }
 
         [StructLayout(LayoutKind.Sequential)]
         private struct POINT { public int X; public int Y; }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct RECT { public int Left; public int Top; public int Right; public int Bottom; }
 
         [StructLayout(LayoutKind.Sequential)]
         private struct MSG {
@@ -127,19 +123,11 @@ namespace NillyChatterBlocker {
             public IntPtr hBalloonIcon;
         }
 
-        [StructLayout(LayoutKind.Sequential)]
-        private struct MONITORINFO {
-            public int cbSize;
-            public RECT rcMonitor;
-            public RECT rcWork;
-            public uint dwFlags;
-        }
-
         // =====================================================================
         // Win32 P/Invoke
         // =====================================================================
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern IntPtr SetWindowsHookExW(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
 
         [DllImport("user32.dll", SetLastError = true)]
         private static extern bool UnhookWindowsHookEx(IntPtr hhk);
@@ -147,14 +135,8 @@ namespace NillyChatterBlocker {
         [DllImport("user32.dll")]
         private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
 
-        [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
-        private static extern IntPtr GetModuleHandleW(string lpModuleName);
-
-        [DllImport("kernel32.dll")]
-        private static extern bool QueryPerformanceCounter(out long lpPerformanceCount);
-
-        [DllImport("kernel32.dll")]
-        private static extern bool QueryPerformanceFrequency(out long lpFrequency);
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern IntPtr GetModuleHandle(string lpModuleName);
 
         [DllImport("kernel32.dll")]
         private static extern IntPtr GetCurrentProcess();
@@ -164,6 +146,9 @@ namespace NillyChatterBlocker {
 
         [DllImport("psapi.dll")]
         private static extern bool EmptyWorkingSet(IntPtr hProcess);
+
+        [DllImport("shell32.dll")]
+        private static extern int SHQueryUserNotificationState(out int pquns);
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         private static extern ushort RegisterClassExW(ref WNDCLASSEXW lpwcx);
@@ -205,7 +190,7 @@ namespace NillyChatterBlocker {
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         private static extern IntPtr LoadImageW(IntPtr hInst, string lpszName, uint uType, int cxDesired, int cyDesired, uint fuLoad);
 
-        [DllImport("user32.dll")]
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         private static extern IntPtr LoadIconW(IntPtr hInstance, IntPtr lpIconName);
 
         [DllImport("user32.dll")]
@@ -233,18 +218,6 @@ namespace NillyChatterBlocker {
         private static extern IntPtr GetForegroundWindow();
 
         [DllImport("user32.dll")]
-        private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
-
-        [DllImport("user32.dll")]
-        private static extern bool GetMonitorInfoW(IntPtr hMonitor, ref MONITORINFO lpmi);
-
-        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        private static extern int GetClassNameW(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
-
-        [DllImport("user32.dll")]
         private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
         [DllImport("kernel32.dll", SetLastError = true)]
@@ -257,7 +230,7 @@ namespace NillyChatterBlocker {
         private static extern bool CloseHandle(IntPtr hObject);
 
         // =====================================================================
-        // Daemon State (zero allocations on hot keyboard hook path!)
+        // Daemon State — 100% faithful to FreneticLLC KeyBlocker semantics
         // =====================================================================
         private static string _baseDir;
         private static string _cfgPath;
@@ -269,37 +242,36 @@ namespace NillyChatterBlocker {
         private static LowLevelKeyboardProc _hookDelegate;
         private static WndProcDelegate _wndProcDelegate;
 
-        private static long _qpcFreq;
         private static bool _isEnabled = true;
-        private static double _globalChatterMs = 50.0;
-        private static double _minChatterMs = 0.0;
+        private static bool _isAutoDisabled = false;
+        private static uint _globalChatterMs = 50;
+        private static uint _minChatterMs = 0;
         private static bool _measureFromRelease = false;
         private static bool _autoDisableFullscreen = true;
         private static bool _otherKeyResets = false;
         private static bool _excludeInjected = false;
         private static string[] _autoDisableProgs = new string[0];
-        private static readonly double[] _perKeyMs = new double[256];
+        private static readonly int[] _perKeyMs = new int[256]; // -1 = use global
 
-        private static readonly bool[] _isDown = new bool[256];
-        private static readonly bool[] _blockedDown = new bool[256];
-        private static readonly long[] _lastTime = new long[256];
+        private static readonly bool[]  _keyIsDown = new bool[256];
+        private static readonly bool[]  _downWasBlocked = new bool[256];
+        private static readonly ulong[] _lastPressMs = new ulong[256];
+        private static readonly ulong[] _lastReleaseMs = new ulong[256];
+        private static int _lastPressedVk = -1;
 
-        // Lightweight in-memory diagnostics (zero disk writes unless requested!)
         private static long _blockedTotal = 0;
         private static readonly int[] _blockedByVk = new int[256];
         private static readonly string[] _recentEvents = new string[24];
         private static int _recentIdx = 0;
         private static DateTime _startedAt = DateTime.Now;
-
-        // Cached foreground window auto-disable check (0.002 ms hot path!)
-        private static IntPtr _lastFgHwnd = IntPtr.Zero;
-        private static long _lastFgCheckTicks = 0;
-        private static bool _lastFgDisabled = false;
-        private static readonly StringBuilder _clsBuf = new StringBuilder(64);
         private static readonly StringBuilder _exeBuf = new StringBuilder(512);
 
         private static readonly Dictionary<string, int> _nameToVk = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
         private static readonly string[] _vkToName = new string[256];
+
+        private static ulong GetTimeMs() {
+            return (ulong)(Stopwatch.GetTimestamp() * (1000.0 / Stopwatch.Frequency));
+        }
 
         private static void InitKeyMaps() {
             for (int c = 'A'; c <= 'Z'; c++) RegKey(((char)c).ToString(), c);
@@ -387,16 +359,15 @@ namespace NillyChatterBlocker {
         }
 
         private static void LoadConfig() {
-            // Reset defaults
             _isEnabled = true;
-            _globalChatterMs = 50.0;
-            _minChatterMs = 0.0;
+            _globalChatterMs = 50;
+            _minChatterMs = 0;
             _measureFromRelease = false;
             _autoDisableFullscreen = true;
             _otherKeyResets = false;
             _excludeInjected = false;
             _autoDisableProgs = new string[0];
-            for (int i = 0; i < 256; i++) _perKeyMs[i] = -1.0;
+            for (int i = 0; i < 256; i++) _perKeyMs[i] = -1;
 
             if (!File.Exists(_cfgPath)) return;
             try {
@@ -413,9 +384,9 @@ namespace NillyChatterBlocker {
                     if (key.Equals("is_enabled", StringComparison.OrdinalIgnoreCase)) {
                         _isEnabled = val.Equals("true", StringComparison.OrdinalIgnoreCase);
                     } else if (key.Equals("global_chatter", StringComparison.OrdinalIgnoreCase)) {
-                        double d; if (double.TryParse(val, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out d)) _globalChatterMs = d;
+                        uint u; if (uint.TryParse(val, out u)) _globalChatterMs = u;
                     } else if (key.Equals("minimum_chatter_time", StringComparison.OrdinalIgnoreCase)) {
-                        double d; if (double.TryParse(val, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out d)) _minChatterMs = d;
+                        uint u; if (uint.TryParse(val, out u)) _minChatterMs = u;
                     } else if (key.Equals("measure_from", StringComparison.OrdinalIgnoreCase)) {
                         _measureFromRelease = val.Equals("Release", StringComparison.OrdinalIgnoreCase);
                     } else if (key.Equals("auto_disable_on_fullscreen", StringComparison.OrdinalIgnoreCase)) {
@@ -426,7 +397,7 @@ namespace NillyChatterBlocker {
                         _excludeInjected = val.Equals("true", StringComparison.OrdinalIgnoreCase);
                     } else if (key.Equals("auto_disable_programs", StringComparison.OrdinalIgnoreCase)) {
                         if (val.Length > 0) {
-                            foreach (string p in val.Split(new char[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)) {
+                            foreach (string p in val.Split(new char[] { '/', ',', ';' }, StringSplitOptions.RemoveEmptyEntries)) {
                                 string pt = p.Trim().ToLowerInvariant();
                                 if (pt.EndsWith(".exe")) pt = pt.Substring(0, pt.Length - 4);
                                 if (pt.Length > 0) progs.Add(pt);
@@ -435,128 +406,130 @@ namespace NillyChatterBlocker {
                     } else if (key.StartsWith("key.", StringComparison.OrdinalIgnoreCase)) {
                         string kName = key.Substring(4).Trim();
                         int vk = ParseKeyName(kName);
-                        double d;
-                        if (vk >= 0 && vk < 256 && double.TryParse(val, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out d)) {
-                            _perKeyMs[vk] = d;
+                        int ms;
+                        if (vk >= 0 && vk < 256 && int.TryParse(val, out ms) && ms >= 0) {
+                            _perKeyMs[vk] = ms;
                         }
                     }
                 }
                 _autoDisableProgs = progs.ToArray();
             } catch {}
+            UpdateAutoDisableState();
             UpdateTrayTip();
         }
 
-        private static bool IsAutoDisabled(long nowTicks) {
-            if (!_autoDisableFullscreen && _autoDisableProgs.Length == 0) return false;
-            IntPtr fg = GetForegroundWindow();
-            if (fg == IntPtr.Zero) return false;
-
-            // Fast cache hit (< 2 microseconds!)
-            double sinceCheckMs = (nowTicks - _lastFgCheckTicks) * 1000.0 / _qpcFreq;
-            if (fg == _lastFgHwnd && sinceCheckMs < 500.0) return _lastFgDisabled;
-
-            _lastFgHwnd = fg;
-            _lastFgCheckTicks = nowTicks;
+        // Exact FreneticLLC FullScreenDetectHelper + AutoDisablePrograms check (runs on 1-sec timer, ZERO hook latency!)
+        private static void UpdateAutoDisableState() {
             bool disabled = false;
 
-            // 1. Check Fullscreen (skip Desktop/Shell windows)
+            // 1. Exact Direct3D Fullscreen check ONLY (never false-triggers on maximized apps like Antigravity/browsers!)
             if (_autoDisableFullscreen) {
-                _clsBuf.Length = 0;
-                GetClassNameW(fg, _clsBuf, _clsBuf.Capacity);
-                string cls = _clsBuf.ToString();
-                if (cls != "Progman" && cls != "WorkerW" && cls != "Shell_TrayWnd" && cls != "Shell_SecondaryTrayWnd") {
-                    RECT wr;
-                    if (GetWindowRect(fg, out wr)) {
-                        IntPtr mon = MonitorFromWindow(fg, MONITOR_DEFAULTTONEAREST);
-                        MONITORINFO mi = new MONITORINFO();
-                        mi.cbSize = Marshal.SizeOf(typeof(MONITORINFO));
-                        if (mon != IntPtr.Zero && GetMonitorInfoW(mon, ref mi)) {
-                            if (wr.Left <= mi.rcMonitor.Left && wr.Top <= mi.rcMonitor.Top &&
-                                wr.Right >= mi.rcMonitor.Right && wr.Bottom >= mi.rcMonitor.Bottom) {
-                                disabled = true;
-                            }
+                int state;
+                if (SHQueryUserNotificationState(out state) == 0 && state == QUNS_RUNNING_D3D_FULL_SCREEN) {
+                    disabled = true;
+                }
+            }
+
+            // 2. Auto-disable programs check against foreground window executable
+            if (!disabled && _autoDisableProgs.Length > 0) {
+                IntPtr fg = GetForegroundWindow();
+                if (fg != IntPtr.Zero) {
+                    uint pid;
+                    GetWindowThreadProcessId(fg, out pid);
+                    if (pid != 0) {
+                        IntPtr hProc = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, pid);
+                        if (hProc != IntPtr.Zero) {
+                            try {
+                                int sz = _exeBuf.Capacity;
+                                _exeBuf.Length = 0;
+                                if (QueryFullProcessImageNameW(hProc, 0, _exeBuf, ref sz)) {
+                                    string full = _exeBuf.ToString();
+                                    int slash = full.LastIndexOf('\\');
+                                    string fname = (slash >= 0 ? full.Substring(slash + 1) : full).ToLowerInvariant();
+                                    if (fname.EndsWith(".exe")) fname = fname.Substring(0, fname.Length - 4);
+                                    for (int i = 0; i < _autoDisableProgs.Length; i++) {
+                                        if (fname == _autoDisableProgs[i]) { disabled = true; break; }
+                                    }
+                                }
+                            } finally { CloseHandle(hProc); }
                         }
                     }
                 }
             }
 
-            // 2. Check Auto-Disable Programs list
-            if (!disabled && _autoDisableProgs.Length > 0) {
-                uint pid;
-                GetWindowThreadProcessId(fg, out pid);
-                if (pid != 0) {
-                    IntPtr hProc = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, pid);
-                    if (hProc != IntPtr.Zero) {
-                        try {
-                            int sz = _exeBuf.Capacity;
-                            _exeBuf.Length = 0;
-                            if (QueryFullProcessImageNameW(hProc, 0, _exeBuf, ref sz)) {
-                                string full = _exeBuf.ToString();
-                                int slash = full.LastIndexOf('\\');
-                                string fname = (slash >= 0 ? full.Substring(slash + 1) : full).ToLowerInvariant();
-                                if (fname.EndsWith(".exe")) fname = fname.Substring(0, fname.Length - 4);
-                                for (int i = 0; i < _autoDisableProgs.Length; i++) {
-                                    if (fname == _autoDisableProgs[i]) { disabled = true; break; }
-                                }
-                            }
-                        } finally { CloseHandle(hProc); }
-                    }
-                }
-            }
-
-            _lastFgDisabled = disabled;
-            return disabled;
+            _isAutoDisabled = disabled;
         }
 
+        // Exact FreneticLLC KeyBlocker.AllowKeyDown / AllowKeyUp logic
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam) {
-            if (nCode >= 0 && _isEnabled) {
+            if (nCode >= 0) {
                 int msg = wParam.ToInt32();
-                bool isDownEvt = (msg == WM_KEYDOWN || msg == WM_SYSKEYDOWN);
-                bool isUpEvt   = (msg == WM_KEYUP   || msg == WM_SYSKEYUP);
+                bool isDown = (msg == WM_KEYDOWN || msg == WM_SYSKEYDOWN);
+                bool isUp   = (msg == WM_KEYUP   || msg == WM_SYSKEYUP);
 
-                if (isDownEvt || isUpEvt) {
+                if (isDown || isUp) {
                     KBDLLHOOKSTRUCT kb = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
+                    if (_excludeInjected && (kb.flags & (LLKHF_INJECTED | LLKHF_LOWER_IL_INJECTED)) != 0) {
+                        return CallNextHookEx(_hHook, nCode, wParam, lParam);
+                    }
                     int vk = (int)(kb.vkCode & 0xFF);
+                    ulong timeNow = GetTimeMs();
 
-                    if (!_excludeInjected || (kb.flags & LLKHF_INJECTED) == 0) {
-                        long nowTicks;
-                        QueryPerformanceCounter(out nowTicks);
+                    if (isDown) {
+                        if (!_isEnabled || _isAutoDisabled) {
+                            return CallNextHookEx(_hHook, nCode, wParam, lParam);
+                        }
+                        int customMs = _perKeyMs[vk];
+                        if (!_otherKeyResets && _globalChatterMs == 0 && customMs < 0) {
+                            return CallNextHookEx(_hHook, nCode, wParam, lParam);
+                        }
+                        // Held key auto-repeat -> allow!
+                        if (_keyIsDown[vk]) {
+                            return CallNextHookEx(_hHook, nCode, wParam, lParam);
+                        }
+                        _keyIsDown[vk] = true;
 
-                        if (isDownEvt) {
-                            // Held-key auto-repeat (no KeyUp received since KeyDown) -> ALWAYS pass through!
-                            if (_isDown[vk]) {
+                        ulong timeLast = _measureFromRelease ? _lastReleaseMs[vk] : _lastPressMs[vk];
+                        if (_otherKeyResets) {
+                            if (vk != _lastPressedVk) {
+                                _lastPressedVk = vk;
+                                _lastPressMs[vk] = timeNow;
                                 return CallNextHookEx(_hHook, nCode, wParam, lParam);
                             }
-
-                            double thresh = (_perKeyMs[vk] >= 0.0) ? _perKeyMs[vk] : _globalChatterMs;
-                            if (thresh > 0.0 && _lastTime[vk] > 0) {
-                                double elapsedMs = (nowTicks - _lastTime[vk]) * 1000.0 / _qpcFreq;
-                                if (elapsedMs < thresh && elapsedMs >= _minChatterMs && !IsAutoDisabled(nowTicks)) {
-                                    // BLOCK MECHANICAL CHATTER!
-                                    _blockedDown[vk] = true;
-                                    _blockedTotal++;
-                                    _blockedByVk[vk]++;
-                                    _recentEvents[_recentIdx] = DateTime.Now.ToString("HH:mm:ss") + "|" + GetVkName(vk) + "|" + elapsedMs.ToString("F1", System.Globalization.CultureInfo.InvariantCulture) + "|" + thresh.ToString("F0", System.Globalization.CultureInfo.InvariantCulture);
-                                    _recentIdx = (_recentIdx + 1) % _recentEvents.Length;
-                                    return (IntPtr)1;
-                                }
-                            }
-
-                            _isDown[vk] = true;
-                            _blockedDown[vk] = false;
-                            if (_otherKeyResets) {
-                                for (int i = 0; i < 256; i++) { if (i != vk) _lastTime[i] = 0; }
-                            }
-                            if (!_measureFromRelease) _lastTime[vk] = nowTicks;
-                        } else {
-                            // KeyUp
-                            if (_blockedDown[vk]) {
-                                _blockedDown[vk] = false;
-                                return (IntPtr)1;
-                            }
-                            _isDown[vk] = false;
-                            if (_measureFromRelease) _lastTime[vk] = nowTicks;
+                            _lastPressedVk = vk;
                         }
+                        if (timeLast > timeNow) {
+                            _lastPressMs[vk] = timeNow;
+                            return CallNextHookEx(_hHook, nCode, wParam, lParam);
+                        }
+                        uint maxTime = (customMs >= 0) ? (uint)customMs : _globalChatterMs;
+                        ulong timePassed = unchecked(timeNow - timeLast);
+                        if (timePassed >= maxTime || timePassed < _minChatterMs) {
+                            _lastPressMs[vk] = timeNow;
+                            return CallNextHookEx(_hHook, nCode, wParam, lParam);
+                        }
+
+                        // BLOCK CHATTER!
+                        _downWasBlocked[vk] = true;
+                        _blockedTotal++;
+                        _blockedByVk[vk]++;
+                        _recentEvents[_recentIdx] = DateTime.Now.ToString("HH:mm:ss") + "|" + GetVkName(vk) + "|" + timePassed + "|" + maxTime;
+                        _recentIdx = (_recentIdx + 1) % _recentEvents.Length;
+                        return (IntPtr)1;
+                    } else {
+                        // KeyUp: exact FreneticLLC AllowKeyUp
+                        if (!_isEnabled || _isAutoDisabled) {
+                            _lastReleaseMs[vk] = timeNow;
+                            return CallNextHookEx(_hHook, nCode, wParam, lParam);
+                        }
+                        _keyIsDown[vk] = false;
+                        if (!_downWasBlocked[vk]) {
+                            _lastReleaseMs[vk] = timeNow;
+                            return CallNextHookEx(_hHook, nCode, wParam, lParam);
+                        }
+                        _downWasBlocked[vk] = false;
+                        // Allow duplicate KeyUp through so physical keys can NEVER stick
+                        return CallNextHookEx(_hHook, nCode, wParam, lParam);
                     }
                 }
             }
@@ -567,15 +540,17 @@ namespace NillyChatterBlocker {
             try {
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine("enabled=" + (_isEnabled ? "true" : "false"));
+                sb.AppendLine("hook_ok=" + (_hHook != IntPtr.Zero ? "true" : "false"));
+                sb.AppendLine("auto_disabled=" + (_isAutoDisabled ? "true" : "false"));
                 sb.AppendLine("started=" + _startedAt.ToString("yyyy-MM-dd HH:mm:ss"));
                 sb.AppendLine("blocked_total=" + _blockedTotal);
-                sb.AppendLine("global_ms=" + _globalChatterMs.ToString("F0", System.Globalization.CultureInfo.InvariantCulture));
-
-                // Top per-key blocked counts
+                sb.AppendLine("global_ms=" + _globalChatterMs);
+                for (int i = 0; i < 256; i++) {
+                    if (_perKeyMs[i] >= 0) sb.AppendLine("cfg." + GetVkName(i) + "=" + _perKeyMs[i]);
+                }
                 for (int i = 0; i < 256; i++) {
                     if (_blockedByVk[i] > 0) sb.AppendLine("stat." + GetVkName(i) + "=" + _blockedByVk[i]);
                 }
-                // Recent events newest-first
                 for (int k = 1; k <= _recentEvents.Length; k++) {
                     int pos = (_recentIdx - k + _recentEvents.Length) % _recentEvents.Length;
                     if (_recentEvents[pos] != null) sb.AppendLine("evt=" + _recentEvents[pos]);
@@ -617,7 +592,7 @@ namespace NillyChatterBlocker {
         }
 
         private static string BuildTip() {
-            string st = _isEnabled ? "ΕΝΕΡΓΟ" : "ΠΑΥΣΗ";
+            string st = _isEnabled ? (_isAutoDisabled ? "AUTO-PAUSED" : "ΕΝΕΡΓΟ") : "ΠΑΥΣΗ";
             return "Nilly Chatter Blocker (" + st + ") | Blocked: " + _blockedTotal + " — nillygraphics.com";
         }
 
@@ -680,13 +655,15 @@ namespace NillyChatterBlocker {
                 else if (ev == WM_LBUTTONDBLCLK) OpenSettingsUi();
                 return IntPtr.Zero;
             }
-            if (msg == WM_RELOAD_CFG) { LoadConfig(); SetTimer(hWnd, (UIntPtr)1, 1500, IntPtr.Zero); return IntPtr.Zero; }
+            if (msg == WM_RELOAD_CFG) { LoadConfig(); DumpStats(); SetTimer(hWnd, (UIntPtr)1, 1500, IntPtr.Zero); return IntPtr.Zero; }
             if (msg == WM_DUMP_STATS) { DumpStats(); SetTimer(hWnd, (UIntPtr)1, 2000, IntPtr.Zero); return IntPtr.Zero; }
             if (msg == WM_TOGGLE_EN)  { _isEnabled = !_isEnabled; UpdateTrayTip(); DumpStats(); SetTimer(hWnd, (UIntPtr)1, 2000, IntPtr.Zero); return IntPtr.Zero; }
             if (msg == WM_EXIT_APP)   { PostQuitMessage(0); return IntPtr.Zero; }
             if (msg == WM_TIMER) {
-                if (wParam.ToInt64() == 1) KillTimer(hWnd, (UIntPtr)1);
-                TrimMemory();
+                long id = wParam.ToInt64();
+                if (id == 1) { KillTimer(hWnd, (UIntPtr)1); TrimMemory(); }
+                else if (id == 2) { TrimMemory(); }
+                else if (id == 3) { UpdateAutoDisableState(); }
                 return IntPtr.Zero;
             }
             if (msg == _wmTaskbarCreated && _wmTaskbarCreated != 0) {
@@ -706,21 +683,28 @@ namespace NillyChatterBlocker {
             using (Mutex mutex = new Mutex(true, "Local\\NillyChatterBlocker_SingleInstance", out createdNew)) {
                 if (!createdNew) return 0;
 
+                // Match FreneticLLC AboveNormal priority for zero typing latency!
+                try { Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.AboveNormal; } catch {}
+
                 _baseDir = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\');
                 _cfgPath = Path.Combine(_baseDir, "chatter_config.txt");
                 _statsPath = Path.Combine(_baseDir, "chatter_stats.txt");
 
-                QueryPerformanceFrequency(out _qpcFreq);
                 InitKeyMaps();
                 LoadConfig();
 
-                IntPtr hInst = GetModuleHandleW(null);
+                IntPtr hInst;
+                using (Process curProc = Process.GetCurrentProcess())
+                using (ProcessModule curMod = curProc.MainModule) {
+                    hInst = GetModuleHandle(curMod.ModuleName);
+                }
+
                 string icoPath = Path.Combine(_baseDir, "PCManagerLite.ico");
                 if (File.Exists(icoPath)) {
                     _hIcon = LoadImageW(IntPtr.Zero, icoPath, IMAGE_ICON, 16, 16, LR_LOADFROMFILE);
                 }
                 if (_hIcon == IntPtr.Zero) {
-                    _hIcon = LoadIconW(IntPtr.Zero, (IntPtr)32512); // IDI_APPLICATION
+                    _hIcon = LoadIconW(IntPtr.Zero, (IntPtr)32512);
                 }
 
                 _wmTaskbarCreated = RegisterWindowMessageW("TaskbarCreated");
@@ -739,11 +723,15 @@ namespace NillyChatterBlocker {
                 AddTrayIcon();
 
                 _hookDelegate = new LowLevelKeyboardProc(HookCallback);
-                _hHook = SetWindowsHookExW(WH_KEYBOARD_LL, _hookDelegate, hInst, 0);
+                _hHook = SetWindowsHookEx(WH_KEYBOARD_LL, _hookDelegate, hInst, 0);
 
-                // Trim RAM aggressively 1.5s after launch + gentle periodic trim every 10 min!
+                // Write initial diagnostic stats immediately so health/hook/config can be verified!
+                DumpStats();
+
+                // Timer 1: initial RAM trim (1.5s) | Timer 2: gentle trim (10 min) | Timer 3: fullscreen/program poll (1s)
                 SetTimer(_hWnd, (UIntPtr)1, 1500, IntPtr.Zero);
                 SetTimer(_hWnd, (UIntPtr)2, 600000, IntPtr.Zero);
+                SetTimer(_hWnd, (UIntPtr)3, 1000, IntPtr.Zero);
                 TrimMemory();
 
                 MSG m;
