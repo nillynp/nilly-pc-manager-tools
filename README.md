@@ -49,9 +49,10 @@ Built to replace heavy background bloatware (Microsoft PC Manager, PowerToys 1.3
 
 ---
 
-## Quick Start (Windows 10 / 11)
-1. Clone or download this repository.
-2. Double-click **`Launch_PCManagerLite.vbs`** (no installation, no admin needed, 0 MB background RAM).
+## Quick Start on ANY Windows 10 / 11 PC (100% Portable!)
+1. Click **Code → Download ZIP** (or `git clone https://github.com/nillynp/nilly-pc-manager-tools.git`) and extract anywhere.
+2. Double-click **`Install_Desktop_Shortcut.bat`** *(unblocks downloaded files & creates the `PC Manager & Tools` Desktop icon — no admin rights, zero Startup entries, 0 MB background RAM!)*.
+   - Or just double-click **`Launch_PCManagerLite.vbs`** directly to run without even creating a shortcut!
 
 ---
 

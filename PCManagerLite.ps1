@@ -799,8 +799,8 @@ public static class NillyNative {
                         </Button>
                         <Button x:Name="BtnOpenScripts" Style="{StaticResource CardButton}" Margin="5">
                             <StackPanel>
-                                <TextBlock Text="Φάκελος Scripts (J:\08_SCRIPTS)" FontSize="13.5" FontWeight="SemiBold"/>
-                                <TextBlock Text="Άνοιγμα όλων των εργαλείων" FontSize="11" Foreground="#94A3B8" Margin="0,3,0,0"/>
+                                <TextBlock Text="Φάκελος Εφαρμογής" FontSize="13.5" FontWeight="SemiBold"/>
+                                <TextBlock Text="Άνοιγμα φακέλου PC Manager &amp; Tools" FontSize="11" Foreground="#94A3B8" Margin="0,3,0,0"/>
                             </StackPanel>
                         </Button>
                         <Button x:Name="BtnTaskbarRepair2" Style="{StaticResource CardButton}" Margin="5">
@@ -1500,7 +1500,12 @@ function Get-DevCachePaths {
 }
 
 $script:CpuName = ((Get-ItemProperty 'HKLM:\HARDWARE\DESCRIPTION\System\CentralProcessor\0' -ErrorAction SilentlyContinue).ProcessorNameString) -replace '\s+', ' '
-if ($script:CpuName) { $script:CpuName = $script:CpuName.Trim() } else { $script:CpuName = "Windows 11 PC" }
+if ($script:CpuName) { $script:CpuName = $script:CpuName.Trim() } else { $script:CpuName = "Windows PC" }
+$cv = Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion' -ErrorAction SilentlyContinue
+$buildNum = 0; [void][int]::TryParse("$($cv.CurrentBuildNumber)", [ref]$buildNum)
+$osVer = if ($buildNum -ge 22000) { "Windows 11" } else { "Windows 10" }
+$osEd  = if ($cv.EditionID) { " $($cv.EditionID)" } else { "" }
+$script:OsLabel = "$osVer$osEd"
 
 $script:ODApps = @{
     Dropbox = @{ Procs = @('Dropbox','DropboxUpdate'); Exe = 'C:\Program Files (x86)\Dropbox\Client\Dropbox.exe'; Args = '' }
@@ -1523,17 +1528,21 @@ function Refresh-OnDemandPage {
     $tot = [math]::Round($d.MB + $r.MB + $l.MB + $g.MB, 1)
     $ui.TxtODTotal.Text = "Συνολική RAM αυτών των 4 εφαρμογών τώρα: $tot MB"
 
-    if ($d.Running) { $ui.TxtDropboxInfo.Text = "ΑΝΟΙΧΤΟ — $($d.Count) διεργασίες, $($d.MB) MB RAM"; $ui.BtnToggleDropbox.Content = "Κλείσιμο (−$($d.MB) MB)" }
-    else { $ui.TxtDropboxInfo.Text = "ΚΛΕΙΣΤΟ — 0 MB RAM"; $ui.BtnToggleDropbox.Content = "Άνοιγμα Dropbox" }
+    if ($d.Running) { $ui.TxtDropboxInfo.Text = "ΑΝΟΙΧΤΟ — $($d.Count) διεργασίες, $($d.MB) MB RAM"; $ui.BtnToggleDropbox.Content = "Κλείσιμο (−$($d.MB) MB)"; $ui.BtnToggleDropbox.IsEnabled = $true }
+    elseif (-not (Test-Path $script:ODApps.Dropbox.Exe)) { $ui.TxtDropboxInfo.Text = "Δεν είναι εγκατεστημένο σε αυτό το PC"; $ui.BtnToggleDropbox.Content = "Μη διαθέσιμο"; $ui.BtnToggleDropbox.IsEnabled = $false }
+    else { $ui.TxtDropboxInfo.Text = "ΚΛΕΙΣΤΟ — 0 MB RAM"; $ui.BtnToggleDropbox.Content = "Άνοιγμα Dropbox"; $ui.BtnToggleDropbox.IsEnabled = $true }
 
-    if ($r.Running) { $ui.TxtRazerInfo.Text = "ΑΝΟΙΧΤΟ — $($r.Count) διεργασίες, $($r.MB) MB RAM"; $ui.BtnToggleRazer.Content = "Κλείσιμο (−$($r.MB) MB)" }
-    else { $ui.TxtRazerInfo.Text = "ΚΛΕΙΣΤΟ — 0 MB RAM (το DeathAdder κρατάει τα DPI του)"; $ui.BtnToggleRazer.Content = "Άνοιγμα Synapse" }
+    if ($r.Running) { $ui.TxtRazerInfo.Text = "ΑΝΟΙΧΤΟ — $($r.Count) διεργασίες, $($r.MB) MB RAM"; $ui.BtnToggleRazer.Content = "Κλείσιμο (−$($r.MB) MB)"; $ui.BtnToggleRazer.IsEnabled = $true }
+    elseif (-not (Test-Path $script:ODApps.Razer.Exe)) { $ui.TxtRazerInfo.Text = "Δεν είναι εγκατεστημένο σε αυτό το PC"; $ui.BtnToggleRazer.Content = "Μη διαθέσιμο"; $ui.BtnToggleRazer.IsEnabled = $false }
+    else { $ui.TxtRazerInfo.Text = "ΚΛΕΙΣΤΟ — 0 MB RAM (το DeathAdder κρατάει τα DPI του)"; $ui.BtnToggleRazer.Content = "Άνοιγμα Synapse"; $ui.BtnToggleRazer.IsEnabled = $true }
 
-    if ($l.Running) { $ui.TxtLogiOptInfo.Text = "ΑΝΟΙΧΤΟ — $($l.Count) διεργασίες, $($l.MB) MB RAM"; $ui.BtnToggleLogiOpt.Content = "Κλείσιμο (−$($l.MB) MB)" }
-    else { $ui.TxtLogiOptInfo.Text = "ΚΛΕΙΣΤΟ — 0 MB RAM"; $ui.BtnToggleLogiOpt.Content = "Άνοιγμα Options+" }
+    if ($l.Running) { $ui.TxtLogiOptInfo.Text = "ΑΝΟΙΧΤΟ — $($l.Count) διεργασίες, $($l.MB) MB RAM"; $ui.BtnToggleLogiOpt.Content = "Κλείσιμο (−$($l.MB) MB)"; $ui.BtnToggleLogiOpt.IsEnabled = $true }
+    elseif (-not (Test-Path $script:ODApps.LogiOpt.Exe)) { $ui.TxtLogiOptInfo.Text = "Δεν είναι εγκατεστημένο σε αυτό το PC"; $ui.BtnToggleLogiOpt.Content = "Μη διαθέσιμο"; $ui.BtnToggleLogiOpt.IsEnabled = $false }
+    else { $ui.TxtLogiOptInfo.Text = "ΚΛΕΙΣΤΟ — 0 MB RAM"; $ui.BtnToggleLogiOpt.Content = "Άνοιγμα Options+"; $ui.BtnToggleLogiOpt.IsEnabled = $true }
 
-    if ($g.Running) { $ui.TxtGHUBInfo.Text = "ΑΝΟΙΧΤΟ — $($g.Count) διεργασίες, $($g.MB) MB RAM (ενεργό G5 → F13)"; $ui.BtnToggleGHUB.Content = "Κλείσιμο (−$($g.MB) MB)" }
-    else { $ui.TxtGHUBInfo.Text = "ΚΛΕΙΣΤΟ — 0 MB RAM (On-Board προφίλ G915)"; $ui.BtnToggleGHUB.Content = "Άνοιγμα G HUB" }
+    if ($g.Running) { $ui.TxtGHUBInfo.Text = "ΑΝΟΙΧΤΟ — $($g.Count) διεργασίες, $($g.MB) MB RAM"; $ui.BtnToggleGHUB.Content = "Κλείσιμο (−$($g.MB) MB)"; $ui.BtnToggleGHUB.IsEnabled = $true }
+    elseif (-not (Test-Path $script:ODApps.GHUB.Exe)) { $ui.TxtGHUBInfo.Text = "Δεν είναι εγκατεστημένο σε αυτό το PC"; $ui.BtnToggleGHUB.Content = "Μη διαθέσιμο"; $ui.BtnToggleGHUB.IsEnabled = $false }
+    else { $ui.TxtGHUBInfo.Text = "ΚΛΕΙΣΤΟ — 0 MB RAM"; $ui.BtnToggleGHUB.Content = "Άνοιγμα G HUB"; $ui.BtnToggleGHUB.IsEnabled = $true }
 }
 
 function Toggle-OnDemandApp([string]$Key, [string]$Friendly) {
@@ -1593,7 +1602,7 @@ function Refresh-HomeStats {
     $usedGB  = [math]::Round($totalGB - $availGB, 1)
     $pct     = [int]$mem.dwMemoryLoad
 
-    $ui.TxtSysSpec.Text   = "$($script:CpuName)  •  $totalGB GB RAM  •  Windows 11 Pro"
+    $ui.TxtSysSpec.Text   = "$($script:CpuName)  •  $totalGB GB RAM  •  $($script:OsLabel)"
     $ui.TxtUptime.Text    = Get-UptimeText
     $ui.TxtRamPct.Text    = "$pct%"
     $ui.TxtRamDetail.Text = "$usedGB / $totalGB GB"
@@ -1917,7 +1926,7 @@ $ui.BtnWinUpdate.Add_Click({ Start-Process "ms-settings:windowsupdate" })
 $ui.BtnWinSecurity.Add_Click({ Start-Process "windowsdefender:" })
 $ui.BtnInstalledApps.Add_Click({ Start-Process "ms-settings:appsfeatures" })
 $ui.BtnStorageSense.Add_Click({ Start-Process "ms-settings:storagesense" })
-$ui.BtnOpenScripts.Add_Click({ Start-Process "explorer.exe" -ArgumentList "J:\08_SCRIPTS" })
+$ui.BtnOpenScripts.Add_Click({ Start-Process "explorer.exe" -ArgumentList "`"$PSScriptRoot`"" })
 $ui.BtnTaskbarRepair2.Add_Click({ Restart-TaskbarExplorer })
 
 # Initial Load
