@@ -2,6 +2,9 @@
 saved_codes.json
 notes.json
 error.log
+chatter_config.txt
+chatter_stats.txt
+NillyChatterBlocker.exe
 hostinger-qr/links.json
 hostinger-qr/config.php
 *.bak

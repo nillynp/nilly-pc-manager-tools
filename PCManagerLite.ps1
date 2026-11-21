@@ -1,14 +1,14 @@
 ﻿<#
 .SYNOPSIS
-    Nilly PC Manager & Tools v3.2 — Ultra-Light On-Demand System, Design & SEO Suite
-    0 MB background RAM | No services | No autostart | Runs only when opened
+    Nilly PC Manager & Tools v3.3 — Ultra-Light On-Demand System, Design & SEO Suite
+    0 MB background RAM | Modular QuickTools + Ultra-Light Win32 Keyboard Chatter Blocker
 
 .DESCRIPTION
     created by Nilly graphics (Sotiris Christos)
     https://nillygraphics.com/
 
-    Modular Architecture (14 lazy-loaded modules under .\tools\ — 0 KB RAM until clicked!):
-      - System: Boost, My Hub (RAM/Firefox/Backup/G-Phonor), On-Demand Apps, Deep Cleaner, RAM Processes, Hardware & Specs, Security
+    Modular Architecture (15 lazy-loaded modules under .\tools\ — 0 KB RAM until clicked!):
+      - System: Boost, My Hub (RAM/Firefox/Backup/G-Phonor), Chatter Blocker (~0.3-2 MB Win32 daemon), On-Demand Apps, Deep Cleaner, RAM Processes, Hardware (CPU/GPU-Z), Security
       - Design & SEO: Color Picker Pro, QR & Barcode Pro (9 GS1/ISO), Print & DPI Calc, Pixel Ruler & Capture, Image Resizer, Images -> PDF, Batch Renamer SEO, SEO & Text Tools, SVG/Base64 & Hash
       - Utilities: Notes & Snippets, File Locksmith, Always On Top
 
@@ -17,11 +17,12 @@
 #>
 
 param(
-    [switch]$TestOnly
+    [switch]$TestOnly,
+    [string]$StartPage = "Home"
 )
 
 $ErrorActionPreference = "SilentlyContinue"
-$AppVersion = "3.2"
+$AppVersion = "3.3"
 $AppAuthor  = "created by Nilly graphics (Sotiris Christos)"
 $AppWebsite = "https://nillygraphics.com/"
 
@@ -126,7 +127,7 @@ public static class NillyNative {
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Nilly PC Manager &amp; Tools v3.2 — created by Nilly graphics (Sotiris Christos)"
+        Title="Nilly PC Manager &amp; Tools v3.3 — created by Nilly graphics (Sotiris Christos)"
         Height="700" Width="880"
         MinHeight="600" MinWidth="740"
         WindowStartupLocation="CenterScreen"
@@ -359,7 +360,7 @@ public static class NillyNative {
                     <DockPanel>
                         <TextBlock Text="PC Manager &amp; Tools" FontSize="14.5" FontWeight="Bold" Foreground="#F8FAFC" VerticalAlignment="Center"/>
                         <Border Background="#0C2A3E" BorderBrush="#1E4E6D" BorderThickness="1" CornerRadius="5" Padding="5,2" HorizontalAlignment="Right" VerticalAlignment="Center">
-                            <TextBlock Text="v3.2" FontSize="9.5" FontWeight="Bold" Foreground="#38BDF8"/>
+                            <TextBlock Text="v3.3" FontSize="9.5" FontWeight="Bold" Foreground="#38BDF8"/>
                         </Border>
                     </DockPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
@@ -401,6 +402,12 @@ public static class NillyNative {
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE945;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
                                 <TextBlock Text="My Hub (RAM / FF / Backup)" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="BtnNavChatter" Style="{StaticResource NavButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE765;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Chatter Blocker" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
                         <Button x:Name="BtnNavOnDemand" Style="{StaticResource NavButton}">
@@ -868,9 +875,9 @@ public static class NillyNative {
                         <DockPanel>
                             <Button x:Name="BtnAboutSite" Content="Επίσκεψη Site →" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" VerticalAlignment="Center"/>
                             <StackPanel Margin="0,0,12,0">
-                                <TextBlock Text="Nilly PC Manager &amp; Tools v3.2 — Ultra-Light On-Demand Edition" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                                <TextBlock Text="Nilly PC Manager &amp; Tools v3.3 — Ultra-Light On-Demand Edition" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
                                 <TextBlock Text="created by Nilly graphics (Sotiris Christos)" FontSize="12.5" FontWeight="SemiBold" Foreground="#38BDF8" Margin="0,4,0,2"/>
-                                <TextBlock Text="https://nillygraphics.com/  •  0 MB RAM στο παρασκήνιο  •  14 Modular QuickTools" FontSize="11.5" Foreground="#94A3B8" TextWrapping="Wrap"/>
+                                <TextBlock Text="https://nillygraphics.com/  •  0 MB RAM στο παρασκήνιο  •  15 Modular QuickTools" FontSize="11.5" Foreground="#94A3B8" TextWrapping="Wrap"/>
                             </StackPanel>
                         </DockPanel>
                     </Border>
@@ -1930,6 +1937,138 @@ public static class NillyNative {
                 </StackPanel>
             </ScrollViewer>
 
+            <!-- PAGE 20: KEYBOARD CHATTER BLOCKER (ULTRA-LIGHT WIN32 DAEMON MANAGER) -->
+            <ScrollViewer x:Name="PageChatter" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
+                <StackPanel MaxWidth="1100">
+                    <DockPanel Margin="0,0,0,10">
+                        <StackPanel>
+                            <TextBlock Text="Keyboard Chatter Blocker (Ultra-Light)" FontSize="20" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                            <TextBlock Text="Καθαρό Win32 Tray Daemon (~32 KB · ~0.3–2 MB RAM αντί 47 MB) · Μηδενική καθυστέρηση · Live ρυθμίσεις ανά πλήκτρο" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <Button x:Name="BtnCBSaveApply" Content="Αποθήκευση &amp; Εφαρμογή Live" Style="{StaticResource PrimaryButton}" DockPanel.Dock="Right" VerticalAlignment="Center" Padding="15,8"/>
+                    </DockPanel>
+
+                    <!-- Live Daemon Status & Controls -->
+                    <Border Background="#111C2D" BorderBrush="#1E3A5F" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,2,0,12">
+                        <StackPanel>
+                            <DockPanel Margin="0,0,0,8">
+                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
+                                    <Button x:Name="BtnCBToggleRun" Content="Εκκίνηση" Style="{StaticResource EmeraldButton}" Padding="14,7" FontSize="12.5" Margin="0,0,8,0"/>
+                                    <Button x:Name="BtnCBPause" Content="Παύση (Live)" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
+                                    <Button x:Name="BtnCBRefresh" Content="Ανανέωση" Style="{StaticResource SecondaryButton}"/>
+                                </StackPanel>
+                                <TextBlock x:Name="TxtCBStatusBadge" Text="Έλεγχος κατάστασης..." FontSize="13" FontWeight="SemiBold" Foreground="#38BDF8" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,12,0"/>
+                            </DockPanel>
+                            <CheckBox x:Name="ChkCBStartup" Content="Αυτόματη εκκίνηση με τα Windows (Startup — τρέχει μόνιμα αθόρυβα στο System Tray)" Margin="0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Global Settings Card -->
+                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,12">
+                        <StackPanel>
+                            <TextBlock Text="Γενικές Ρυθμίσεις:" FontSize="12.5" FontWeight="SemiBold" Foreground="#CBD5E1" Margin="0,0,0,8"/>
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="1.6*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Global Όριο (ms):" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,4"/>
+                                    <TextBox x:Name="TxtCBGlobalMs" Text="50" FontFamily="Consolas" FontSize="13" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Ελάχιστο (ms):" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,4"/>
+                                    <TextBox x:Name="TxtCBMinMs" Text="0" FontFamily="Consolas" FontSize="13" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="4">
+                                    <TextBlock Text="Μέτρηση από:" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,4"/>
+                                    <ComboBox x:Name="CmbCBMeasure" SelectedIndex="0" FontSize="12.5" Padding="6,6">
+                                        <ComboBoxItem Content="Press (Πάτημα)"/>
+                                        <ComboBoxItem Content="Release (Άφημα)"/>
+                                    </ComboBox>
+                                </StackPanel>
+                                <StackPanel Grid.Column="6">
+                                    <TextBlock Text="Εξαίρεση προγραμμάτων (με κόμμα):" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,4"/>
+                                    <TextBox x:Name="TxtCBAutoProgs" Text="" FontFamily="Consolas" FontSize="12" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <WrapPanel>
+                                <CheckBox x:Name="ChkCBFullscreen" Content="Αυτόματη παύση σε Fullscreen (παιχνίδια)" IsChecked="True" Margin="0,0,18,0"/>
+                                <CheckBox x:Name="ChkCBOtherResets" Content="Άλλο πλήκτρο μηδενίζει timer" Margin="0,0,18,0"/>
+                                <CheckBox x:Name="ChkCBExcludeInj" Content="Αγνόηση injected πλήκτρων" Margin="0"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Per-Key Overrides + Live Blocked Log side by side -->
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.15*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Per-Key Overrides -->
+                        <Border Grid.Column="0" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13">
+                            <StackPanel>
+                                <TextBlock Text="Ειδικά Όρια ανά Πλήκτρο (ms):" FontSize="12.5" FontWeight="SemiBold" Foreground="#CBD5E1" Margin="0,0,0,8"/>
+                                <Grid Margin="0,0,0,8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="8"/>
+                                        <ColumnDefinition Width="72"/>
+                                        <ColumnDefinition Width="8"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ComboBox x:Name="CmbCBNewKey" Grid.Column="0" IsEditable="True" Text="E" FontSize="12" Padding="6,5"/>
+                                    <TextBox x:Name="TxtCBNewKeyMs" Grid.Column="2" Text="100" FontFamily="Consolas" FontSize="12.5" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="7,5"/>
+                                    <Button x:Name="BtnCBAddKey" Grid.Column="4" Content="+ Ορισμός" Style="{StaticResource EmeraldButton}" Padding="11,5" FontSize="12"/>
+                                </Grid>
+
+                                <ListView x:Name="ListCBKeys" Height="175" Background="#0B0F17" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="12" Margin="0,0,0,8">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="Πλήκτρο" Width="115" DisplayMemberBinding="{Binding Key}"/>
+                                            <GridViewColumn Header="Όριο (ms)" Width="85" DisplayMemberBinding="{Binding ThresholdMs}"/>
+                                            <GridViewColumn Header="Blocked" Width="70" DisplayMemberBinding="{Binding BlockedCount}"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+
+                                <Button x:Name="BtnCBDelKey" Content="Διαγραφή Επιλεγμένου Πλήκτρου" Style="{StaticResource DangerButton}" HorizontalAlignment="Right"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Live Blocked Chatter Log -->
+                        <Border Grid.Column="2" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13">
+                            <StackPanel>
+                                <TextBlock Text="Τελευταία Διπλοπατήματα που Μπλοκαρίστηκαν:" FontSize="12.5" FontWeight="SemiBold" Foreground="#CBD5E1" Margin="0,0,0,8"/>
+                                <ListView x:Name="ListCBLog" Height="244" Background="#0B0F17" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="11.5">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="Ώρα" Width="64" DisplayMemberBinding="{Binding Time}"/>
+                                            <GridViewColumn Header="Πλήκτρο" Width="72" DisplayMemberBinding="{Binding Key}"/>
+                                            <GridViewColumn Header="Χρόνος" Width="62" DisplayMemberBinding="{Binding BounceMs}"/>
+                                            <GridViewColumn Header="Όριο" Width="54" DisplayMemberBinding="{Binding LimitMs}"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10">
+                        <TextBlock x:Name="TxtCBFooterStatus" Text="Οι ρυθμίσεις σου μεταφέρθηκαν αυτούσιες (chatter_config.txt). Δεξί κλικ στο Tray εικονίδιο για γρήγορη Παύση / Ρυθμίσεις." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
         </Grid>
     </Grid>
 </Window>
@@ -1967,8 +2106,8 @@ $window.Add_Closed({
 # Grab all named UI controls
 $ctrlNames = @(
     'ColSidebar',
-    'BtnNavHome','BtnNavMyHub','BtnNavOnDemand','BtnNavClean','BtnNavProcs','BtnNavTools','BtnNavColorPicker','BtnNavQrBarcode','BtnNavPrintDpi','BtnNavPixelRuler','BtnNavImageResizer','BtnNavBatchRenamer','BtnNavSeoText','BtnNavBase64Hash','BtnNavFileLocksmith','BtnNavAlwaysOnTop','BtnNavHardware','BtnNavImgPdf','BtnNavNotes','BtnSidebarSite',
-    'PageHome','PageMyHub','PageOnDemand','PageClean','PageProcs','PageTools','PageColorPicker','PageQrBarcode','PagePrintDpi','PagePixelRuler','PageImageResizer','PageBatchRenamer','PageSeoText','PageBase64Hash','PageFileLocksmith','PageAlwaysOnTop','PageHardware','PageImgPdf','PageNotes',
+    'BtnNavHome','BtnNavMyHub','BtnNavChatter','BtnNavOnDemand','BtnNavClean','BtnNavProcs','BtnNavTools','BtnNavColorPicker','BtnNavQrBarcode','BtnNavPrintDpi','BtnNavPixelRuler','BtnNavImageResizer','BtnNavBatchRenamer','BtnNavSeoText','BtnNavBase64Hash','BtnNavFileLocksmith','BtnNavAlwaysOnTop','BtnNavHardware','BtnNavImgPdf','BtnNavNotes','BtnSidebarSite',
+    'PageHome','PageMyHub','PageChatter','PageOnDemand','PageClean','PageProcs','PageTools','PageColorPicker','PageQrBarcode','PagePrintDpi','PagePixelRuler','PageImageResizer','PageBatchRenamer','PageSeoText','PageBase64Hash','PageFileLocksmith','PageAlwaysOnTop','PageHardware','PageImgPdf','PageNotes',
     'TxtSysSpec','TxtUptime','BtnRefreshHome','TxtRamPct','TxtRamDetail','BarRam','TxtTempSize','TxtBgHeavy','BarTemp',
     'BtnBoost','BtnHomeColorPicker','BtnHomeOnDemand','TxtBoostStatus','ListDrives',
     'BtnQuickClean','BtnQuickProcs','BtnQuickStartup','BtnQuickTaskbar','TxtProcCount',
@@ -2001,7 +2140,8 @@ $ctrlNames = @(
     'CmbPDPreset','TxtPDWidth','TxtPDHeight','CmbPDUnit','CmbPDDpi','CmbPDBleed','BtnPDSwap','BtnPDCopy','ValPDPixels','ValPDMm','ValPDBleed','ValPDRatio','TxtPDScaleW','TxtPDScaleRes','TxtPDStatus',
     'BtnPRStart','ChkPRAutoCopy','ImgPRPreview','TxtPRDims','BtnPRCopyImg','BtnPRCopyDims','BtnPRSavePng','TxtPRStatus',
     'TxtSEOTitle','LblSEOTitleCount','BarSEOTitle','TxtSEODesc','LblSEODescCount','BarSEODesc','TxtSEOSlugOut','PrevSEOTitle','PrevSEODesc','BtnSEOCopySlug','BtnSEOCopyMeta','TxtSEOCleaner','LblSEOTextStats','BtnSEOCleanSpaces','BtnSEOUpper','BtnSEOLower','BtnSEOTitleCase','BtnSEOCopyPlain','CmbSEOPassLen','ChkSEOPassSym','TxtSEOPassOut','BtnSEOGenPass','TxtSEOStatus',
-    'ZoneB64Drop','BtnB64Browse','TxtB64Info','ValB64Sha','ValB64Md5','TxtB64Output','BtnB64CopyUri','BtnB64CopyHtml','BtnB64CopyCss','BtnB64CopySha','BtnB64CopyMd5','TxtB64Status'
+    'ZoneB64Drop','BtnB64Browse','TxtB64Info','ValB64Sha','ValB64Md5','TxtB64Output','BtnB64CopyUri','BtnB64CopyHtml','BtnB64CopyCss','BtnB64CopySha','BtnB64CopyMd5','TxtB64Status',
+    'TxtCBStatusBadge','BtnCBToggleRun','BtnCBPause','BtnCBRefresh','ChkCBStartup','TxtCBGlobalMs','TxtCBMinMs','CmbCBMeasure','ChkCBFullscreen','ChkCBOtherResets','ChkCBExcludeInj','TxtCBAutoProgs','BtnCBSaveApply','CmbCBNewKey','TxtCBNewKeyMs','BtnCBAddKey','BtnCBDelKey','ListCBKeys','ListCBLog','TxtCBFooterStatus'
 )
 $ui = @{}
 foreach ($n in $ctrlNames) {
@@ -2235,7 +2375,7 @@ $script:ProtectedProcs = @(
     'svchost','dwm','explorer','MsMpEng','MpDefenderCoreService','NisSrv','SecurityHealthService',
     'Memory Compression','Secure System','LsaIso','fontdrvhost','audiodg','spoolsv','powershell','pwsh',
     'Docker Desktop','com.docker.backend','com.docker.build','vmmemWSL','wslservice',
-    'FanControl','FanControl.Service','KeyboardChatterBlocker'
+    'FanControl','FanControl.Service','KeyboardChatterBlocker','NillyChatterBlocker'
 )
 $script:AllProcRows = @()
 
@@ -2274,6 +2414,7 @@ function Set-ActivePage([string]$Page) {
     $pages = @{
         Home          = $ui.PageHome
         MyHub         = $ui.PageMyHub
+        ChatterBlocker= $ui.PageChatter
         OnDemand      = $ui.PageOnDemand
         Clean         = $ui.PageClean
         Procs         = $ui.PageProcs
@@ -2300,6 +2441,7 @@ function Set-ActivePage([string]$Page) {
     $navMap = @{
         Home          = $ui.BtnNavHome
         MyHub         = $ui.BtnNavMyHub
+        ChatterBlocker= $ui.BtnNavChatter
         OnDemand      = $ui.BtnNavOnDemand
         Clean         = $ui.BtnNavClean
         Procs         = $ui.BtnNavProcs
@@ -2472,6 +2614,16 @@ function Open-Base64HashPage {
     }
 }
 
+function Open-ChatterPage {
+    try {
+        Ensure-ToolLoaded 'ChatterBlocker'
+        Initialize-ChatterBlockerTool -MainWindow $window -UiMap $ui -RootDir $PSScriptRoot
+        Set-ActivePage 'ChatterBlocker'
+    } catch {
+        Add-Content -Path (Join-Path $PSScriptRoot "error.log") -Value "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] ChatterBlocker error: $($_.Exception.Message)" -ErrorAction SilentlyContinue
+    }
+}
+
 function Restart-TaskbarExplorer {
     Stop-Process -Name "explorer" -Force -ErrorAction SilentlyContinue
     Start-Sleep -Milliseconds 600
@@ -2481,6 +2633,7 @@ function Restart-TaskbarExplorer {
 # Wire Navigation
 $ui.BtnNavHome.Add_Click({ Set-ActivePage 'Home'; Refresh-HomeStats })
 $ui.BtnNavMyHub.Add_Click({ Open-MyHubPage })
+$ui.BtnNavChatter.Add_Click({ Open-ChatterPage })
 $ui.BtnNavOnDemand.Add_Click({ Set-ActivePage 'OnDemand'; Refresh-OnDemandPage })
 $ui.BtnNavClean.Add_Click({ Set-ActivePage 'Clean'; Scan-CleanupTargets })
 $ui.BtnNavProcs.Add_Click({ Set-ActivePage 'Procs'; Refresh-Processes })
@@ -2587,7 +2740,7 @@ $ui.BtnRunClean.Add_Click({
     $ui.BtnRunClean.IsEnabled = $true
 })
 $ui.BtnWinUpdateClean.Add_Click({
-    $cmd = 'Write-Host "Nilly PC Manager & Tools v3.2 - created by Nilly graphics (Sotiris Christos) | https://nillygraphics.com/" -ForegroundColor Cyan; DISM.exe /Online /Cleanup-Image /StartComponentCleanup; Stop-Service wuauserv -Force; Remove-Item C:\Windows\SoftwareDistribution\Download\* -Recurse -Force -ErrorAction SilentlyContinue; Start-Service wuauserv; Write-Host "DONE!" -ForegroundColor Green'
+    $cmd = 'Write-Host "Nilly PC Manager & Tools v3.3 - created by Nilly graphics (Sotiris Christos) | https://nillygraphics.com/" -ForegroundColor Cyan; DISM.exe /Online /Cleanup-Image /StartComponentCleanup; Stop-Service wuauserv -Force; Remove-Item C:\Windows\SoftwareDistribution\Download\* -Recurse -Force -ErrorAction SilentlyContinue; Start-Service wuauserv; Write-Host "DONE!" -ForegroundColor Green'
     Start-Process powershell.exe -Verb RunAs -ArgumentList '-NoExit','-Command',$cmd
 })
 
@@ -2622,9 +2775,13 @@ $ui.BtnStorageSense.Add_Click({ Start-Process "ms-settings:storagesense" })
 $ui.BtnOpenScripts.Add_Click({ Start-Process "explorer.exe" -ArgumentList "`"$PSScriptRoot`"" })
 $ui.BtnTaskbarRepair2.Add_Click({ Restart-TaskbarExplorer })
 
-# Initial Load
-Set-ActivePage 'Home'
+# Initial Load (supports direct deep-link e.g. from Nilly Chatter Blocker Tray icon!)
 Refresh-HomeStats
+if ($StartPage -eq 'ChatterBlocker') {
+    Open-ChatterPage
+} else {
+    Set-ActivePage 'Home'
+}
 
 if ($TestOnly) {
     Refresh-OnDemandPage
@@ -2670,8 +2827,10 @@ if ($TestOnly) {
     Open-Base64HashPage
     Process-Base64AndHashFile -FilePath (Join-Path $PSScriptRoot "PCManagerLite.ico")
     $b64Ok = $ui.ValB64Sha.Text.Length -eq 64 -and $ui.ValB64Md5.Text.Length -eq 32 -and $ui.TxtB64Output.Text.StartsWith("data:image/x-icon;base64,")
+    Open-ChatterPage
+    $cbKeys = @($ui.ListCBKeys.ItemsSource).Count
     $hwRows = @($ui.ListHWSpecs.ItemsSource).Count
-    Write-Output "SELF-TEST PASSED! Version=$AppVersion | Modules=$($script:LoadedTools.Count) | RAM=$($ui.TxtRamPct.Text) | Drives=$($ui.ListDrives.ItemsSource.Count) | ColorPicker=$($ui.ValCPHex.Text)/$($ui.ValCPCmyk.Text) | QR=[$qrMeta] | BC=[$bcMeta] | Slug=[$slugTest] | HWRows=$hwRows | PrintDPI=[$pdPx | $pdBleed] | RulerCtor=$prCtorOk | SeoSlug=[$seoSlug] PwLen=$seoPwLen | B64Hash=$b64Ok"
+    Write-Output "SELF-TEST PASSED! Version=$AppVersion | Modules=$($script:LoadedTools.Count) | RAM=$($ui.TxtRamPct.Text) | Drives=$($ui.ListDrives.ItemsSource.Count) | ColorPicker=$($ui.ValCPHex.Text)/$($ui.ValCPCmyk.Text) | QR=[$qrMeta] | BC=[$bcMeta] | Slug=[$slugTest] | HWRows=$hwRows | PrintDPI=[$pdPx | $pdBleed] | RulerCtor=$prCtorOk | SeoSlug=[$seoSlug] PwLen=$seoPwLen | B64Hash=$b64Ok | ChatterKeys=$cbKeys"
     exit 0
 }
 

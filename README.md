@@ -1,7 +1,7 @@
-# Nilly PC Manager & Tools v3.2
+# Nilly PC Manager & Tools v3.3
 
-**Ultra-lightweight (~400 KB), zero-background-RAM Windows 10/11 System Manager, Graphic Design & SEO Suite.**
-Built to replace heavy background bloatware & 12+ separate apps (Microsoft PC Manager, PowerToys 1.3+ GB, CPU-Z, GPU-Z, Sticky Notes, online expiring QR/barcode sites, DPI calculators, SEO/Base64 web tools, RAM/cache scripts) with **one** clean, native, on-demand desktop suite.
+**Ultra-lightweight (~435 KB), zero-background-RAM Windows 10/11 System Manager, Graphic Design & SEO Suite + Ultra-Light Win32 Keyboard Chatter Blocker.**
+Built to replace heavy background bloatware & 13+ separate apps (Microsoft PC Manager, PowerToys 1.3+ GB, 47 MB KeyboardChatterBlocker, CPU-Z, GPU-Z, Sticky Notes, online expiring QR/barcode sites, DPI calculators, SEO/Base64 web tools, RAM/cache scripts) with **one** clean, native, modular desktop suite.
 
 > **created by Nilly graphics (Sotiris Christos)**
 > Official Website: **[https://nillygraphics.com/](https://nillygraphics.com/)**
@@ -11,8 +11,8 @@ Built to replace heavy background bloatware & 12+ separate apps (Microsoft PC Ma
 ## Why Nilly PC Manager & Tools?
 
 - **0 MB Background RAM:** Never registers in Startup, installs zero Windows services, leaves zero lingering processes when closed. Opens only when you want it.
-- **~400 KB Total Footprint:** Pure Windows-native WPF + Win32 / C# (zero Electron, zero WebView2, zero Node/Python runtime dependencies).
-- **14 Lazy-Loaded Modules:** Every QuickTool lives in its own lightweight `.psm1` module under `tools/` and loads only when clicked (`0 KB` RAM until used).
+- **~435 KB Total Footprint:** Pure Windows-native WPF + Win32 / C# (zero Electron, zero WebView2, zero Node/Python runtime dependencies).
+- **15 Lazy-Loaded Modules:** Every QuickTool lives in its own lightweight `.psm1` module under `tools/` and loads only when clicked (`0 KB` RAM until used).
 - **100% Safe by Design:** Never touches Docker, Documents, Xbox, Phone Link, WebView2, browser cookies, passwords, or personal files.
 
 ---
@@ -22,6 +22,7 @@ Built to replace heavy background bloatware & 12+ separate apps (Microsoft PC Ma
 ### System Management
 - **PC Boost & Overview:** Instant Win32 RAM working-set trim (`EmptyWorkingSet`), User Temp cleanup, live system uptime, and multi-drive health bars (`C:`, `H:`, `J:`, etc.).
 - **My Hub (`tools/MyHub.psm1`):** Unified 1-click **Clean RAM Purge**, **Firefox Cache Clean & Restart** (keeps open tabs/cookies/passwords intact), **Master Backup Monitor/Trigger**, and **G-Phonor Voice-to-Text** toggle.
+- **Keyboard Chatter Blocker (`tools/ChatterBlocker.psm1` + `tools/NillyChatterBlocker.cs`):** Ultra-light pure-Win32 `WH_KEYBOARD_LL` tray daemon (~32 KB, ~0.3–2 MB RAM vs 47 MB original!) compiled natively via built-in Windows `csc.exe` (zero WinForms/WPF!), with per-key `ms` overrides, fullscreen game auto-pause, live blocked-bounce log, instant live config reload & optional Startup toggle.
 - **On-Demand Apps Control:** 1-click Close/Launch toggles for heavy background suites (**Dropbox**, **Razer Synapse 4**, **Logi Options+**, **Logitech G HUB**) + 1-click **Focus / Game Mode** & **Restore**.
 - **Deep Safe Cleaner:** Fast native C# directory scanner for User Temp, Firefox/Brave/Chrome/Edge caches, Chrome On-Device AI model cache (`OptGuideOnDeviceModel`), Spotify caches, npm/pip/CrashDumps, Recycle Bin & Admin Windows Update/DISM cleanup.
 - **RAM Process Manager:** Top 35 grouped memory consumers with live search filter and critical process protection.
