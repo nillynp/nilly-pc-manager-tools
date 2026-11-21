@@ -1,14 +1,14 @@
 ﻿<#
 .SYNOPSIS
-    Nilly PC Manager & Tools v3.3 — Ultra-Light On-Demand System, Design & SEO Suite
-    0 MB background RAM | Modular QuickTools + Ultra-Light Win32 Keyboard Chatter Blocker
+    Nilly PC Manager & Tools v4.0 — Ultra-Light On-Demand System, Design & SEO Suite
+    0 MB background RAM | 15 Modular QuickTools + Ultra-Light Win32 Keyboard Chatter Blocker
 
 .DESCRIPTION
     created by Nilly graphics (Sotiris Christos)
     https://nillygraphics.com/
 
     Modular Architecture (15 lazy-loaded modules under .\tools\ — 0 KB RAM until clicked!):
-      - System: Boost, My Hub (RAM/Firefox/Backup/G-Phonor), Chatter Blocker (~0.3-2 MB Win32 daemon), On-Demand Apps, Deep Cleaner, RAM Processes, Hardware (CPU/GPU-Z), Security
+      - System: Boost, My Hub (RAM/Firefox/Auto-Detected Tools), Chatter Blocker (~0.5 MB Win32 daemon), On-Demand Apps, Deep Cleaner, RAM Processes, Hardware (CPU/GPU-Z), Security & Update Check
       - Design & SEO: Color Picker Pro, QR & Barcode Pro (9 GS1/ISO), Print & DPI Calc, Pixel Ruler & Capture, Image Resizer, Images -> PDF, Batch Renamer SEO, SEO & Text Tools, SVG/Base64 & Hash
       - Utilities: Notes & Snippets, File Locksmith, Always On Top
 
@@ -22,9 +22,11 @@ param(
 )
 
 $ErrorActionPreference = "SilentlyContinue"
-$AppVersion = "3.3"
+$AppVersion = "4.0"
 $AppAuthor  = "created by Nilly graphics (Sotiris Christos)"
 $AppWebsite = "https://nillygraphics.com/"
+$AppRepoApi = "https://api.github.com/repos/nillynp/nilly-pc-manager-tools/releases/latest"
+$AppRelUrl  = "https://github.com/nillynp/nilly-pc-manager-tools/releases/latest"
 
 Add-Type -AssemblyName PresentationFramework
 Add-Type -AssemblyName PresentationCore
@@ -45,6 +47,27 @@ public static class NillyNative {
 
     [DllImport("user32.dll")]
     public static extern bool SetProcessDPIAware();
+
+    [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+    public static extern IntPtr FindWindowW(string lpClassName, string lpWindowName);
+
+    [DllImport("user32.dll")]
+    public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+    [DllImport("user32.dll")]
+    public static extern bool IsIconic(IntPtr hWnd);
+
+    [DllImport("user32.dll")]
+    public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+    public static void FocusExistingWindow(string exactTitle) {
+        IntPtr hw = FindWindowW(null, exactTitle);
+        if (hw != IntPtr.Zero) {
+            if (IsIconic(hw)) ShowWindow(hw, 9);
+            else ShowWindow(hw, 5);
+            SetForegroundWindow(hw);
+        }
+    }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public struct MEMORYSTATUSEX {
@@ -124,10 +147,21 @@ public static class NillyNative {
 
 [void][NillyNative]::SetProcessDPIAware()
 
+$script:WindowTitle = "Nilly PC Manager & Tools v$AppVersion — $AppAuthor"
+$script:SingleInstanceMutex = $null
+if (-not $TestOnly) {
+    $createdNew = $false
+    $script:SingleInstanceMutex = New-Object System.Threading.Mutex($true, "Local\NillyPCManagerLite_SingleInstance", [ref]$createdNew)
+    if (-not $createdNew) {
+        [NillyNative]::FocusExistingWindow($script:WindowTitle)
+        exit 0
+    }
+}
+
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Nilly PC Manager &amp; Tools v3.3 — created by Nilly graphics (Sotiris Christos)"
+        Title="Nilly PC Manager &amp; Tools v4.0 — created by Nilly graphics (Sotiris Christos)"
         Height="700" Width="880"
         MinHeight="600" MinWidth="740"
         WindowStartupLocation="CenterScreen"
@@ -344,6 +378,147 @@ public static class NillyNative {
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <!-- Full Dark-Theme ComboBox & ComboBoxItem (eliminates light Windows Aero dropdowns!) -->
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Background" Value="#0F141F"/>
+            <Setter Property="Foreground" Value="#E2E8F0"/>
+            <Setter Property="Padding" Value="10,7"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#1E3A5F"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#172A45"/>
+                                <Setter Property="Foreground" Value="#38BDF8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="#0B0F17"/>
+            <Setter Property="Foreground" Value="#F8FAFC"/>
+            <Setter Property="BorderBrush" Value="#2C384D"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton x:Name="ToggleButton" Focusable="False" ClickMode="Press"
+                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="tbBd" Background="#0B0F17" BorderBrush="#2C384D" BorderThickness="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="26"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Path Grid.Column="1" Data="M 0 0 L 4.5 5 L 9 0 Z" Fill="#94A3B8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="tbBd" Property="BorderBrush" Value="#38BDF8"/>
+                                                <Setter TargetName="tbBd" Property="Background" Value="#111827"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            <ContentPresenter IsHitTestVisible="False"
+                                              Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              Margin="10,5,28,5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <Popup x:Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Fade">
+                                <Border MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                        Background="#0F141F" BorderBrush="#38BDF8" BorderThickness="1" CornerRadius="6" Margin="0,2,0,0">
+                                    <ScrollViewer SnapsToDevicePixels="True" VerticalScrollBarVisibility="Auto">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Sleek Minimal Dark ScrollBar (Vertical & Horizontal) -->
+        <Style TargetType="ScrollBar">
+            <Setter Property="Width" Value="8"/>
+            <Setter Property="MinWidth" Value="8"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid Background="Transparent">
+                            <Track x:Name="PART_Track" IsDirectionReversed="True">
+                                <Track.Thumb>
+                                    <Thumb>
+                                        <Thumb.Template>
+                                            <ControlTemplate TargetType="Thumb">
+                                                <Border x:Name="th" Background="#253247" CornerRadius="4" Margin="1,2"/>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="th" Property="Background" Value="#38BDF8"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="Orientation" Value="Horizontal">
+                    <Setter Property="Width" Value="Auto"/>
+                    <Setter Property="MinWidth" Value="0"/>
+                    <Setter Property="Height" Value="8"/>
+                    <Setter Property="MinHeight" Value="8"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ScrollBar">
+                                <Grid Background="Transparent">
+                                    <Track x:Name="PART_Track" IsDirectionReversed="False">
+                                        <Track.Thumb>
+                                            <Thumb>
+                                                <Thumb.Template>
+                                                    <ControlTemplate TargetType="Thumb">
+                                                        <Border x:Name="th" Background="#253247" CornerRadius="4" Margin="2,1"/>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="th" Property="Background" Value="#38BDF8"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Thumb.Template>
+                                            </Thumb>
+                                        </Track.Thumb>
+                                    </Track>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -360,7 +535,7 @@ public static class NillyNative {
                     <DockPanel>
                         <TextBlock Text="PC Manager &amp; Tools" FontSize="14.5" FontWeight="Bold" Foreground="#F8FAFC" VerticalAlignment="Center"/>
                         <Border Background="#0C2A3E" BorderBrush="#1E4E6D" BorderThickness="1" CornerRadius="5" Padding="5,2" HorizontalAlignment="Right" VerticalAlignment="Center">
-                            <TextBlock Text="v3.3" FontSize="9.5" FontWeight="Bold" Foreground="#38BDF8"/>
+                            <TextBlock Text="v4.0" FontSize="9.5" FontWeight="Bold" Foreground="#38BDF8"/>
                         </Border>
                     </DockPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
@@ -661,13 +836,13 @@ public static class NillyNative {
                                 <Button x:Name="BtnRestoreOD" Content="Άνοιγμα Όλων" Style="{StaticResource SecondaryButton}" Padding="12,8" FontSize="12"/>
                             </StackPanel>
                             <StackPanel Margin="0,0,12,0">
-                                <TextBlock x:Name="TxtODTotal" Text="Συνολική RAM αυτών των 4 εφαρμογών: -- MB" FontSize="13.5" FontWeight="SemiBold" Foreground="#38BDF8"/>
-                                <TextBlock Text="Focus Mode: κλείνει Dropbox, Razer Synapse &amp; Logi Options+ και κάνει RAM Trim (κρατάει G HUB για το G5→F13)." FontSize="11" Foreground="#94A3B8" Margin="0,3,0,0" TextWrapping="Wrap"/>
+                                <TextBlock x:Name="TxtODTotal" Text="Συνολική RAM των ανιχνευμένων εφαρμογών: -- MB" FontSize="13.5" FontWeight="SemiBold" Foreground="#38BDF8"/>
+                                <TextBlock Text="Focus Mode: κλείνει προσωρινά βαριές background εφαρμογές (Dropbox, Razer Synapse, Logi Options+) και κάνει RAM Trim." FontSize="11" Foreground="#94A3B8" Margin="0,3,0,0" TextWrapping="Wrap"/>
                             </StackPanel>
                         </DockPanel>
                     </Border>
 
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,10">
+                    <Border x:Name="CardODDropbox" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,10">
                         <DockPanel>
                             <Button x:Name="BtnToggleDropbox" Content="..." Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" MinWidth="135" VerticalAlignment="Center"/>
                             <StackPanel Margin="0,0,12,0">
@@ -677,38 +852,38 @@ public static class NillyNative {
                         </DockPanel>
                     </Border>
 
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,10">
+                    <Border x:Name="CardODRazer" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,10">
                         <DockPanel>
                             <Button x:Name="BtnToggleRazer" Content="..." Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" MinWidth="135" VerticalAlignment="Center"/>
                             <StackPanel Margin="0,0,12,0">
-                                <TextBlock Text="Razer Synapse 4 (DeathAdder V2 X)" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                                <TextBlock Text="Razer Synapse" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
                                 <TextBlock x:Name="TxtRazerInfo" Text="Έλεγχος..." FontSize="11.5" Foreground="#94A3B8" Margin="0,3,0,0" TextWrapping="Wrap"/>
                             </StackPanel>
                         </DockPanel>
                     </Border>
 
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,10">
+                    <Border x:Name="CardODLogiOpt" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,10">
                         <DockPanel>
                             <Button x:Name="BtnToggleLogiOpt" Content="..." Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" MinWidth="135" VerticalAlignment="Center"/>
                             <StackPanel Margin="0,0,12,0">
-                                <TextBlock Text="Logi Options+ (MX Master 2S)" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                                <TextBlock Text="Logi Options+" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
                                 <TextBlock x:Name="TxtLogiOptInfo" Text="Έλεγχος..." FontSize="11.5" Foreground="#94A3B8" Margin="0,3,0,0" TextWrapping="Wrap"/>
                             </StackPanel>
                         </DockPanel>
                     </Border>
 
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,10">
+                    <Border x:Name="CardODGHUB" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,10">
                         <DockPanel>
                             <Button x:Name="BtnToggleGHUB" Content="..." Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" MinWidth="135" VerticalAlignment="Center"/>
                             <StackPanel Margin="0,0,12,0">
-                                <TextBlock Text="Logitech G HUB (G915 Keyboard)" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                                <TextBlock Text="Logitech G HUB" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
                                 <TextBlock x:Name="TxtGHUBInfo" Text="Έλεγχος..." FontSize="11.5" Foreground="#94A3B8" Margin="0,3,0,0" TextWrapping="Wrap"/>
                             </StackPanel>
                         </DockPanel>
                     </Border>
 
                     <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="11">
-                        <TextBlock x:Name="TxtODStatus" Text="Tip: Το DeathAdder V2 X &amp; το G915 κρατούν βασικά DPI / On-Board profiles στη μνήμη τους ακόμα κι όταν το software είναι κλειστό." FontSize="11.5" Foreground="#94A3B8" TextWrapping="Wrap"/>
+                        <TextBlock x:Name="TxtODStatus" Text="Tip: Τα περισσότερα περιφερειακά κρατούν βασικά DPI / On-Board profiles στη μνήμη τους ακόμα κι όταν το software είναι κλειστό." FontSize="11.5" Foreground="#94A3B8" TextWrapping="Wrap"/>
                     </Border>
                 </StackPanel>
             </ScrollViewer>
@@ -870,16 +1045,22 @@ public static class NillyNative {
                         </Button>
                     </UniformGrid>
 
-                    <!-- SEO Branding About Card -->
+                    <!-- SEO Branding About Card + On-Demand GitHub Update Checker -->
                     <Border Background="#101827" BorderBrush="#1E3A5F" BorderThickness="1" CornerRadius="10" Padding="16">
-                        <DockPanel>
-                            <Button x:Name="BtnAboutSite" Content="Επίσκεψη Site →" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" VerticalAlignment="Center"/>
-                            <StackPanel Margin="0,0,12,0">
-                                <TextBlock Text="Nilly PC Manager &amp; Tools v3.3 — Ultra-Light On-Demand Edition" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
-                                <TextBlock Text="created by Nilly graphics (Sotiris Christos)" FontSize="12.5" FontWeight="SemiBold" Foreground="#38BDF8" Margin="0,4,0,2"/>
-                                <TextBlock Text="https://nillygraphics.com/  •  0 MB RAM στο παρασκήνιο  •  15 Modular QuickTools" FontSize="11.5" Foreground="#94A3B8" TextWrapping="Wrap"/>
-                            </StackPanel>
-                        </DockPanel>
+                        <StackPanel>
+                            <DockPanel>
+                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
+                                    <Button x:Name="BtnCheckUpdate" Content="Έλεγχος Ενημερώσεων" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
+                                    <Button x:Name="BtnAboutSite" Content="Επίσκεψη Site →" Style="{StaticResource PrimaryButton}" Padding="13,7" FontSize="12"/>
+                                </StackPanel>
+                                <StackPanel Margin="0,0,12,0">
+                                    <TextBlock Text="Nilly PC Manager &amp; Tools v4.0 — Ultra-Light Public Edition" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                                    <TextBlock Text="created by Nilly graphics (Sotiris Christos)" FontSize="12.5" FontWeight="SemiBold" Foreground="#38BDF8" Margin="0,4,0,2"/>
+                                    <TextBlock Text="https://nillygraphics.com/  •  0 MB RAM στο παρασκήνιο  •  15 Modular QuickTools" FontSize="11.5" Foreground="#94A3B8" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </DockPanel>
+                            <TextBlock x:Name="TxtUpdateStatus" Text="" FontSize="11.5" Foreground="#22C55E" Margin="0,8,0,0" TextWrapping="Wrap" Visibility="Collapsed"/>
+                        </StackPanel>
                     </Border>
                 </StackPanel>
             </ScrollViewer>
@@ -1413,8 +1594,8 @@ public static class NillyNative {
                 <StackPanel MaxWidth="1100">
                     <DockPanel Margin="0,0,0,10">
                         <StackPanel>
-                            <TextBlock Text="My Hub — Γρήγορες Ενέργειες, Backup &amp; G-Phonor" FontSize="20" FontWeight="SemiBold" Foreground="#F8FAFC"/>
-                            <TextBlock Text="Ενοποιεί Clean_RAM, Clean_Firefox_Cache, Master Backup (H:) &amp; G-Phonor σε ένα σημείο" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
+                            <TextBlock Text="My Hub — Γρήγορες Ενέργειες &amp; Εργαλεία" FontSize="20" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                            <TextBlock Text="Γρήγορος καθαρισμός RAM, Firefox Cache &amp; αυτόματος εντοπισμός προσωπικών scripts" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
                         </StackPanel>
                         <Button x:Name="BtnHubRefresh" Content="Ανανέωση" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" VerticalAlignment="Center"/>
                     </DockPanel>
@@ -1424,7 +1605,7 @@ public static class NillyNative {
                         <DockPanel>
                             <Button x:Name="BtnHubCleanRam" Content="Clean RAM Τώρα" Style="{StaticResource PrimaryButton}" DockPanel.Dock="Right" MinWidth="165" VerticalAlignment="Center"/>
                             <StackPanel Margin="0,0,12,0">
-                                <TextBlock Text="Καθαρισμός RAM (Working Set Purge — αντικαθιστά Clean_RAM.bat)" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                                <TextBlock Text="Καθαρισμός RAM (Working Set Purge)" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
                                 <TextBlock x:Name="TxtHubRamInfo" Text="Έλεγχος RAM..." FontSize="11.5" Foreground="#94A3B8" Margin="0,3,0,0" TextWrapping="Wrap"/>
                             </StackPanel>
                         </DockPanel>
@@ -1435,14 +1616,14 @@ public static class NillyNative {
                         <DockPanel>
                             <Button x:Name="BtnHubCleanFF" Content="Clean &amp; Restart FF" Style="{StaticResource EmeraldButton}" DockPanel.Dock="Right" MinWidth="165" VerticalAlignment="Center"/>
                             <StackPanel Margin="0,0,12,0">
-                                <TextBlock Text="Καθαρισμός Firefox Cache &amp; Επανεκκίνηση (αντικαθιστά RUN_Clean_Firefox_Cache)" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                                <TextBlock Text="Καθαρισμός Firefox Cache &amp; Επανεκκίνηση (Tabs &amp; Cookies ανέπαφα)" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
                                 <TextBlock x:Name="TxtHubFFInfo" Text="Έλεγχος Firefox..." FontSize="11.5" Foreground="#94A3B8" Margin="0,3,0,0" TextWrapping="Wrap"/>
                             </StackPanel>
                         </DockPanel>
                     </Border>
 
-                    <!-- Card 3: NillyGraphics Master Backup -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="15" Margin="0,0,0,10">
+                    <!-- Card 3: Local Master Backup (auto-hides on PCs without local backup script) -->
+                    <Border x:Name="CardHubBackup" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="15" Margin="0,0,0,10">
                         <DockPanel>
                             <Button x:Name="BtnHubRunBackup" Content="Backup Τώρα (H:)" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" MinWidth="165" VerticalAlignment="Center"/>
                             <StackPanel Margin="0,0,12,0">
@@ -1452,12 +1633,12 @@ public static class NillyNative {
                         </DockPanel>
                     </Border>
 
-                    <!-- Card 4: G-Phonor Voice-to-Text -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="15" Margin="0,0,0,12">
+                    <!-- Card 4: G-Phonor Voice-to-Text (auto-hides on PCs without G-Phonor) -->
+                    <Border x:Name="CardHubGPhonor" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="15" Margin="0,0,0,12">
                         <DockPanel>
                             <Button x:Name="BtnHubToggleGPhonor" Content="Εκκίνηση G-Phonor" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" MinWidth="165" VerticalAlignment="Center"/>
                             <StackPanel Margin="0,0,12,0">
-                                <TextBlock Text="G-Phonor (Ελληνική Φωνητική Πληκτρολόγηση — G5 / F13)" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                                <TextBlock Text="G-Phonor (Φωνητική Πληκτρολόγηση)" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
                                 <TextBlock x:Name="TxtHubGPhonorInfo" Text="Έλεγχος G-Phonor..." FontSize="11.5" Foreground="#94A3B8" Margin="0,3,0,0" TextWrapping="Wrap"/>
                             </StackPanel>
                         </DockPanel>
@@ -2127,6 +2308,7 @@ $window.Add_SizeChanged({
 
 # Guarantee 0 MB footprint after closing
 $window.Add_Closed({
+    try { if ($script:SingleInstanceMutex) { $script:SingleInstanceMutex.ReleaseMutex(); $script:SingleInstanceMutex.Dispose() } } catch {}
     [Environment]::Exit(0)
 })
 
@@ -2139,14 +2321,14 @@ $ctrlNames = @(
     'BtnBoost','BtnHomeColorPicker','BtnHomeOnDemand','TxtBoostStatus','ListDrives',
     'BtnQuickClean','BtnQuickProcs','BtnQuickStartup','BtnQuickTaskbar','TxtProcCount',
     'BtnRefreshOD','BtnFocusMode','BtnRestoreOD','TxtODTotal',
-    'BtnToggleDropbox','TxtDropboxInfo','BtnToggleRazer','TxtRazerInfo',
-    'BtnToggleLogiOpt','TxtLogiOptInfo','BtnToggleGHUB','TxtGHUBInfo','TxtODStatus',
+    'CardODDropbox','BtnToggleDropbox','TxtDropboxInfo','CardODRazer','BtnToggleRazer','TxtRazerInfo',
+    'CardODLogiOpt','BtnToggleLogiOpt','TxtLogiOptInfo','CardODGHUB','BtnToggleGHUB','TxtGHUBInfo','TxtODStatus',
     'BtnScanClean','ChkTemp','ChkBrowsers','ChkChromeAI','ChkDev','ChkSpotify','ChkRecycle',
     'LblTemp','LblBrowsers','LblChromeAI','LblDev','LblSpotify','LblRecycle','LblCleanTotal',
     'BtnRunClean','BtnWinUpdateClean','TxtCleanLog',
     'BtnRefreshProcs','TxtProcFilter','ListProcs','TxtProcStatus','BtnKillProc',
     'BtnDefenderScan','TxtDefenderInfo','BtnNetCheck','TxtNetInfo',
-    'BtnWinUpdate','BtnWinSecurity','BtnInstalledApps','BtnStorageSense','BtnOpenScripts','BtnTaskbarRepair2','BtnAboutSite',
+    'BtnWinUpdate','BtnWinSecurity','BtnInstalledApps','BtnStorageSense','BtnOpenScripts','BtnTaskbarRepair2','BtnAboutSite','BtnCheckUpdate','TxtUpdateStatus',
     'BtnCPPickScreen','BtnCPLiveSpy','BoxCPPreview','TxtCPPreviewHex','TxtCPInputHex','BtnCPApplyHex','TxtCPContrast',
     'ValCPHex','ValCPRgb','ValCPHsl','ValCPCmyk','ValCPCss',
     'BtnCopyHex','BtnCopyRgb','BtnCopyHsl','BtnCopyCmyk','BtnCopyCss',
@@ -2160,7 +2342,7 @@ $ctrlNames = @(
     'BtnBRUndo','BtnBRApply','ZoneBRDrop','BtnBRBrowse','BtnBRClear','TxtBRFind','TxtBRReplace','TxtBRPrefix','TxtBRSuffix','ChkBRSeoSlug','ChkBRNumbering','ListBRPreview','TxtBRStatus',
     'ZoneFLDrop','BtnFLBrowse','BtnFLScan','TxtFLPath','ListFLLocks','BtnFLKill','TxtFLStatus',
     'BtnAOTUnpinAll','BtnAOTRefresh','ListAOTWindows','BtnAOTToggle','TxtAOTStatus',
-    'BtnHubRefresh','BtnHubCleanRam','TxtHubRamInfo','BtnHubCleanFF','TxtHubFFInfo','BtnHubRunBackup','TxtHubBackupInfo','BtnHubToggleGPhonor','TxtHubGPhonorInfo','TxtHubStatus',
+    'BtnHubRefresh','BtnHubCleanRam','TxtHubRamInfo','BtnHubCleanFF','TxtHubFFInfo','CardHubBackup','BtnHubRunBackup','TxtHubBackupInfo','CardHubGPhonor','BtnHubToggleGPhonor','TxtHubGPhonorInfo','TxtHubStatus',
     'BtnHWCopy','BtnHWRefresh','ListHWSpecs','TxtHWStatus',
     'BtnPdfBuild','ZonePdfDrop','BtnPdfBrowse','BtnPdfClear','CmbPdfPage','CmbPdfQuality','BtnPdfUp','BtnPdfDown','ListPdfFiles','TxtPdfStatus',
     'BtnQNSaveScratch','TxtQNScratch','TxtQNSnipTitle','TxtQNSnipBody','BtnQNAddSnip','ListQNSnippets','BtnQNCopySnip','BtnQNDelSnip','TxtQNStatus',
@@ -2282,23 +2464,37 @@ function Refresh-OnDemandPage {
     $l = Get-AppRamMB $script:ODApps.LogiOpt.Procs
     $g = Get-AppRamMB $script:ODApps.GHUB.Procs
     $tot = [math]::Round($d.MB + $r.MB + $l.MB + $g.MB, 1)
-    $ui.TxtODTotal.Text = "Συνολική RAM αυτών των 4 εφαρμογών τώρα: $tot MB"
 
-    if ($d.Running) { $ui.TxtDropboxInfo.Text = "ΑΝΟΙΧΤΟ — $($d.Count) διεργασίες, $($d.MB) MB RAM"; $ui.BtnToggleDropbox.Content = "Κλείσιμο (−$($d.MB) MB)"; $ui.BtnToggleDropbox.IsEnabled = $true }
-    elseif (-not (Test-Path $script:ODApps.Dropbox.Exe)) { $ui.TxtDropboxInfo.Text = "Δεν είναι εγκατεστημένο σε αυτό το PC"; $ui.BtnToggleDropbox.Content = "Μη διαθέσιμο"; $ui.BtnToggleDropbox.IsEnabled = $false }
-    else { $ui.TxtDropboxInfo.Text = "ΚΛΕΙΣΤΟ — 0 MB RAM"; $ui.BtnToggleDropbox.Content = "Άνοιγμα Dropbox"; $ui.BtnToggleDropbox.IsEnabled = $true }
+    $installedCount = 0
+    if ($d.Running -or (Test-Path $script:ODApps.Dropbox.Exe)) {
+        $installedCount++; $ui.CardODDropbox.Visibility = 'Visible'
+        if ($d.Running) { $ui.TxtDropboxInfo.Text = "ΑΝΟΙΧΤΟ — $($d.Count) διεργασίες, $($d.MB) MB RAM"; $ui.BtnToggleDropbox.Content = "Κλείσιμο (−$($d.MB) MB)"; $ui.BtnToggleDropbox.IsEnabled = $true }
+        else { $ui.TxtDropboxInfo.Text = "ΚΛΕΙΣΤΟ — 0 MB RAM"; $ui.BtnToggleDropbox.Content = "Άνοιγμα Dropbox"; $ui.BtnToggleDropbox.IsEnabled = $true }
+    } else { $ui.CardODDropbox.Visibility = 'Collapsed' }
 
-    if ($r.Running) { $ui.TxtRazerInfo.Text = "ΑΝΟΙΧΤΟ — $($r.Count) διεργασίες, $($r.MB) MB RAM"; $ui.BtnToggleRazer.Content = "Κλείσιμο (−$($r.MB) MB)"; $ui.BtnToggleRazer.IsEnabled = $true }
-    elseif (-not (Test-Path $script:ODApps.Razer.Exe)) { $ui.TxtRazerInfo.Text = "Δεν είναι εγκατεστημένο σε αυτό το PC"; $ui.BtnToggleRazer.Content = "Μη διαθέσιμο"; $ui.BtnToggleRazer.IsEnabled = $false }
-    else { $ui.TxtRazerInfo.Text = "ΚΛΕΙΣΤΟ — 0 MB RAM (το DeathAdder κρατάει τα DPI του)"; $ui.BtnToggleRazer.Content = "Άνοιγμα Synapse"; $ui.BtnToggleRazer.IsEnabled = $true }
+    if ($r.Running -or (Test-Path $script:ODApps.Razer.Exe)) {
+        $installedCount++; $ui.CardODRazer.Visibility = 'Visible'
+        if ($r.Running) { $ui.TxtRazerInfo.Text = "ΑΝΟΙΧΤΟ — $($r.Count) διεργασίες, $($r.MB) MB RAM"; $ui.BtnToggleRazer.Content = "Κλείσιμο (−$($r.MB) MB)"; $ui.BtnToggleRazer.IsEnabled = $true }
+        else { $ui.TxtRazerInfo.Text = "ΚΛΕΙΣΤΟ — 0 MB RAM (τα on-board DPI profiles παραμένουν ενεργά)"; $ui.BtnToggleRazer.Content = "Άνοιγμα Synapse"; $ui.BtnToggleRazer.IsEnabled = $true }
+    } else { $ui.CardODRazer.Visibility = 'Collapsed' }
 
-    if ($l.Running) { $ui.TxtLogiOptInfo.Text = "ΑΝΟΙΧΤΟ — $($l.Count) διεργασίες, $($l.MB) MB RAM"; $ui.BtnToggleLogiOpt.Content = "Κλείσιμο (−$($l.MB) MB)"; $ui.BtnToggleLogiOpt.IsEnabled = $true }
-    elseif (-not (Test-Path $script:ODApps.LogiOpt.Exe)) { $ui.TxtLogiOptInfo.Text = "Δεν είναι εγκατεστημένο σε αυτό το PC"; $ui.BtnToggleLogiOpt.Content = "Μη διαθέσιμο"; $ui.BtnToggleLogiOpt.IsEnabled = $false }
-    else { $ui.TxtLogiOptInfo.Text = "ΚΛΕΙΣΤΟ — 0 MB RAM"; $ui.BtnToggleLogiOpt.Content = "Άνοιγμα Options+"; $ui.BtnToggleLogiOpt.IsEnabled = $true }
+    if ($l.Running -or (Test-Path $script:ODApps.LogiOpt.Exe)) {
+        $installedCount++; $ui.CardODLogiOpt.Visibility = 'Visible'
+        if ($l.Running) { $ui.TxtLogiOptInfo.Text = "ΑΝΟΙΧΤΟ — $($l.Count) διεργασίες, $($l.MB) MB RAM"; $ui.BtnToggleLogiOpt.Content = "Κλείσιμο (−$($l.MB) MB)"; $ui.BtnToggleLogiOpt.IsEnabled = $true }
+        else { $ui.TxtLogiOptInfo.Text = "ΚΛΕΙΣΤΟ — 0 MB RAM"; $ui.BtnToggleLogiOpt.Content = "Άνοιγμα Options+"; $ui.BtnToggleLogiOpt.IsEnabled = $true }
+    } else { $ui.CardODLogiOpt.Visibility = 'Collapsed' }
 
-    if ($g.Running) { $ui.TxtGHUBInfo.Text = "ΑΝΟΙΧΤΟ — $($g.Count) διεργασίες, $($g.MB) MB RAM"; $ui.BtnToggleGHUB.Content = "Κλείσιμο (−$($g.MB) MB)"; $ui.BtnToggleGHUB.IsEnabled = $true }
-    elseif (-not (Test-Path $script:ODApps.GHUB.Exe)) { $ui.TxtGHUBInfo.Text = "Δεν είναι εγκατεστημένο σε αυτό το PC"; $ui.BtnToggleGHUB.Content = "Μη διαθέσιμο"; $ui.BtnToggleGHUB.IsEnabled = $false }
-    else { $ui.TxtGHUBInfo.Text = "ΚΛΕΙΣΤΟ — 0 MB RAM"; $ui.BtnToggleGHUB.Content = "Άνοιγμα G HUB"; $ui.BtnToggleGHUB.IsEnabled = $true }
+    if ($g.Running -or (Test-Path $script:ODApps.GHUB.Exe)) {
+        $installedCount++; $ui.CardODGHUB.Visibility = 'Visible'
+        if ($g.Running) { $ui.TxtGHUBInfo.Text = "ΑΝΟΙΧΤΟ — $($g.Count) διεργασίες, $($g.MB) MB RAM"; $ui.BtnToggleGHUB.Content = "Κλείσιμο (−$($g.MB) MB)"; $ui.BtnToggleGHUB.IsEnabled = $true }
+        else { $ui.TxtGHUBInfo.Text = "ΚΛΕΙΣΤΟ — 0 MB RAM"; $ui.BtnToggleGHUB.Content = "Άνοιγμα G HUB"; $ui.BtnToggleGHUB.IsEnabled = $true }
+    } else { $ui.CardODGHUB.Visibility = 'Collapsed' }
+
+    if ($installedCount -eq 0) {
+        $ui.TxtODTotal.Text = "Δεν εντοπίστηκαν βαριές On-Demand εφαρμογές (Dropbox / Razer / Logitech) σε αυτό το PC!"
+    } else {
+        $ui.TxtODTotal.Text = "Συνολική RAM των $installedCount ανιχνευμένων εφαρμογών τώρα: $tot MB"
+    }
 }
 
 function Toggle-OnDemandApp([string]$Key, [string]$Friendly) {
@@ -2684,6 +2880,31 @@ $ui.BtnNavNotes.Add_Click({ Open-NotesPage })
 
 $ui.BtnSidebarSite.Add_Click({ Start-Process $AppWebsite })
 $ui.BtnAboutSite.Add_Click({ Start-Process $AppWebsite })
+$ui.BtnCheckUpdate.Add_Click({
+    $ui.TxtUpdateStatus.Visibility = 'Visible'
+    $ui.TxtUpdateStatus.Text = "Έλεγχος ενημερώσεων στο GitHub..."
+    $window.Dispatcher.Invoke([Action]{}, [Windows.Threading.DispatcherPriority]::Render)
+    try {
+        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
+        $rel = Invoke-RestMethod -Uri $AppRepoApi -Headers @{ 'User-Agent' = "NillyPCManager/$AppVersion" } -TimeoutSec 6 -ErrorAction Stop
+        $latestTag = "$($rel.tag_name)".TrimStart('v','V')
+        $curVer = $null; $latVer = $null
+        $hasNew = $false
+        if ([Version]::TryParse($AppVersion, [ref]$curVer) -and [Version]::TryParse($latestTag, [ref]$latVer)) {
+            $hasNew = ($latVer -gt $curVer)
+        } elseif ($latestTag -and ($latestTag -ne $AppVersion)) {
+            $hasNew = $true
+        }
+        if ($hasNew) {
+            $ui.TxtUpdateStatus.Text = "Νέα έκδοση διαθέσιμη: v$latestTag (τρέχεις v$AppVersion)! Άνοιγμα σελίδας λήψης..."
+            Start-Process $AppRelUrl
+        } else {
+            $ui.TxtUpdateStatus.Text = "Είσαι ενημερωμένος! Έχεις την πιο πρόσφατη έκδοση (v$AppVersion)."
+        }
+    } catch {
+        $ui.TxtUpdateStatus.Text = "Δεν βρέθηκε δημοσιευμένη ενημέρωση ή δεν υπάρχει σύνδεση (τρέχεις v$AppVersion)."
+    }
+})
 
 $ui.BtnRefreshHome.Add_Click({ Refresh-HomeStats })
 $ui.BtnHomeColorPicker.Add_Click({ Open-ColorPickerPage })
@@ -2770,7 +2991,7 @@ $ui.BtnRunClean.Add_Click({
     $ui.BtnRunClean.IsEnabled = $true
 })
 $ui.BtnWinUpdateClean.Add_Click({
-    $cmd = 'Write-Host "Nilly PC Manager & Tools v3.3 - created by Nilly graphics (Sotiris Christos) | https://nillygraphics.com/" -ForegroundColor Cyan; DISM.exe /Online /Cleanup-Image /StartComponentCleanup; Stop-Service wuauserv -Force; Remove-Item C:\Windows\SoftwareDistribution\Download\* -Recurse -Force -ErrorAction SilentlyContinue; Start-Service wuauserv; Write-Host "DONE!" -ForegroundColor Green'
+    $cmd = 'Write-Host "Nilly PC Manager & Tools v4.0 - created by Nilly graphics (Sotiris Christos) | https://nillygraphics.com/" -ForegroundColor Cyan; DISM.exe /Online /Cleanup-Image /StartComponentCleanup; Stop-Service wuauserv -Force; Remove-Item C:\Windows\SoftwareDistribution\Download\* -Recurse -Force -ErrorAction SilentlyContinue; Start-Service wuauserv; Write-Host "DONE!" -ForegroundColor Green'
     Start-Process powershell.exe -Verb RunAs -ArgumentList '-NoExit','-Command',$cmd
 })
 

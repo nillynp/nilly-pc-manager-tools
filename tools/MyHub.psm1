@@ -55,6 +55,7 @@ function Refresh-MyHubPage {
     $usbTxt = if ($usbProc.Count -gt 0) { "USB Watcher: ΕΝΕΡΓΟ" } else { "USB Watcher: Ανενεργό" }
 
     if ((Test-Path $bkBat) -or (Test-Path $bkPs1)) {
+        if ($ui.CardHubBackup) { $ui.CardHubBackup.Visibility = 'Visible' }
         $ui.BtnHubRunBackup.IsEnabled = $true
         if (Test-Path $bkZip) {
             $fi = Get-Item $bkZip
@@ -64,29 +65,31 @@ function Refresh-MyHubPage {
             $ui.TxtHubBackupInfo.Text = "Έτοιμο για Backup (H:\NillyGraphics_Backup_Now.bat)  •  $usbTxt"
         }
     } else {
+        if ($ui.CardHubBackup) { $ui.CardHubBackup.Visibility = 'Collapsed' }
         $ui.BtnHubRunBackup.IsEnabled = $false
-        $ui.TxtHubBackupInfo.Text = "Δεν βρέθηκε το προσωπικό backup script (H:\) σε αυτό το PC."
+        $ui.TxtHubBackupInfo.Text = ""
     }
 
-    # 4. G-Phonor status (portable detection)
+    # 4. G-Phonor status (portable detection — auto-hides on PCs without G-Phonor!)
     $gpDir = Join-Path $env:USERPROFILE "Documents\G-Phonor"
     $gpPy  = Join-Path $gpDir "g_phonor.py"
     $gpVbs = Join-Path $gpDir "run_silent.vbs"
     if (Test-Path $gpPy) {
+        if ($ui.CardHubGPhonor) { $ui.CardHubGPhonor.Visibility = 'Visible' }
         $ui.BtnHubToggleGPhonor.IsEnabled = $true
         $gpProcs = Get-GPhonorProc
         if ($gpProcs.Count -gt 0) {
             $ram = [math]::Round((($gpProcs | Measure-Object WorkingSetSize -Sum).Sum / 1MB), 1)
-            $ui.TxtHubGPhonorInfo.Text = "Κατάσταση: ΕΝΕΡΓΟ ($ram MB RAM — κράτα G5/F13 για υπαγόρευση)"
+            $ui.TxtHubGPhonorInfo.Text = "Κατάσταση: ΕΝΕΡΓΟ ($ram MB RAM)"
             $ui.BtnHubToggleGPhonor.Content = "Τερματισμός G-Phonor"
         } else {
             $ui.TxtHubGPhonorInfo.Text = "Κατάσταση: ΚΛΕΙΣΤΟ (0 MB RAM)"
             $ui.BtnHubToggleGPhonor.Content = "Εκκίνηση G-Phonor"
         }
     } else {
+        if ($ui.CardHubGPhonor) { $ui.CardHubGPhonor.Visibility = 'Collapsed' }
         $ui.BtnHubToggleGPhonor.IsEnabled = $false
-        $ui.TxtHubGPhonorInfo.Text = "Το G-Phonor δεν είναι εγκατεστημένο σε αυτό το PC."
-        $ui.BtnHubToggleGPhonor.Content = "Μη διαθέσιμο"
+        $ui.TxtHubGPhonorInfo.Text = ""
     }
 }
 

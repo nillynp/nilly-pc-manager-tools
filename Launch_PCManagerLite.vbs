@@ -1,4 +1,4 @@
-' Nilly PC Manager & Tools v3.3 — Portable Silent Launcher (0 MB background RAM)
+' Nilly PC Manager & Tools v4.0 — Portable Silent Launcher (0 MB background RAM)
 ' created by Nilly graphics (Sotiris Christos) — https://nillygraphics.com/
 Set fso = CreateObject("Scripting.FileSystemObject")
 scriptDir = fso.GetParentFolderName(WScript.ScriptFullName)
