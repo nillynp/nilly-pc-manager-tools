@@ -1,16 +1,16 @@
 ﻿<#
 .SYNOPSIS
-    PC Manager & Tools v2.1 — Ultra-Light On-Demand System & Designer Suite
+    Nilly PC Manager & Tools v3.2 — Ultra-Light On-Demand System, Design & SEO Suite
     0 MB background RAM | No services | No autostart | Runs only when opened
 
 .DESCRIPTION
     created by Nilly graphics (Sotiris Christos)
     https://nillygraphics.com/
 
-    Modular Architecture:
-      - Core System Manager (Boost, On-Demand Apps, Deep Cleaner, RAM Processes, Security)
-      - Nilly QuickTools (lazy-loaded tools under .\tools\ — 0 KB RAM until clicked!)
-        * Tool #1: Color Picker Pro (Screen Zoom Loupe, HEX/RGB/HSL/CMYK, WCAG Contrast, Tints & Shades)
+    Modular Architecture (14 lazy-loaded modules under .\tools\ — 0 KB RAM until clicked!):
+      - System: Boost, My Hub (RAM/Firefox/Backup/G-Phonor), On-Demand Apps, Deep Cleaner, RAM Processes, Hardware & Specs, Security
+      - Design & SEO: Color Picker Pro, QR & Barcode Pro (9 GS1/ISO), Print & DPI Calc, Pixel Ruler & Capture, Image Resizer, Images -> PDF, Batch Renamer SEO, SEO & Text Tools, SVG/Base64 & Hash
+      - Utilities: Notes & Snippets, File Locksmith, Always On Top
 
     Safe Guarantee: NEVER touches Docker, Documents, Xbox, WebView2,
     Phone Link, cookies, passwords, or personal files.
@@ -21,7 +21,7 @@ param(
 )
 
 $ErrorActionPreference = "SilentlyContinue"
-$AppVersion = "3.1"
+$AppVersion = "3.2"
 $AppAuthor  = "created by Nilly graphics (Sotiris Christos)"
 $AppWebsite = "https://nillygraphics.com/"
 
@@ -126,7 +126,7 @@ public static class NillyNative {
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Nilly PC Manager &amp; Tools v3.1 — created by Nilly graphics (Sotiris Christos)"
+        Title="Nilly PC Manager &amp; Tools v3.2 — created by Nilly graphics (Sotiris Christos)"
         Height="700" Width="880"
         MinHeight="600" MinWidth="740"
         WindowStartupLocation="CenterScreen"
@@ -359,7 +359,7 @@ public static class NillyNative {
                     <DockPanel>
                         <TextBlock Text="PC Manager &amp; Tools" FontSize="14.5" FontWeight="Bold" Foreground="#F8FAFC" VerticalAlignment="Center"/>
                         <Border Background="#0C2A3E" BorderBrush="#1E4E6D" BorderThickness="1" CornerRadius="5" Padding="5,2" HorizontalAlignment="Right" VerticalAlignment="Center">
-                            <TextBlock Text="v3.1" FontSize="9.5" FontWeight="Bold" Foreground="#38BDF8"/>
+                            <TextBlock Text="v3.2" FontSize="9.5" FontWeight="Bold" Foreground="#38BDF8"/>
                         </Border>
                     </DockPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
@@ -388,7 +388,7 @@ public static class NillyNative {
 
                 <!-- Navigation List (scrollable if small window) -->
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel Margin="0,2,0,0">
+                    <StackPanel Margin="0,2,0,4">
                         <TextBlock Text="ΣΥΣΤΗΜΑ" FontSize="10" FontWeight="Bold" Foreground="#475569" Margin="18,6,0,4"/>
 
                         <Button x:Name="BtnNavHome" Style="{StaticResource NavButton}">
@@ -421,6 +421,12 @@ public static class NillyNative {
                                 <TextBlock Text="Διεργασίες (RAM)" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
+                        <Button x:Name="BtnNavHardware" Style="{StaticResource NavButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE950;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Hardware &amp; Specs" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                         <Button x:Name="BtnNavTools" Style="{StaticResource NavButton}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEA18;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
@@ -428,8 +434,8 @@ public static class NillyNative {
                             </StackPanel>
                         </Button>
 
-                        <Separator Background="#1C2536" Margin="14,10,14,6"/>
-                        <TextBlock Text="NILLY QUICKTOOLS" FontSize="10" FontWeight="Bold" Foreground="#38BDF8" Margin="18,2,0,4"/>
+                        <Separator Background="#1C2536" Margin="14,8,14,5"/>
+                        <TextBlock Text="DESIGN &amp; SEO" FontSize="10" FontWeight="Bold" Foreground="#38BDF8" Margin="18,2,0,4"/>
 
                         <Button x:Name="BtnNavColorPicker" Style="{StaticResource NavButton}">
                             <StackPanel Orientation="Horizontal">
@@ -443,16 +449,56 @@ public static class NillyNative {
                                 <TextBlock Text="QR &amp; Barcode Pro" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
+                        <Button x:Name="BtnNavPrintDpi" Style="{StaticResource NavButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE749;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Print &amp; DPI Calc" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="BtnNavPixelRuler" Style="{StaticResource NavButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xECC6;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Pixel Ruler &amp; Capture" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                         <Button x:Name="BtnNavImageResizer" Style="{StaticResource NavButton}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEB9F;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
                                 <TextBlock Text="Image Resizer" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
+                        <Button x:Name="BtnNavImgPdf" Style="{StaticResource NavButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEA90;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Images → PDF" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                         <Button x:Name="BtnNavBatchRenamer" Style="{StaticResource NavButton}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8AC;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
                                 <TextBlock Text="Batch Renamer SEO" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="BtnNavSeoText" Style="{StaticResource NavButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8D2;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="SEO &amp; Text Tools" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="BtnNavBase64Hash" Style="{StaticResource NavButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE943;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="SVG / Base64 &amp; Hash" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Separator Background="#1C2536" Margin="14,8,14,5"/>
+                        <TextBlock Text="UTILITIES" FontSize="10" FontWeight="Bold" Foreground="#94A3B8" Margin="18,2,0,4"/>
+
+                        <Button x:Name="BtnNavNotes" Style="{StaticResource NavButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE70B;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Notes &amp; Snippets" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
                         <Button x:Name="BtnNavFileLocksmith" Style="{StaticResource NavButton}">
@@ -465,24 +511,6 @@ public static class NillyNative {
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE718;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
                                 <TextBlock Text="Always On Top" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="BtnNavHardware" Style="{StaticResource NavButton}">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE950;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                <TextBlock Text="Hardware &amp; Specs" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="BtnNavImgPdf" Style="{StaticResource NavButton}">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEA90;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                <TextBlock Text="Images → PDF" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="BtnNavNotes" Style="{StaticResource NavButton}">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE70B;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                <TextBlock Text="Notes &amp; Snippets" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
                     </StackPanel>
@@ -840,9 +868,9 @@ public static class NillyNative {
                         <DockPanel>
                             <Button x:Name="BtnAboutSite" Content="Επίσκεψη Site →" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" VerticalAlignment="Center"/>
                             <StackPanel Margin="0,0,12,0">
-                                <TextBlock Text="Nilly PC Manager &amp; Tools v3.1 — Ultra-Light On-Demand Edition" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                                <TextBlock Text="Nilly PC Manager &amp; Tools v3.2 — Ultra-Light On-Demand Edition" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
                                 <TextBlock Text="created by Nilly graphics (Sotiris Christos)" FontSize="12.5" FontWeight="SemiBold" Foreground="#38BDF8" Margin="0,4,0,2"/>
-                                <TextBlock Text="https://nillygraphics.com/  •  0 MB RAM στο παρασκήνιο  •  Modular QuickTools" FontSize="11.5" Foreground="#94A3B8" TextWrapping="Wrap"/>
+                                <TextBlock Text="https://nillygraphics.com/  •  0 MB RAM στο παρασκήνιο  •  14 Modular QuickTools" FontSize="11.5" Foreground="#94A3B8" TextWrapping="Wrap"/>
                             </StackPanel>
                         </DockPanel>
                     </Border>
@@ -1596,6 +1624,312 @@ public static class NillyNative {
                 </StackPanel>
             </ScrollViewer>
 
+            <!-- PAGE 16: PRINT, DPI & SOCIAL SIZES CALCULATOR -->
+            <ScrollViewer x:Name="PagePrintDpi" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
+                <StackPanel MaxWidth="1100">
+                    <DockPanel Margin="0,0,0,10">
+                        <StackPanel>
+                            <TextBlock Text="Print, DPI &amp; Social Sizes Calculator" FontSize="20" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                            <TextBlock Text="Άμεση μετατροπή mm / cm ↔ px (72 / 150 / 300 / 600 DPI) + Bleed (+3mm / +5mm) + Aspect Ratio" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <Button x:Name="BtnPDCopy" Content="Copy Διαστάσεις" Style="{StaticResource PrimaryButton}" DockPanel.Dock="Right" VerticalAlignment="Center" Padding="15,8"/>
+                    </DockPanel>
+
+                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,2,0,12">
+                        <StackPanel>
+                            <TextBlock Text="Έτοιμο Preset (Εκτύπωση &amp; Social Media):" FontSize="11.5" Foreground="#94A3B8" Margin="0,0,0,5"/>
+                            <ComboBox x:Name="CmbPDPreset" FontSize="12.5" Padding="8,6" Margin="0,0,0,12"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="84"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="108"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="118"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Πλάτος (W):" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,4"/>
+                                    <TextBox x:Name="TxtPDWidth" Text="210" FontFamily="Consolas" FontSize="13.5" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6"/>
+                                </StackPanel>
+
+                                <Button x:Name="BtnPDSwap" Grid.Column="2" Content="⇄" ToolTip="Εναλλαγή Πλάτους / Ύψους" Style="{StaticResource SecondaryButton}" VerticalAlignment="Bottom" Padding="10,6" FontSize="14"/>
+
+                                <StackPanel Grid.Column="4">
+                                    <TextBlock Text="Ύψος (H):" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,4"/>
+                                    <TextBox x:Name="TxtPDHeight" Text="297" FontFamily="Consolas" FontSize="13.5" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="6">
+                                    <TextBlock Text="Μονάδα:" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,4"/>
+                                    <ComboBox x:Name="CmbPDUnit" SelectedIndex="0" FontSize="12.5" Padding="6,6">
+                                        <ComboBoxItem Content="mm" Tag="mm"/>
+                                        <ComboBoxItem Content="cm" Tag="cm"/>
+                                        <ComboBoxItem Content="px" Tag="px"/>
+                                    </ComboBox>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="8">
+                                    <TextBlock Text="Ανάλυση (DPI):" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,4"/>
+                                    <ComboBox x:Name="CmbPDDpi" SelectedIndex="2" FontSize="12.5" Padding="6,6">
+                                        <ComboBoxItem Content="72 DPI" Tag="72"/>
+                                        <ComboBoxItem Content="150 DPI" Tag="150"/>
+                                        <ComboBoxItem Content="300 DPI" Tag="300"/>
+                                        <ComboBoxItem Content="600 DPI" Tag="600"/>
+                                    </ComboBox>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="10">
+                                    <TextBlock Text="Bleed (Ξάκρισμα):" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,4"/>
+                                    <ComboBox x:Name="CmbPDBleed" SelectedIndex="1" FontSize="12.5" Padding="6,6">
+                                        <ComboBoxItem Content="0 mm" Tag="0"/>
+                                        <ComboBoxItem Content="+3 mm" Tag="3"/>
+                                        <ComboBoxItem Content="+5 mm" Tag="5"/>
+                                    </ComboBox>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Live Output Cards -->
+                    <UniformGrid Columns="2" Margin="-5,0,-5,12">
+                        <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="ΤΕΛΙΚΕΣ ΔΙΑΣΤΑΣΕΙΣ PIXELS" FontSize="10.5" FontWeight="Bold" Foreground="#38BDF8"/>
+                                <TextBlock x:Name="ValPDPixels" Text="--" FontFamily="Consolas" FontSize="15.5" FontWeight="Bold" Foreground="#F8FAFC" Margin="0,5,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="ΦΥΣΙΚΟ ΜΕΓΕΘΟΣ ΕΚΤΥΠΩΣΗΣ" FontSize="10.5" FontWeight="Bold" Foreground="#10B981"/>
+                                <TextBlock x:Name="ValPDMm" Text="--" FontFamily="Consolas" FontSize="14.5" FontWeight="SemiBold" Foreground="#F8FAFC" Margin="0,5,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="ΜΕ BLEED (ΓΙΑ ΤΥΠΟΓΡΑΦΕΙΟ)" FontSize="10.5" FontWeight="Bold" Foreground="#F59E0B"/>
+                                <TextBlock x:Name="ValPDBleed" Text="--" FontFamily="Consolas" FontSize="13.5" FontWeight="SemiBold" Foreground="#FDE68A" Margin="0,5,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="ASPECT RATIO &amp; MEGAPIXELS" FontSize="10.5" FontWeight="Bold" Foreground="#A78BFA"/>
+                                <TextBlock x:Name="ValPDRatio" Text="--" FontFamily="Consolas" FontSize="14.5" FontWeight="SemiBold" Foreground="#F8FAFC" Margin="0,5,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                    </UniformGrid>
+
+                    <!-- Proportional Resize Helper -->
+                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,10">
+                        <DockPanel>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock Text="Αναλογική κλίμακα — Αν το νέο Πλάτος είναι:" FontSize="12" Foreground="#CBD5E1" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                <TextBox x:Name="TxtPDScaleW" Width="90" Text="1080" FontFamily="Consolas" FontSize="13" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,5"/>
+                            </StackPanel>
+                            <TextBlock x:Name="TxtPDScaleRes" Text="—" FontFamily="Consolas" FontSize="13.5" FontWeight="Bold" Foreground="#38BDF8" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        </DockPanel>
+                    </Border>
+
+                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10">
+                        <TextBlock x:Name="TxtPDStatus" Text="Tip: 300 DPI + 3mm Bleed είναι το στάνταρ για κάρτες, flyers &amp; έντυπα · 150 DPI για banners/roll-ups." FontSize="11.5" Foreground="#94A3B8" TextWrapping="Wrap"/>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- PAGE 17: SCREEN PIXEL RULER & QUICK REGION SCREENSHOT -->
+            <ScrollViewer x:Name="PagePixelRuler" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
+                <StackPanel MaxWidth="1100">
+                    <DockPanel Margin="0,0,0,10">
+                        <StackPanel>
+                            <TextBlock Text="Pixel Ruler &amp; Quick Capture" FontSize="20" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                            <TextBlock Text="Μέτρηση διαστάσεων οθόνης σε pixels (W × H) &amp; άμεσο Screenshot με Copy στο Clipboard (120 FPS)" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <Button x:Name="BtnPRStart" Content="Μέτρηση &amp; Λήψη Οθόνης" Style="{StaticResource PrimaryButton}" DockPanel.Dock="Right" VerticalAlignment="Center" Padding="16,9"/>
+                    </DockPanel>
+
+                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,2,0,12">
+                        <DockPanel>
+                            <CheckBox x:Name="ChkPRAutoCopy" Content="Αυτόματη αντιγραφή Screenshot στο Clipboard (έτοιμο για Ctrl+V σε Photoshop / Figma / Chat)" IsChecked="True" Margin="0"/>
+                        </DockPanel>
+                    </Border>
+
+                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,12">
+                        <StackPanel>
+                            <DockPanel Margin="0,0,0,10">
+                                <TextBlock x:Name="TxtPRDims" Text="Καμία μέτρηση ακόμα — πάτα 'Μέτρηση &amp; Λήψη Οθόνης' και σύρε με το ποντίκι." FontFamily="Consolas" FontSize="13" FontWeight="SemiBold" Foreground="#38BDF8" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                                    <Button x:Name="BtnPRCopyDims" Content="Copy W×H" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
+                                    <Button x:Name="BtnPRCopyImg" Content="Copy PNG" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
+                                    <Button x:Name="BtnPRSavePng" Content="Αποθήκευση PNG" Style="{StaticResource EmeraldButton}" Padding="13,7" FontSize="12.5"/>
+                                </StackPanel>
+                            </DockPanel>
+                            <Border Background="#0B0F17" BorderBrush="#263348" BorderThickness="1" CornerRadius="8" MinHeight="270" MaxHeight="360" Padding="8">
+                                <Image x:Name="ImgPRPreview" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10">
+                        <TextBlock x:Name="TxtPRStatus" Text="0 MB background RAM · Esc ή Δεξί κλικ για ακύρωση κατά την επιλογή περιοχής." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- PAGE 18: SEO, TEXT CLEANER & PASSWORD TOOLKIT -->
+            <ScrollViewer x:Name="PageSeoText" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
+                <StackPanel MaxWidth="1100">
+                    <DockPanel Margin="0,0,0,10">
+                        <StackPanel>
+                            <TextBlock Text="SEO, Text &amp; Password Toolkit" FontSize="20" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                            <TextBlock Text="Google SERP Title/Meta Checker · Greek → SEO Slug · Plain Text Cleaner · Crypto Password Generator" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
+                            <Button x:Name="BtnSEOCopySlug" Content="Copy Slug" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
+                            <Button x:Name="BtnSEOCopyMeta" Content="Copy HTML Meta" Style="{StaticResource PrimaryButton}" Padding="14,8"/>
+                        </StackPanel>
+                    </DockPanel>
+
+                    <!-- Google SERP Checker Card -->
+                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,2,0,12">
+                        <StackPanel>
+                            <DockPanel Margin="0,0,0,4">
+                                <TextBlock Text="SEO Title (ιδανικά έως 60 χαρακτήρες):" FontSize="11.5" Foreground="#CBD5E1"/>
+                                <TextBlock x:Name="LblSEOTitleCount" Text="0 / 60 chars" FontFamily="Consolas" FontSize="11.5" FontWeight="Bold" HorizontalAlignment="Right" Foreground="#22C55E"/>
+                            </DockPanel>
+                            <TextBox x:Name="TxtSEOTitle" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6" FontSize="12.5"/>
+                            <ProgressBar x:Name="BarSEOTitle" Height="4" Minimum="0" Maximum="80" Value="0" Background="#1E293B" Foreground="#38BDF8" BorderThickness="0" Margin="0,4,0,10"/>
+
+                            <DockPanel Margin="0,0,0,4">
+                                <TextBlock Text="Meta Description (ιδανικά έως 155 χαρακτήρες):" FontSize="11.5" Foreground="#CBD5E1"/>
+                                <TextBlock x:Name="LblSEODescCount" Text="0 / 155 chars" FontFamily="Consolas" FontSize="11.5" FontWeight="Bold" HorizontalAlignment="Right" Foreground="#22C55E"/>
+                            </DockPanel>
+                            <TextBox x:Name="TxtSEODesc" Height="54" AcceptsReturn="True" TextWrapping="Wrap" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6" FontSize="12"/>
+                            <ProgressBar x:Name="BarSEODesc" Height="4" Minimum="0" Maximum="200" Value="0" Background="#1E293B" Foreground="#10B981" BorderThickness="0" Margin="0,4,0,10"/>
+
+                            <!-- Live Google SERP Preview -->
+                            <Border Background="#0B0F17" BorderBrush="#253349" BorderThickness="1" CornerRadius="8" Padding="11">
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtSEOSlugOut" Text="https://nillygraphics.com/" FontSize="11" Foreground="#94A3B8" TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock x:Name="PrevSEOTitle" Text="Title Preview" FontSize="14.5" FontWeight="SemiBold" Foreground="#60A5FA" Margin="0,2,0,2" TextWrapping="Wrap"/>
+                                    <TextBlock x:Name="PrevSEODesc" Text="Description Preview" FontSize="11.5" Foreground="#CBD5E1" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Plain Text Cleaner & Case Converter -->
+                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,12">
+                        <StackPanel>
+                            <DockPanel Margin="0,0,0,6">
+                                <TextBlock Text="Καθαρισμός Κειμένου &amp; Μετατροπή Κεφαλαίων / Πεζών:" FontSize="12" FontWeight="SemiBold" Foreground="#CBD5E1"/>
+                                <TextBlock x:Name="LblSEOTextStats" Text="0 λέξεις • 0 χαρακτήρες • 0 γραμμές" FontFamily="Consolas" FontSize="11" Foreground="#94A3B8" HorizontalAlignment="Right"/>
+                            </DockPanel>
+                            <TextBox x:Name="TxtSEOCleaner" Height="82" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6" FontSize="12" Margin="0,0,0,8"/>
+                            <WrapPanel>
+                                <Button x:Name="BtnSEOCleanSpaces" Content="Καθαρισμός Κενών" Style="{StaticResource SecondaryButton}" Margin="0,0,8,4"/>
+                                <Button x:Name="BtnSEOUpper" Content="ΚΕΦΑΛΑΙΑ" Style="{StaticResource SecondaryButton}" Margin="0,0,8,4"/>
+                                <Button x:Name="BtnSEOLower" Content="πεζά" Style="{StaticResource SecondaryButton}" Margin="0,0,8,4"/>
+                                <Button x:Name="BtnSEOTitleCase" Content="Title Case" Style="{StaticResource SecondaryButton}" Margin="0,0,8,4"/>
+                                <Button x:Name="BtnSEOCopyPlain" Content="Copy Plain Text" Style="{StaticResource EmeraldButton}" Padding="13,7" FontSize="12" Margin="0,0,0,4"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Crypto Password Generator -->
+                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="95"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="TxtSEOPassOut" Grid.Column="0" IsReadOnly="True" FontFamily="Consolas" FontSize="13.5" FontWeight="Bold" Background="#0B0F17" Foreground="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="10,7"/>
+                            <ComboBox x:Name="CmbSEOPassLen" Grid.Column="2" SelectedIndex="1" FontSize="12" Padding="6,6" VerticalAlignment="Center">
+                                <ComboBoxItem Content="12 chars" Tag="12"/>
+                                <ComboBoxItem Content="16 chars" Tag="16"/>
+                                <ComboBoxItem Content="24 chars" Tag="24"/>
+                            </ComboBox>
+                            <CheckBox x:Name="ChkSEOPassSym" Grid.Column="4" Content="Σύμβολα" IsChecked="True" Margin="0" VerticalAlignment="Center"/>
+                            <Button x:Name="BtnSEOGenPass" Grid.Column="6" Content="Νέος &amp; Copy" Style="{StaticResource PrimaryButton}" Padding="13,7" FontSize="12.5"/>
+                        </Grid>
+                    </Border>
+
+                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10">
+                        <TextBlock x:Name="TxtSEOStatus" Text="100% offline · Ιδανικό για WordPress, WooCommerce, Elementor, Meta Tags &amp; πελάτες." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- PAGE 19: SVG / IMAGE TO BASE64 DATA URI & FILE HASH -->
+            <ScrollViewer x:Name="PageBase64Hash" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
+                <StackPanel MaxWidth="1100">
+                    <DockPanel Margin="0,0,0,10">
+                        <StackPanel>
+                            <TextBlock Text="SVG / Image → Base64 &amp; File Hash" FontSize="20" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                            <TextBlock Text="Μετατροπή SVG / PNG / JPG / ICO σε Data URI, HTML &lt;img&gt; &amp; CSS url() + SHA-256 &amp; MD5 έλεγχος αρχείων" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <Button x:Name="BtnB64Browse" Content="Επιλογή Αρχείου" Style="{StaticResource PrimaryButton}" DockPanel.Dock="Right" VerticalAlignment="Center" Padding="15,8"/>
+                    </DockPanel>
+
+                    <Border x:Name="ZoneB64Drop" AllowDrop="True" Background="#111C2D" BorderBrush="#38BDF8" BorderThickness="1" CornerRadius="10" Padding="16" Margin="0,2,0,12">
+                        <StackPanel>
+                            <TextBlock Text="Ρίξε εδώ SVG, Logo, PNG, WebP, ICO ή οποιοδήποτε αρχείο (Drag &amp; Drop)" FontSize="13.5" FontWeight="SemiBold" Foreground="#38BDF8"/>
+                            <TextBlock x:Name="TxtB64Info" Text="Κανένα αρχείο επιλεγμένο ακόμα." FontSize="11.5" Foreground="#94A3B8" Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Hashes Card -->
+                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,12">
+                        <StackPanel>
+                            <DockPanel Margin="0,0,0,8">
+                                <Button x:Name="BtnB64CopySha" Content="Copy SHA-256" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" Padding="11,5" FontSize="11.5"/>
+                                <StackPanel Margin="0,0,10,0">
+                                    <TextBlock Text="SHA-256:" FontSize="10.5" FontWeight="Bold" Foreground="#38BDF8"/>
+                                    <TextBox x:Name="ValB64Sha" IsReadOnly="True" Text="—" FontFamily="Consolas" FontSize="11.5" Background="Transparent" Foreground="#E2E8F0" BorderThickness="0"/>
+                                </StackPanel>
+                            </DockPanel>
+                            <DockPanel>
+                                <Button x:Name="BtnB64CopyMd5" Content="Copy MD5" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" Padding="11,5" FontSize="11.5"/>
+                                <StackPanel Margin="0,0,10,0">
+                                    <TextBlock Text="MD5:" FontSize="10.5" FontWeight="Bold" Foreground="#10B981"/>
+                                    <TextBox x:Name="ValB64Md5" IsReadOnly="True" Text="—" FontFamily="Consolas" FontSize="11.5" Background="Transparent" Foreground="#E2E8F0" BorderThickness="0"/>
+                                </StackPanel>
+                            </DockPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Base64 Output + 1-Click Copy -->
+                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,10">
+                        <StackPanel>
+                            <DockPanel Margin="0,0,0,8">
+                                <TextBlock Text="Base64 Data URI Προεπισκόπηση:" FontSize="12" FontWeight="SemiBold" Foreground="#CBD5E1" VerticalAlignment="Center"/>
+                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                                    <Button x:Name="BtnB64CopyUri" Content="Copy Data URI" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
+                                    <Button x:Name="BtnB64CopyHtml" Content="Copy HTML &lt;img&gt;" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
+                                    <Button x:Name="BtnB64CopyCss" Content="Copy CSS url()" Style="{StaticResource EmeraldButton}" Padding="13,7" FontSize="12"/>
+                                </StackPanel>
+                            </DockPanel>
+                            <TextBox x:Name="TxtB64Output" Height="115" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" FontFamily="Consolas" FontSize="11.5" Background="#0B0F17" Foreground="#CBD5E1" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10">
+                        <TextBlock x:Name="TxtB64Status" Text="Tip: Ιδανικό για email υπογραφές, inline SVG icons στο CSS/WordPress &amp; έλεγχο ακεραιότητας αρχείων." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
         </Grid>
     </Grid>
 </Window>
@@ -1633,8 +1967,8 @@ $window.Add_Closed({
 # Grab all named UI controls
 $ctrlNames = @(
     'ColSidebar',
-    'BtnNavHome','BtnNavMyHub','BtnNavOnDemand','BtnNavClean','BtnNavProcs','BtnNavTools','BtnNavColorPicker','BtnNavQrBarcode','BtnNavImageResizer','BtnNavBatchRenamer','BtnNavFileLocksmith','BtnNavAlwaysOnTop','BtnNavHardware','BtnNavImgPdf','BtnNavNotes','BtnSidebarSite',
-    'PageHome','PageMyHub','PageOnDemand','PageClean','PageProcs','PageTools','PageColorPicker','PageQrBarcode','PageImageResizer','PageBatchRenamer','PageFileLocksmith','PageAlwaysOnTop','PageHardware','PageImgPdf','PageNotes',
+    'BtnNavHome','BtnNavMyHub','BtnNavOnDemand','BtnNavClean','BtnNavProcs','BtnNavTools','BtnNavColorPicker','BtnNavQrBarcode','BtnNavPrintDpi','BtnNavPixelRuler','BtnNavImageResizer','BtnNavBatchRenamer','BtnNavSeoText','BtnNavBase64Hash','BtnNavFileLocksmith','BtnNavAlwaysOnTop','BtnNavHardware','BtnNavImgPdf','BtnNavNotes','BtnSidebarSite',
+    'PageHome','PageMyHub','PageOnDemand','PageClean','PageProcs','PageTools','PageColorPicker','PageQrBarcode','PagePrintDpi','PagePixelRuler','PageImageResizer','PageBatchRenamer','PageSeoText','PageBase64Hash','PageFileLocksmith','PageAlwaysOnTop','PageHardware','PageImgPdf','PageNotes',
     'TxtSysSpec','TxtUptime','BtnRefreshHome','TxtRamPct','TxtRamDetail','BarRam','TxtTempSize','TxtBgHeavy','BarTemp',
     'BtnBoost','BtnHomeColorPicker','BtnHomeOnDemand','TxtBoostStatus','ListDrives',
     'BtnQuickClean','BtnQuickProcs','BtnQuickStartup','BtnQuickTaskbar','TxtProcCount',
@@ -1663,7 +1997,11 @@ $ctrlNames = @(
     'BtnHubRefresh','BtnHubCleanRam','TxtHubRamInfo','BtnHubCleanFF','TxtHubFFInfo','BtnHubRunBackup','TxtHubBackupInfo','BtnHubToggleGPhonor','TxtHubGPhonorInfo','TxtHubStatus',
     'BtnHWCopy','BtnHWRefresh','ListHWSpecs','TxtHWStatus',
     'BtnPdfBuild','ZonePdfDrop','BtnPdfBrowse','BtnPdfClear','CmbPdfPage','CmbPdfQuality','BtnPdfUp','BtnPdfDown','ListPdfFiles','TxtPdfStatus',
-    'BtnQNSaveScratch','TxtQNScratch','TxtQNSnipTitle','TxtQNSnipBody','BtnQNAddSnip','ListQNSnippets','BtnQNCopySnip','BtnQNDelSnip','TxtQNStatus'
+    'BtnQNSaveScratch','TxtQNScratch','TxtQNSnipTitle','TxtQNSnipBody','BtnQNAddSnip','ListQNSnippets','BtnQNCopySnip','BtnQNDelSnip','TxtQNStatus',
+    'CmbPDPreset','TxtPDWidth','TxtPDHeight','CmbPDUnit','CmbPDDpi','CmbPDBleed','BtnPDSwap','BtnPDCopy','ValPDPixels','ValPDMm','ValPDBleed','ValPDRatio','TxtPDScaleW','TxtPDScaleRes','TxtPDStatus',
+    'BtnPRStart','ChkPRAutoCopy','ImgPRPreview','TxtPRDims','BtnPRCopyImg','BtnPRCopyDims','BtnPRSavePng','TxtPRStatus',
+    'TxtSEOTitle','LblSEOTitleCount','BarSEOTitle','TxtSEODesc','LblSEODescCount','BarSEODesc','TxtSEOSlugOut','PrevSEOTitle','PrevSEODesc','BtnSEOCopySlug','BtnSEOCopyMeta','TxtSEOCleaner','LblSEOTextStats','BtnSEOCleanSpaces','BtnSEOUpper','BtnSEOLower','BtnSEOTitleCase','BtnSEOCopyPlain','CmbSEOPassLen','ChkSEOPassSym','TxtSEOPassOut','BtnSEOGenPass','TxtSEOStatus',
+    'ZoneB64Drop','BtnB64Browse','TxtB64Info','ValB64Sha','ValB64Md5','TxtB64Output','BtnB64CopyUri','BtnB64CopyHtml','BtnB64CopyCss','BtnB64CopySha','BtnB64CopyMd5','TxtB64Status'
 )
 $ui = @{}
 foreach ($n in $ctrlNames) {
@@ -1942,8 +2280,12 @@ function Set-ActivePage([string]$Page) {
         Tools         = $ui.PageTools
         ColorPicker   = $ui.PageColorPicker
         QrBarcode     = $ui.PageQrBarcode
+        PrintDpi      = $ui.PagePrintDpi
+        PixelRuler    = $ui.PagePixelRuler
         ImageResizer  = $ui.PageImageResizer
         BatchRenamer  = $ui.PageBatchRenamer
+        SeoText       = $ui.PageSeoText
+        Base64Hash    = $ui.PageBase64Hash
         FileLocksmith = $ui.PageFileLocksmith
         AlwaysOnTop   = $ui.PageAlwaysOnTop
         Hardware      = $ui.PageHardware
@@ -1964,8 +2306,12 @@ function Set-ActivePage([string]$Page) {
         Tools         = $ui.BtnNavTools
         ColorPicker   = $ui.BtnNavColorPicker
         QrBarcode     = $ui.BtnNavQrBarcode
+        PrintDpi      = $ui.BtnNavPrintDpi
+        PixelRuler    = $ui.BtnNavPixelRuler
         ImageResizer  = $ui.BtnNavImageResizer
         BatchRenamer  = $ui.BtnNavBatchRenamer
+        SeoText       = $ui.BtnNavSeoText
+        Base64Hash    = $ui.BtnNavBase64Hash
         FileLocksmith = $ui.BtnNavFileLocksmith
         AlwaysOnTop   = $ui.BtnNavAlwaysOnTop
         Hardware      = $ui.BtnNavHardware
@@ -2086,6 +2432,46 @@ function Open-NotesPage {
     }
 }
 
+function Open-PrintDpiPage {
+    try {
+        Ensure-ToolLoaded 'PrintDpi'
+        Initialize-PrintDpiTool -MainWindow $window -UiMap $ui
+        Set-ActivePage 'PrintDpi'
+    } catch {
+        Add-Content -Path (Join-Path $PSScriptRoot "error.log") -Value "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] PrintDpi error: $($_.Exception.Message)" -ErrorAction SilentlyContinue
+    }
+}
+
+function Open-PixelRulerPage {
+    try {
+        Ensure-ToolLoaded 'PixelRuler'
+        Initialize-PixelRulerTool -MainWindow $window -UiMap $ui
+        Set-ActivePage 'PixelRuler'
+    } catch {
+        Add-Content -Path (Join-Path $PSScriptRoot "error.log") -Value "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] PixelRuler error: $($_.Exception.Message)" -ErrorAction SilentlyContinue
+    }
+}
+
+function Open-SeoTextPage {
+    try {
+        Ensure-ToolLoaded 'SeoText'
+        Initialize-SeoTextTool -MainWindow $window -UiMap $ui
+        Set-ActivePage 'SeoText'
+    } catch {
+        Add-Content -Path (Join-Path $PSScriptRoot "error.log") -Value "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] SeoText error: $($_.Exception.Message)" -ErrorAction SilentlyContinue
+    }
+}
+
+function Open-Base64HashPage {
+    try {
+        Ensure-ToolLoaded 'Base64Hash'
+        Initialize-Base64HashTool -MainWindow $window -UiMap $ui
+        Set-ActivePage 'Base64Hash'
+    } catch {
+        Add-Content -Path (Join-Path $PSScriptRoot "error.log") -Value "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] Base64Hash error: $($_.Exception.Message)" -ErrorAction SilentlyContinue
+    }
+}
+
 function Restart-TaskbarExplorer {
     Stop-Process -Name "explorer" -Force -ErrorAction SilentlyContinue
     Start-Sleep -Milliseconds 600
@@ -2101,8 +2487,12 @@ $ui.BtnNavProcs.Add_Click({ Set-ActivePage 'Procs'; Refresh-Processes })
 $ui.BtnNavTools.Add_Click({ Set-ActivePage 'Tools'; Refresh-DefenderInfo })
 $ui.BtnNavColorPicker.Add_Click({ Open-ColorPickerPage })
 $ui.BtnNavQrBarcode.Add_Click({ Open-QrBarcodePage })
+$ui.BtnNavPrintDpi.Add_Click({ Open-PrintDpiPage })
+$ui.BtnNavPixelRuler.Add_Click({ Open-PixelRulerPage })
 $ui.BtnNavImageResizer.Add_Click({ Open-ImageResizerPage })
 $ui.BtnNavBatchRenamer.Add_Click({ Open-BatchRenamerPage })
+$ui.BtnNavSeoText.Add_Click({ Open-SeoTextPage })
+$ui.BtnNavBase64Hash.Add_Click({ Open-Base64HashPage })
 $ui.BtnNavFileLocksmith.Add_Click({ Open-FileLocksmithPage })
 $ui.BtnNavAlwaysOnTop.Add_Click({ Open-AlwaysOnTopPage })
 $ui.BtnNavHardware.Add_Click({ Open-HardwarePage })
@@ -2197,7 +2587,7 @@ $ui.BtnRunClean.Add_Click({
     $ui.BtnRunClean.IsEnabled = $true
 })
 $ui.BtnWinUpdateClean.Add_Click({
-    $cmd = 'Write-Host "PC Manager & Tools v2.1 - created by Nilly graphics (Sotiris Christos) | https://nillygraphics.com/" -ForegroundColor Cyan; DISM.exe /Online /Cleanup-Image /StartComponentCleanup; Stop-Service wuauserv -Force; Remove-Item C:\Windows\SoftwareDistribution\Download\* -Recurse -Force -ErrorAction SilentlyContinue; Start-Service wuauserv; Write-Host "DONE!" -ForegroundColor Green'
+    $cmd = 'Write-Host "Nilly PC Manager & Tools v3.2 - created by Nilly graphics (Sotiris Christos) | https://nillygraphics.com/" -ForegroundColor Cyan; DISM.exe /Online /Cleanup-Image /StartComponentCleanup; Stop-Service wuauserv -Force; Remove-Item C:\Windows\SoftwareDistribution\Download\* -Recurse -Force -ErrorAction SilentlyContinue; Start-Service wuauserv; Write-Host "DONE!" -ForegroundColor Green'
     Start-Process powershell.exe -Verb RunAs -ArgumentList '-NoExit','-Command',$cmd
 })
 
@@ -2264,8 +2654,24 @@ if ($TestOnly) {
     Open-HardwarePage
     Open-ImgPdfPage
     Open-NotesPage
+    Open-PrintDpiPage
+    $pdPx = $ui.ValPDPixels.Text
+    $pdBleed = $ui.ValPDBleed.Text
+    Open-PixelRulerPage
+    $prCtorOk = $false
+    try {
+        $rf = New-Object NillyRulerCaptureForm
+        $prCtorOk = $true
+        $rf.Dispose()
+    } catch { throw "PixelRuler ctor failed: $($_.Exception.Message)" }
+    Open-SeoTextPage
+    $seoSlug = Convert-TextToSeoSlugLocal -Text "Σχεδιασμός Λογοτύπου & Συσκευασίας 2026"
+    $seoPwLen = (New-CryptoPassword -Length 24 -IncludeSymbols $true).Length
+    Open-Base64HashPage
+    Process-Base64AndHashFile -FilePath (Join-Path $PSScriptRoot "PCManagerLite.ico")
+    $b64Ok = $ui.ValB64Sha.Text.Length -eq 64 -and $ui.ValB64Md5.Text.Length -eq 32 -and $ui.TxtB64Output.Text.StartsWith("data:image/x-icon;base64,")
     $hwRows = @($ui.ListHWSpecs.ItemsSource).Count
-    Write-Output "SELF-TEST PASSED! Version=$AppVersion | RAM=$($ui.TxtRamPct.Text) | Drives=$($ui.ListDrives.ItemsSource.Count) | ColorPicker=$($ui.ValCPHex.Text)/$($ui.ValCPCmyk.Text) | QR=[$qrMeta] | BC=[$bcMeta] | Slug=[$slugTest] | HWRows=$hwRows | HubRAM=[$($ui.TxtHubRamInfo.Text)]"
+    Write-Output "SELF-TEST PASSED! Version=$AppVersion | Modules=$($script:LoadedTools.Count) | RAM=$($ui.TxtRamPct.Text) | Drives=$($ui.ListDrives.ItemsSource.Count) | ColorPicker=$($ui.ValCPHex.Text)/$($ui.ValCPCmyk.Text) | QR=[$qrMeta] | BC=[$bcMeta] | Slug=[$slugTest] | HWRows=$hwRows | PrintDPI=[$pdPx | $pdBleed] | RulerCtor=$prCtorOk | SeoSlug=[$seoSlug] PwLen=$seoPwLen | B64Hash=$b64Ok"
     exit 0
 }
 

@@ -1,7 +1,7 @@
 @echo off
 title Install Shortcut - Nilly PC Manager & Tools
 echo =====================================================================
-echo   Nilly PC Manager ^& Tools v3.0 — Portable Setup (0 MB background)
+echo   Nilly PC Manager ^& Tools v3.2 — Portable Setup (0 MB background)
 echo   created by Nilly graphics (Sotiris Christos)
 echo   https://nillygraphics.com/
 echo =====================================================================
@@ -19,7 +19,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command ^
   "$sc.Arguments = '\"' + (Join-Path $dir 'Launch_PCManagerLite.vbs') + '\"';" ^
   "$sc.WorkingDirectory = $dir;" ^
   "$sc.IconLocation = (Join-Path $dir 'PCManagerLite.ico') + ',0';" ^
-  "$sc.Description = 'Nilly PC Manager & Tools v3.0 - created by Nilly graphics (Sotiris Christos) | https://nillygraphics.com/';" ^
+  "$sc.Description = 'Nilly PC Manager & Tools v3.2 - created by Nilly graphics (Sotiris Christos) | https://nillygraphics.com/';" ^
   "$sc.Save();" ^
   "Write-Host '[OK] Files unblocked & Desktop shortcut created!' -ForegroundColor Green;" ^
   "Write-Host '[OK] Zero startup entries, zero services, 0 MB background RAM.' -ForegroundColor Cyan"
