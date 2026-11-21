@@ -1941,11 +1941,11 @@ public static class NillyNative {
             <ScrollViewer x:Name="PageChatter" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
                 <StackPanel MaxWidth="1100">
                     <DockPanel Margin="0,0,0,10">
+                        <Button x:Name="BtnCBSaveApply" Content="Αποθήκευση &amp; Εφαρμογή Live" Style="{StaticResource PrimaryButton}" DockPanel.Dock="Right" VerticalAlignment="Center" Padding="14,8" Margin="12,0,0,0"/>
                         <StackPanel>
                             <TextBlock Text="Keyboard Chatter Blocker (Ultra-Light)" FontSize="20" FontWeight="SemiBold" Foreground="#F8FAFC"/>
-                            <TextBlock Text="Καθαρό Win32 Tray Daemon (~32 KB · ~0.3–2 MB RAM αντί 47 MB) · Μηδενική καθυστέρηση · Live ρυθμίσεις ανά πλήκτρο" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
+                            <TextBlock Text="Καθαρό Win32 Tray Daemon (~33 KB · &lt;2 MB RAM αντί 47 MB) · Αναλυτικά στατιστικά όλων των πλήκτρων &amp; live log" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0" TextWrapping="Wrap"/>
                         </StackPanel>
-                        <Button x:Name="BtnCBSaveApply" Content="Αποθήκευση &amp; Εφαρμογή Live" Style="{StaticResource PrimaryButton}" DockPanel.Dock="Right" VerticalAlignment="Center" Padding="15,8"/>
                     </DockPanel>
 
                     <!-- Live Daemon Status & Controls -->
@@ -1953,13 +1953,40 @@ public static class NillyNative {
                         <StackPanel>
                             <DockPanel Margin="0,0,0,8">
                                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
-                                    <Button x:Name="BtnCBToggleRun" Content="Εκκίνηση" Style="{StaticResource EmeraldButton}" Padding="14,7" FontSize="12.5" Margin="0,0,8,0"/>
-                                    <Button x:Name="BtnCBPause" Content="Παύση (Live)" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
-                                    <Button x:Name="BtnCBRefresh" Content="Ανανέωση" Style="{StaticResource SecondaryButton}"/>
+                                    <Button x:Name="BtnCBToggleRun" Content="Εκκίνηση" Style="{StaticResource EmeraldButton}" Padding="13,7" FontSize="12" Margin="0,0,6,0"/>
+                                    <Button x:Name="BtnCBPause" Content="Παύση (Live)" Style="{StaticResource SecondaryButton}" Padding="11,7" Margin="0,0,6,0"/>
+                                    <Button x:Name="BtnCBRefresh" Content="Ανανέωση" Style="{StaticResource SecondaryButton}" Padding="11,7" Margin="0,0,6,0"/>
+                                    <Button x:Name="BtnCBResetStats" Content="Μηδενισμός" Style="{StaticResource SecondaryButton}" Padding="11,7"/>
                                 </StackPanel>
-                                <TextBlock x:Name="TxtCBStatusBadge" Text="Έλεγχος κατάστασης..." FontSize="13" FontWeight="SemiBold" Foreground="#38BDF8" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,12,0"/>
+                                <TextBlock x:Name="TxtCBStatusBadge" Text="Έλεγχος κατάστασης..." FontSize="12.5" FontWeight="SemiBold" Foreground="#38BDF8" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,10,0"/>
                             </DockPanel>
-                            <CheckBox x:Name="ChkCBStartup" Content="Αυτόματη εκκίνηση με τα Windows (Startup — τρέχει μόνιμα αθόρυβα στο System Tray)" Margin="0"/>
+                            <WrapPanel>
+                                <CheckBox x:Name="ChkCBStartup" Content="Αυτόματη εκκίνηση με Windows (Startup)" Margin="0,2,18,0"/>
+                                <CheckBox x:Name="ChkCBStableCursor" Content="Σταθερός δείκτης ποντικιού (χωρίς αναβόσβημα όταν γράφεις)" Margin="0,2,18,0"/>
+                                <CheckBox x:Name="ChkCBLiveRefresh" Content="Live ανανέωση πίνακα (2s)" IsChecked="True" Margin="0,2,0,0"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- FULL-WIDTH ANALYTICS TABLE (ALL KEYS — FIND BROKEN SWITCHES INSTANTLY!) -->
+                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,12">
+                        <StackPanel>
+                            <DockPanel Margin="0,0,0,8">
+                                <TextBlock Text="Αναλυτικά Στατιστικά Όλων των Πλήκτρων (τα προβληματικά ανεβαίνουν πρώτα — διπλό κλικ για ρύθμιση ορίου):" FontSize="12.5" FontWeight="SemiBold" Foreground="#F8FAFC" TextWrapping="Wrap"/>
+                            </DockPanel>
+                            <ListView x:Name="ListCBStats" Height="195" Background="#0B0F17" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="12">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Πλήκτρο" Width="88" DisplayMemberBinding="{Binding Key}"/>
+                                        <GridViewColumn Header="Πατήματα" Width="76" DisplayMemberBinding="{Binding Presses}"/>
+                                        <GridViewColumn Header="Blocked" Width="68" DisplayMemberBinding="{Binding Blocked}"/>
+                                        <GridViewColumn Header="% Chatter" Width="76" DisplayMemberBinding="{Binding PctText}"/>
+                                        <GridViewColumn Header="Χρόνοι (Min / Max)" Width="155" DisplayMemberBinding="{Binding Timing}"/>
+                                        <GridViewColumn Header="Όριο" Width="68" DisplayMemberBinding="{Binding LimitText}"/>
+                                        <GridViewColumn Header="Κατάσταση" Width="115" DisplayMemberBinding="{Binding StatusText}"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
                         </StackPanel>
                     </Border>
 
@@ -1993,13 +2020,13 @@ public static class NillyNative {
                                     </ComboBox>
                                 </StackPanel>
                                 <StackPanel Grid.Column="6">
-                                    <TextBlock Text="Εξαίρεση προγραμμάτων (με κόμμα):" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,4"/>
+                                    <TextBlock Text="Εξαίρεση προγραμμάτων (/ ή ,):" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,4"/>
                                     <TextBox x:Name="TxtCBAutoProgs" Text="" FontFamily="Consolas" FontSize="12" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6"/>
                                 </StackPanel>
                             </Grid>
 
                             <WrapPanel>
-                                <CheckBox x:Name="ChkCBFullscreen" Content="Αυτόματη παύση σε Fullscreen (παιχνίδια)" IsChecked="True" Margin="0,0,18,0"/>
+                                <CheckBox x:Name="ChkCBFullscreen" Content="Αυτόματη παύση σε Fullscreen παιχνίδια (D3D)" IsChecked="True" Margin="0,0,18,0"/>
                                 <CheckBox x:Name="ChkCBOtherResets" Content="Άλλο πλήκτρο μηδενίζει timer" Margin="0,0,18,0"/>
                                 <CheckBox x:Name="ChkCBExcludeInj" Content="Αγνόηση injected πλήκτρων" Margin="0"/>
                             </WrapPanel>
@@ -2009,7 +2036,7 @@ public static class NillyNative {
                     <!-- Per-Key Overrides + Live Blocked Log side by side -->
                     <Grid Margin="0,0,0,10">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1.15*"/>
+                            <ColumnDefinition Width="1.1*"/>
                             <ColumnDefinition Width="12"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
@@ -2017,7 +2044,7 @@ public static class NillyNative {
                         <!-- Per-Key Overrides -->
                         <Border Grid.Column="0" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13">
                             <StackPanel>
-                                <TextBlock Text="Ειδικά Όρια ανά Πλήκτρο (ms):" FontSize="12.5" FontWeight="SemiBold" Foreground="#CBD5E1" Margin="0,0,0,8"/>
+                                <TextBlock Text="Ειδικά Όρια ανά Πλήκτρο (π.χ. I, E, M, Back, Space):" FontSize="12" FontWeight="SemiBold" Foreground="#CBD5E1" Margin="0,0,0,8"/>
                                 <Grid Margin="0,0,0,8">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
@@ -2026,12 +2053,12 @@ public static class NillyNative {
                                         <ColumnDefinition Width="8"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <ComboBox x:Name="CmbCBNewKey" Grid.Column="0" IsEditable="True" Text="E" FontSize="12" Padding="6,5"/>
-                                    <TextBox x:Name="TxtCBNewKeyMs" Grid.Column="2" Text="100" FontFamily="Consolas" FontSize="12.5" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="7,5"/>
+                                    <TextBox x:Name="TxtCBNewKey" Grid.Column="0" Text="I" ToolTip="Όνομα πλήκτρου (π.χ. I, E, M, Back, Space, OemPeriod)" FontFamily="Consolas" FontSize="12.5" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,5"/>
+                                    <TextBox x:Name="TxtCBNewKeyMs" Grid.Column="2" Text="125" FontFamily="Consolas" FontSize="12.5" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="7,5"/>
                                     <Button x:Name="BtnCBAddKey" Grid.Column="4" Content="+ Ορισμός" Style="{StaticResource EmeraldButton}" Padding="11,5" FontSize="12"/>
                                 </Grid>
 
-                                <ListView x:Name="ListCBKeys" Height="175" Background="#0B0F17" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="12" Margin="0,0,0,8">
+                                <ListView x:Name="ListCBKeys" Height="165" Background="#0B0F17" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="12" Margin="0,0,0,8">
                                     <ListView.View>
                                         <GridView>
                                             <GridViewColumn Header="Πλήκτρο" Width="115" DisplayMemberBinding="{Binding Key}"/>
@@ -2041,15 +2068,15 @@ public static class NillyNative {
                                     </ListView.View>
                                 </ListView>
 
-                                <Button x:Name="BtnCBDelKey" Content="Διαγραφή Επιλεγμένου Πλήκτρου" Style="{StaticResource DangerButton}" HorizontalAlignment="Right"/>
+                                <Button x:Name="BtnCBDelKey" Content="Διαγραφή Επιλεγμένου" Style="{StaticResource DangerButton}" HorizontalAlignment="Right"/>
                             </StackPanel>
                         </Border>
 
                         <!-- Live Blocked Chatter Log -->
                         <Border Grid.Column="2" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13">
                             <StackPanel>
-                                <TextBlock Text="Τελευταία Διπλοπατήματα που Μπλοκαρίστηκαν:" FontSize="12.5" FontWeight="SemiBold" Foreground="#CBD5E1" Margin="0,0,0,8"/>
-                                <ListView x:Name="ListCBLog" Height="244" Background="#0B0F17" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="11.5">
+                                <TextBlock Text="Live Log Διπλοπατημάτων (Τελευταία 50):" FontSize="12" FontWeight="SemiBold" Foreground="#CBD5E1" Margin="0,0,0,8"/>
+                                <ListView x:Name="ListCBLog" Height="234" Background="#0B0F17" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="11.5">
                                     <ListView.View>
                                         <GridView>
                                             <GridViewColumn Header="Ώρα" Width="64" DisplayMemberBinding="{Binding Time}"/>
@@ -2064,7 +2091,7 @@ public static class NillyNative {
                     </Grid>
 
                     <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10">
-                        <TextBlock x:Name="TxtCBFooterStatus" Text="Οι ρυθμίσεις σου μεταφέρθηκαν αυτούσιες (chatter_config.txt). Δεξί κλικ στο Tray εικονίδιο για γρήγορη Παύση / Ρυθμίσεις." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                        <TextBlock x:Name="TxtCBFooterStatus" Text="Tip: Κάνε διπλό κλικ σε οποιοδήποτε πλήκτρο στον πίνακα στατιστικών για να σου προτείνει αυτόματα το ιδανικό όριο ms!" FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
                     </Border>
                 </StackPanel>
             </ScrollViewer>
@@ -2141,7 +2168,7 @@ $ctrlNames = @(
     'BtnPRStart','ChkPRAutoCopy','ImgPRPreview','TxtPRDims','BtnPRCopyImg','BtnPRCopyDims','BtnPRSavePng','TxtPRStatus',
     'TxtSEOTitle','LblSEOTitleCount','BarSEOTitle','TxtSEODesc','LblSEODescCount','BarSEODesc','TxtSEOSlugOut','PrevSEOTitle','PrevSEODesc','BtnSEOCopySlug','BtnSEOCopyMeta','TxtSEOCleaner','LblSEOTextStats','BtnSEOCleanSpaces','BtnSEOUpper','BtnSEOLower','BtnSEOTitleCase','BtnSEOCopyPlain','CmbSEOPassLen','ChkSEOPassSym','TxtSEOPassOut','BtnSEOGenPass','TxtSEOStatus',
     'ZoneB64Drop','BtnB64Browse','TxtB64Info','ValB64Sha','ValB64Md5','TxtB64Output','BtnB64CopyUri','BtnB64CopyHtml','BtnB64CopyCss','BtnB64CopySha','BtnB64CopyMd5','TxtB64Status',
-    'TxtCBStatusBadge','BtnCBToggleRun','BtnCBPause','BtnCBRefresh','ChkCBStartup','TxtCBGlobalMs','TxtCBMinMs','CmbCBMeasure','ChkCBFullscreen','ChkCBOtherResets','ChkCBExcludeInj','TxtCBAutoProgs','BtnCBSaveApply','CmbCBNewKey','TxtCBNewKeyMs','BtnCBAddKey','BtnCBDelKey','ListCBKeys','ListCBLog','TxtCBFooterStatus'
+    'TxtCBStatusBadge','BtnCBToggleRun','BtnCBPause','BtnCBRefresh','BtnCBResetStats','ChkCBStartup','ChkCBStableCursor','ChkCBLiveRefresh','ListCBStats','TxtCBGlobalMs','TxtCBMinMs','CmbCBMeasure','ChkCBFullscreen','ChkCBOtherResets','ChkCBExcludeInj','TxtCBAutoProgs','BtnCBSaveApply','TxtCBNewKey','TxtCBNewKeyMs','BtnCBAddKey','BtnCBDelKey','ListCBKeys','ListCBLog','TxtCBFooterStatus'
 )
 $ui = @{}
 foreach ($n in $ctrlNames) {
@@ -2410,6 +2437,9 @@ function Refresh-DefenderInfo {
 function Set-ActivePage([string]$Page) {
     if ($Page -ne 'ColorPicker' -and (Get-Command Stop-NillyColorSpy -ErrorAction SilentlyContinue)) {
         Stop-NillyColorSpy
+    }
+    if ($Page -ne 'ChatterBlocker' -and (Get-Command Stop-NillyChatterTimer -ErrorAction SilentlyContinue)) {
+        Stop-NillyChatterTimer
     }
     $pages = @{
         Home          = $ui.PageHome

@@ -32,6 +32,7 @@ namespace NillyChatterBlocker {
         private const uint WM_DUMP_STATS = 0x8002;
         private const uint WM_TOGGLE_EN  = 0x8003;
         private const uint WM_EXIT_APP   = 0x8004;
+        private const uint WM_RESET_STAT = 0x8005;
 
         private const uint NIM_ADD    = 0x00000000;
         private const uint NIM_MODIFY = 0x00000001;
@@ -260,10 +261,16 @@ namespace NillyChatterBlocker {
         private static int _lastPressedVk = -1;
 
         private static long _blockedTotal = 0;
+        private static long _pressTotal = 0;
+        private static readonly int[] _pressByVk = new int[256];
         private static readonly int[] _blockedByVk = new int[256];
-        private static readonly string[] _recentEvents = new string[24];
+        private static readonly ulong[] _minGapByVk = new ulong[256];
+        private static readonly ulong[] _maxBlockedByVk = new ulong[256];
+        private static readonly string[] _recentEvents = new string[50];
         private static int _recentIdx = 0;
         private static DateTime _startedAt = DateTime.Now;
+        private static IntPtr _lastFgHwnd = IntPtr.Zero;
+        private static bool _lastProgDisabled = false;
         private static readonly StringBuilder _exeBuf = new StringBuilder(512);
 
         private static readonly Dictionary<string, int> _nameToVk = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
@@ -430,29 +437,37 @@ namespace NillyChatterBlocker {
                 }
             }
 
-            // 2. Auto-disable programs check against foreground window executable
+            // 2. Auto-disable programs check (cached per foreground HWND — zero OpenProcess while typing in same window!)
             if (!disabled && _autoDisableProgs.Length > 0) {
                 IntPtr fg = GetForegroundWindow();
                 if (fg != IntPtr.Zero) {
-                    uint pid;
-                    GetWindowThreadProcessId(fg, out pid);
-                    if (pid != 0) {
-                        IntPtr hProc = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, pid);
-                        if (hProc != IntPtr.Zero) {
-                            try {
-                                int sz = _exeBuf.Capacity;
-                                _exeBuf.Length = 0;
-                                if (QueryFullProcessImageNameW(hProc, 0, _exeBuf, ref sz)) {
-                                    string full = _exeBuf.ToString();
-                                    int slash = full.LastIndexOf('\\');
-                                    string fname = (slash >= 0 ? full.Substring(slash + 1) : full).ToLowerInvariant();
-                                    if (fname.EndsWith(".exe")) fname = fname.Substring(0, fname.Length - 4);
-                                    for (int i = 0; i < _autoDisableProgs.Length; i++) {
-                                        if (fname == _autoDisableProgs[i]) { disabled = true; break; }
+                    if (fg == _lastFgHwnd) {
+                        disabled = _lastProgDisabled;
+                    } else {
+                        _lastFgHwnd = fg;
+                        bool progMatch = false;
+                        uint pid;
+                        GetWindowThreadProcessId(fg, out pid);
+                        if (pid != 0) {
+                            IntPtr hProc = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, pid);
+                            if (hProc != IntPtr.Zero) {
+                                try {
+                                    int sz = _exeBuf.Capacity;
+                                    _exeBuf.Length = 0;
+                                    if (QueryFullProcessImageNameW(hProc, 0, _exeBuf, ref sz)) {
+                                        string full = _exeBuf.ToString();
+                                        int slash = full.LastIndexOf('\\');
+                                        string fname = (slash >= 0 ? full.Substring(slash + 1) : full).ToLowerInvariant();
+                                        if (fname.EndsWith(".exe")) fname = fname.Substring(0, fname.Length - 4);
+                                        for (int i = 0; i < _autoDisableProgs.Length; i++) {
+                                            if (fname == _autoDisableProgs[i]) { progMatch = true; break; }
+                                        }
                                     }
-                                }
-                            } finally { CloseHandle(hProc); }
+                                } finally { CloseHandle(hProc); }
+                            }
                         }
+                        _lastProgDisabled = progMatch;
+                        disabled = progMatch;
                     }
                 }
             }
@@ -488,6 +503,8 @@ namespace NillyChatterBlocker {
                             return CallNextHookEx(_hHook, nCode, wParam, lParam);
                         }
                         _keyIsDown[vk] = true;
+                        _pressTotal++;
+                        _pressByVk[vk]++;
 
                         ulong timeLast = _measureFromRelease ? _lastReleaseMs[vk] : _lastPressMs[vk];
                         if (_otherKeyResets) {
@@ -504,6 +521,11 @@ namespace NillyChatterBlocker {
                         }
                         uint maxTime = (customMs >= 0) ? (uint)customMs : _globalChatterMs;
                         ulong timePassed = unchecked(timeNow - timeLast);
+                        if (timeLast > 0 && timePassed < 5000) {
+                            if (_minGapByVk[vk] == 0 || timePassed < _minGapByVk[vk]) {
+                                _minGapByVk[vk] = timePassed;
+                            }
+                        }
                         if (timePassed >= maxTime || timePassed < _minChatterMs) {
                             _lastPressMs[vk] = timeNow;
                             return CallNextHookEx(_hHook, nCode, wParam, lParam);
@@ -513,6 +535,7 @@ namespace NillyChatterBlocker {
                         _downWasBlocked[vk] = true;
                         _blockedTotal++;
                         _blockedByVk[vk]++;
+                        if (timePassed > _maxBlockedByVk[vk]) _maxBlockedByVk[vk] = timePassed;
                         _recentEvents[_recentIdx] = DateTime.Now.ToString("HH:mm:ss") + "|" + GetVkName(vk) + "|" + timePassed + "|" + maxTime;
                         _recentIdx = (_recentIdx + 1) % _recentEvents.Length;
                         return (IntPtr)1;
@@ -536,6 +559,21 @@ namespace NillyChatterBlocker {
             return CallNextHookEx(_hHook, nCode, wParam, lParam);
         }
 
+        private static void ResetStats() {
+            _blockedTotal = 0;
+            _pressTotal = 0;
+            for (int i = 0; i < 256; i++) {
+                _pressByVk[i] = 0;
+                _blockedByVk[i] = 0;
+                _minGapByVk[i] = 0;
+                _maxBlockedByVk[i] = 0;
+            }
+            for (int i = 0; i < _recentEvents.Length; i++) _recentEvents[i] = null;
+            _recentIdx = 0;
+            UpdateTrayTip();
+            DumpStats();
+        }
+
         private static void DumpStats() {
             try {
                 StringBuilder sb = new StringBuilder();
@@ -543,13 +581,17 @@ namespace NillyChatterBlocker {
                 sb.AppendLine("hook_ok=" + (_hHook != IntPtr.Zero ? "true" : "false"));
                 sb.AppendLine("auto_disabled=" + (_isAutoDisabled ? "true" : "false"));
                 sb.AppendLine("started=" + _startedAt.ToString("yyyy-MM-dd HH:mm:ss"));
+                sb.AppendLine("press_total=" + _pressTotal);
                 sb.AppendLine("blocked_total=" + _blockedTotal);
                 sb.AppendLine("global_ms=" + _globalChatterMs);
                 for (int i = 0; i < 256; i++) {
                     if (_perKeyMs[i] >= 0) sb.AppendLine("cfg." + GetVkName(i) + "=" + _perKeyMs[i]);
                 }
                 for (int i = 0; i < 256; i++) {
-                    if (_blockedByVk[i] > 0) sb.AppendLine("stat." + GetVkName(i) + "=" + _blockedByVk[i]);
+                    if (_pressByVk[i] > 0 || _blockedByVk[i] > 0) {
+                        uint lim = (_perKeyMs[i] >= 0) ? (uint)_perKeyMs[i] : _globalChatterMs;
+                        sb.AppendLine("kstat=" + GetVkName(i) + "|" + _pressByVk[i] + "|" + _blockedByVk[i] + "|" + _minGapByVk[i] + "|" + _maxBlockedByVk[i] + "|" + lim);
+                    }
                 }
                 for (int k = 1; k <= _recentEvents.Length; k++) {
                     int pos = (_recentIdx - k + _recentEvents.Length) % _recentEvents.Length;
@@ -655,14 +697,14 @@ namespace NillyChatterBlocker {
                 else if (ev == WM_LBUTTONDBLCLK) OpenSettingsUi();
                 return IntPtr.Zero;
             }
-            if (msg == WM_RELOAD_CFG) { LoadConfig(); DumpStats(); SetTimer(hWnd, (UIntPtr)1, 1500, IntPtr.Zero); return IntPtr.Zero; }
-            if (msg == WM_DUMP_STATS) { DumpStats(); SetTimer(hWnd, (UIntPtr)1, 2000, IntPtr.Zero); return IntPtr.Zero; }
-            if (msg == WM_TOGGLE_EN)  { _isEnabled = !_isEnabled; UpdateTrayTip(); DumpStats(); SetTimer(hWnd, (UIntPtr)1, 2000, IntPtr.Zero); return IntPtr.Zero; }
+            if (msg == WM_RELOAD_CFG) { _lastFgHwnd = IntPtr.Zero; LoadConfig(); DumpStats(); return IntPtr.Zero; }
+            if (msg == WM_DUMP_STATS) { DumpStats(); return IntPtr.Zero; }
+            if (msg == WM_TOGGLE_EN)  { _isEnabled = !_isEnabled; UpdateTrayTip(); DumpStats(); return IntPtr.Zero; }
+            if (msg == WM_RESET_STAT) { ResetStats(); return IntPtr.Zero; }
             if (msg == WM_EXIT_APP)   { PostQuitMessage(0); return IntPtr.Zero; }
             if (msg == WM_TIMER) {
                 long id = wParam.ToInt64();
                 if (id == 1) { KillTimer(hWnd, (UIntPtr)1); TrimMemory(); }
-                else if (id == 2) { TrimMemory(); }
                 else if (id == 3) { UpdateAutoDisableState(); }
                 return IntPtr.Zero;
             }
@@ -728,11 +770,9 @@ namespace NillyChatterBlocker {
                 // Write initial diagnostic stats immediately so health/hook/config can be verified!
                 DumpStats();
 
-                // Timer 1: initial RAM trim (1.5s) | Timer 2: gentle trim (10 min) | Timer 3: fullscreen/program poll (1s)
-                SetTimer(_hWnd, (UIntPtr)1, 1500, IntPtr.Zero);
-                SetTimer(_hWnd, (UIntPtr)2, 600000, IntPtr.Zero);
-                SetTimer(_hWnd, (UIntPtr)3, 1000, IntPtr.Zero);
-                TrimMemory();
+                // Timer 1: one-time initial RAM trim (2s) | Timer 3: lightweight fullscreen/program poll (2.5s)
+                SetTimer(_hWnd, (UIntPtr)1, 2000, IntPtr.Zero);
+                SetTimer(_hWnd, (UIntPtr)3, 2500, IntPtr.Zero);
 
                 MSG m;
                 while (GetMessageW(out m, IntPtr.Zero, 0, 0) > 0) {
