@@ -1,7 +1,7 @@
-# Nilly PC Manager & Tools v3.0
+# Nilly PC Manager & Tools v3.1
 
-**Ultra-lightweight (~260 KB), zero-background-RAM Windows 11 System Manager & Graphic Designer QuickTools Suite.**
-Built to replace heavy background bloatware (Microsoft PC Manager, PowerToys 1.3+ GB, online expiring QR/barcode sites) with a clean, native, on-demand desktop suite.
+**Ultra-lightweight (~340 KB), zero-background-RAM Windows 10/11 System Manager & Graphic Designer QuickTools Suite.**
+Built to replace heavy background bloatware & 10+ separate apps (Microsoft PC Manager, PowerToys 1.3+ GB, CPU-Z, GPU-Z, Sticky Notes, online expiring QR/barcode sites, RAM/cache scripts) with **one** clean, native, on-demand desktop suite.
 
 > **created by Nilly graphics (Sotiris Christos)**
 > Official Website: **[https://nillygraphics.com/](https://nillygraphics.com/)**
@@ -43,6 +43,14 @@ Built to replace heavy background bloatware (Microsoft PC Manager, PowerToys 1.3
    - Native Windows Restart Manager API (`rstrtmgr.dll`) to identify which process locks any file and safely unlock it.
 6. **Always On Top (`tools/AlwaysOnTop.psm1`):**
    - Win32 window manager to Pin/Unpin any open desktop window above all others with 1 click.
+7. **My Hub (`tools/MyHub.psm1`):**
+   - Unified 1-click **Clean RAM Purge**, **Firefox Cache Clean & Restart** (keeps open tabs/cookies/passwords intact), **Master Backup Monitor/Trigger**, and **G-Phonor Voice-to-Text** toggle.
+8. **Hardware & System Specs (`tools/HardwareSpecs.psm1`):**
+   - Lightweight **CPU-Z + GPU-Z replacement**: CPU cores/clocks, Motherboard/BIOS, RAM sticks slot-by-slot (GB/MHz/manufacturer), GPU VRAM & driver version, monitors, SSD SMART health & Local IP + 1-click Copy Report.
+9. **Images → PDF Creator (`tools/ImagesToPdf.psm1`):**
+   - Pure zero-dependency C# PDF 1.4 writer: Drag & Drop images, reorder pages, A4 Portrait/Landscape/Full-Bleed & quality presets.
+10. **Quick Notes & Client Snippets (`tools/QuickNotes.psm1`):**
+    - Lightweight **Sticky Notes replacement**: local scratchpad + 1-click Copy reusable snippets stored privately in `notes.json` (gitignored).
 
 ### Bonus: Self-Hosted Hostinger Dynamic QR (`hostinger-qr/`)
 - Optional ~7 KB PHP 8 + JSON redirector (`index.php`, `admin.php`, `.htaccess`) for Hostinger so you can create **editable client QR codes** under your own domain (`https://nillygraphics.com/go/client`) with scan counters and zero monthly subscriptions.

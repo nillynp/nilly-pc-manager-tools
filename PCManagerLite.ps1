@@ -21,7 +21,7 @@ param(
 )
 
 $ErrorActionPreference = "SilentlyContinue"
-$AppVersion = "3.0"
+$AppVersion = "3.1"
 $AppAuthor  = "created by Nilly graphics (Sotiris Christos)"
 $AppWebsite = "https://nillygraphics.com/"
 
@@ -126,7 +126,7 @@ public static class NillyNative {
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Nilly PC Manager &amp; Tools v3.0 — created by Nilly graphics (Sotiris Christos)"
+        Title="Nilly PC Manager &amp; Tools v3.1 — created by Nilly graphics (Sotiris Christos)"
         Height="700" Width="880"
         MinHeight="600" MinWidth="740"
         WindowStartupLocation="CenterScreen"
@@ -359,7 +359,7 @@ public static class NillyNative {
                     <DockPanel>
                         <TextBlock Text="PC Manager &amp; Tools" FontSize="14.5" FontWeight="Bold" Foreground="#F8FAFC" VerticalAlignment="Center"/>
                         <Border Background="#0C2A3E" BorderBrush="#1E4E6D" BorderThickness="1" CornerRadius="5" Padding="5,2" HorizontalAlignment="Right" VerticalAlignment="Center">
-                            <TextBlock Text="v3.0" FontSize="9.5" FontWeight="Bold" Foreground="#38BDF8"/>
+                            <TextBlock Text="v3.1" FontSize="9.5" FontWeight="Bold" Foreground="#38BDF8"/>
                         </Border>
                     </DockPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
@@ -395,6 +395,12 @@ public static class NillyNative {
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE80F;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
                                 <TextBlock Text="Αρχική" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="BtnNavMyHub" Style="{StaticResource NavButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE945;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="My Hub (RAM / FF / Backup)" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
                         <Button x:Name="BtnNavOnDemand" Style="{StaticResource NavButton}">
@@ -459,6 +465,24 @@ public static class NillyNative {
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE718;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
                                 <TextBlock Text="Always On Top" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="BtnNavHardware" Style="{StaticResource NavButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE950;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Hardware &amp; Specs" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="BtnNavImgPdf" Style="{StaticResource NavButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEA90;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Images → PDF" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="BtnNavNotes" Style="{StaticResource NavButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE70B;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Notes &amp; Snippets" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
                     </StackPanel>
@@ -816,7 +840,7 @@ public static class NillyNative {
                         <DockPanel>
                             <Button x:Name="BtnAboutSite" Content="Επίσκεψη Site →" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" VerticalAlignment="Center"/>
                             <StackPanel Margin="0,0,12,0">
-                                <TextBlock Text="Nilly PC Manager &amp; Tools v3.0 — Ultra-Light On-Demand Edition" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                                <TextBlock Text="Nilly PC Manager &amp; Tools v3.1 — Ultra-Light On-Demand Edition" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
                                 <TextBlock Text="created by Nilly graphics (Sotiris Christos)" FontSize="12.5" FontWeight="SemiBold" Foreground="#38BDF8" Margin="0,4,0,2"/>
                                 <TextBlock Text="https://nillygraphics.com/  •  0 MB RAM στο παρασκήνιο  •  Modular QuickTools" FontSize="11.5" Foreground="#94A3B8" TextWrapping="Wrap"/>
                             </StackPanel>
@@ -1349,6 +1373,229 @@ public static class NillyNative {
                 </DockPanel>
             </Grid>
 
+            <!-- PAGE 12: MY HUB (CLEAN RAM + FIREFOX CACHE + BACKUPS + G-PHONOR) -->
+            <ScrollViewer x:Name="PageMyHub" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
+                <StackPanel MaxWidth="1100">
+                    <DockPanel Margin="0,0,0,10">
+                        <StackPanel>
+                            <TextBlock Text="My Hub — Γρήγορες Ενέργειες, Backup &amp; G-Phonor" FontSize="20" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                            <TextBlock Text="Ενοποιεί Clean_RAM, Clean_Firefox_Cache, Master Backup (H:) &amp; G-Phonor σε ένα σημείο" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <Button x:Name="BtnHubRefresh" Content="Ανανέωση" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" VerticalAlignment="Center"/>
+                    </DockPanel>
+
+                    <!-- Card 1: Clean RAM Now -->
+                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="15" Margin="0,4,0,10">
+                        <DockPanel>
+                            <Button x:Name="BtnHubCleanRam" Content="Clean RAM Τώρα" Style="{StaticResource PrimaryButton}" DockPanel.Dock="Right" MinWidth="165" VerticalAlignment="Center"/>
+                            <StackPanel Margin="0,0,12,0">
+                                <TextBlock Text="Καθαρισμός RAM (Working Set Purge — αντικαθιστά Clean_RAM.bat)" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                                <TextBlock x:Name="TxtHubRamInfo" Text="Έλεγχος RAM..." FontSize="11.5" Foreground="#94A3B8" Margin="0,3,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+
+                    <!-- Card 2: Firefox Cache Clean & Restart -->
+                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="15" Margin="0,0,0,10">
+                        <DockPanel>
+                            <Button x:Name="BtnHubCleanFF" Content="Clean &amp; Restart FF" Style="{StaticResource EmeraldButton}" DockPanel.Dock="Right" MinWidth="165" VerticalAlignment="Center"/>
+                            <StackPanel Margin="0,0,12,0">
+                                <TextBlock Text="Καθαρισμός Firefox Cache &amp; Επανεκκίνηση (αντικαθιστά RUN_Clean_Firefox_Cache)" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                                <TextBlock x:Name="TxtHubFFInfo" Text="Έλεγχος Firefox..." FontSize="11.5" Foreground="#94A3B8" Margin="0,3,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+
+                    <!-- Card 3: NillyGraphics Master Backup -->
+                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="15" Margin="0,0,0,10">
+                        <DockPanel>
+                            <Button x:Name="BtnHubRunBackup" Content="Backup Τώρα (H:)" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" MinWidth="165" VerticalAlignment="Center"/>
+                            <StackPanel Margin="0,0,12,0">
+                                <TextBlock Text="NillyGraphics Works — Master ZIP Backup (H:)" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                                <TextBlock x:Name="TxtHubBackupInfo" Text="Έλεγχος Backup..." FontSize="11.5" Foreground="#94A3B8" Margin="0,3,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+
+                    <!-- Card 4: G-Phonor Voice-to-Text -->
+                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="15" Margin="0,0,0,12">
+                        <DockPanel>
+                            <Button x:Name="BtnHubToggleGPhonor" Content="Εκκίνηση G-Phonor" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" MinWidth="165" VerticalAlignment="Center"/>
+                            <StackPanel Margin="0,0,12,0">
+                                <TextBlock Text="G-Phonor (Ελληνική Φωνητική Πληκτρολόγηση — G5 / F13)" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                                <TextBlock x:Name="TxtHubGPhonorInfo" Text="Έλεγχος G-Phonor..." FontSize="11.5" Foreground="#94A3B8" Margin="0,3,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+
+                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="11">
+                        <TextBlock x:Name="TxtHubStatus" Text="Όλα τα προσωπικά σου scripts &amp; γρήγορες ενέργειες σε ένα σημείο (0 MB background RAM)." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- PAGE 13: HARDWARE & SPECS (CPU-Z + GPU-Z REPLACEMENT) -->
+            <Grid x:Name="PageHardware" Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <DockPanel Grid.Row="0" Margin="0,0,0,10">
+                    <StackPanel>
+                        <TextBlock Text="Hardware &amp; System Specs" FontSize="20" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                        <TextBlock Text="Ελαφριά αντικατάσταση CPU-Z &amp; GPU-Z · CPU, Μητρική, RAM Slots, GPU VRAM, Υγεία SSD &amp; IP" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
+                        <Button x:Name="BtnHWCopy" Content="Copy Specs" Style="{StaticResource PrimaryButton}" Margin="0,0,8,0" Padding="14,8"/>
+                        <Button x:Name="BtnHWRefresh" Content="Ανανέωση" Style="{StaticResource SecondaryButton}"/>
+                    </StackPanel>
+                </DockPanel>
+
+                <ListView x:Name="ListHWSpecs" Grid.Row="1" Background="#131924" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="12">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Κατηγορία" Width="95" DisplayMemberBinding="{Binding Category}"/>
+                            <GridViewColumn Header="Στοιχείο" Width="155" DisplayMemberBinding="{Binding Item}"/>
+                            <GridViewColumn Header="Τιμή / Λεπτομέρειες" Width="360" DisplayMemberBinding="{Binding Value}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+                <Border Grid.Row="2" Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10" Margin="0,10,0,0">
+                    <TextBlock x:Name="TxtHWStatus" Text="Ανάγνωση υλικού..." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                </Border>
+            </Grid>
+
+            <!-- PAGE 14: IMAGES TO PDF CREATOR (LIGHTWEIGHT PDF CREATION) -->
+            <ScrollViewer x:Name="PageImgPdf" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
+                <StackPanel MaxWidth="1100">
+                    <DockPanel Margin="0,0,0,10">
+                        <StackPanel>
+                            <TextBlock Text="Images → PDF Creator" FontSize="20" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                            <TextBlock Text="Φτιάξε πολυσέλιδα PDF από εικόνες/μακέτες (100% native — χωρίς βαρύ PDF editor)" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <Button x:Name="BtnPdfBuild" Content="Δημιουργία PDF" Style="{StaticResource PrimaryButton}" DockPanel.Dock="Right" VerticalAlignment="Center" Padding="16,9"/>
+                    </DockPanel>
+
+                    <Border x:Name="ZonePdfDrop" AllowDrop="True" Background="#111C2D" BorderBrush="#38BDF8" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,2,0,10">
+                        <DockPanel>
+                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
+                                <Button x:Name="BtnPdfBrowse" Content="Επιλογή Εικόνων" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
+                                <Button x:Name="BtnPdfClear" Content="Καθαρισμός" Style="{StaticResource SecondaryButton}"/>
+                            </StackPanel>
+                            <TextBlock Text="Ρίξε εδώ 1–100 εικόνες (Drag &amp; Drop) για ένωση σε ένα PDF" FontSize="13" FontWeight="SemiBold" Foreground="#38BDF8" VerticalAlignment="Center"/>
+                        </DockPanel>
+                    </Border>
+
+                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="12" Margin="0,0,0,10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Μέγεθος Σελίδας:" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,4"/>
+                                <ComboBox x:Name="CmbPdfPage" SelectedIndex="0" FontSize="12" Padding="6,5">
+                                    <ComboBoxItem Content="A4 Κάθετο (Portrait)" Tag="A4P"/>
+                                    <ComboBoxItem Content="A4 Οριζόντιο (Landscape)" Tag="A4L"/>
+                                    <ComboBoxItem Content="Ακριβές μέγεθος εικόνας (Full Bleed)" Tag="FIT"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Ποιότητα PDF:" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,4"/>
+                                <ComboBox x:Name="CmbPdfQuality" SelectedIndex="1" FontSize="12" Padding="6,5">
+                                    <ComboBoxItem Content="Εκτύπωση (95% — Μεγαλύτερο)" Tag="95"/>
+                                    <ComboBoxItem Content="Ισορροπημένο (85% — Ιδανικό)" Tag="85"/>
+                                    <ComboBoxItem Content="Web / Email (72% — Ελαφρύ)" Tag="72"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Bottom">
+                                <Button x:Name="BtnPdfUp" Content="▲ Πάνω" Style="{StaticResource SecondaryButton}" Margin="0,0,6,0" Padding="10,6"/>
+                                <Button x:Name="BtnPdfDown" Content="▼ Κάτω" Style="{StaticResource SecondaryButton}" Padding="10,6"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <ListView x:Name="ListPdfFiles" AllowDrop="True" Height="220" Background="#131924" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="12" Margin="0,0,0,10">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Σελίδα" Width="70" DisplayMemberBinding="{Binding Page}"/>
+                                <GridViewColumn Header="Εικόνα" Width="260" DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="Μέγεθος" Width="90" DisplayMemberBinding="{Binding Size}"/>
+                                <GridViewColumn Header="Διαδρομή" Width="190" DisplayMemberBinding="{Binding Path}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10">
+                        <TextBlock x:Name="TxtPdfStatus" Text="Ρίξε εικόνες, βάλε τες στη σειρά και πάτα 'Δημιουργία PDF'." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- PAGE 15: QUICK NOTES & CLIENT SNIPPETS (STICKY NOTES REPLACEMENT) -->
+            <ScrollViewer x:Name="PageNotes" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
+                <StackPanel MaxWidth="1100">
+                    <DockPanel Margin="0,0,0,10">
+                        <StackPanel>
+                            <TextBlock Text="Quick Notes &amp; Client Snippets" FontSize="20" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                            <TextBlock Text="Ελαφριά αντικατάσταση Sticky Notes · Ιδιωτική τοπική αποθήκευση (notes.json, εκτός GitHub)" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <Button x:Name="BtnQNSaveScratch" Content="Αποθήκευση Σημειώσεων" Style="{StaticResource PrimaryButton}" DockPanel.Dock="Right" VerticalAlignment="Center" Padding="15,8"/>
+                    </DockPanel>
+
+                    <!-- Scratchpad -->
+                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,2,0,12">
+                        <StackPanel>
+                            <TextBlock Text="Γρήγορες Σημειώσεις (Scratchpad):" FontSize="12" FontWeight="SemiBold" Foreground="#CBD5E1" Margin="0,0,0,6"/>
+                            <TextBox x:Name="TxtQNScratch" Height="130" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="10,8" FontSize="12.5"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Reusable 1-Click Snippets -->
+                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,10">
+                        <StackPanel>
+                            <TextBlock Text="Έτοιμα Snippets (ΑΦΜ, IBAN, Υπογραφή, SEO — διπλό κλικ για Copy):" FontSize="12" FontWeight="SemiBold" Foreground="#CBD5E1" Margin="0,0,0,8"/>
+                            <Grid Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="TxtQNSnipTitle" Grid.Column="0" ToolTip="Τίτλος (π.χ. IBAN / Υπογραφή)" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6" FontSize="12"/>
+                                <TextBox x:Name="TxtQNSnipBody" Grid.Column="2" ToolTip="Κείμενο προς αντιγραφή" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6" FontSize="12"/>
+                                <Button x:Name="BtnQNAddSnip" Grid.Column="4" Content="+ Προσθήκη" Style="{StaticResource EmeraldButton}" Padding="13,6" FontSize="12"/>
+                            </Grid>
+
+                            <ListView x:Name="ListQNSnippets" Height="155" Background="#0B0F17" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="12" Margin="0,0,0,8">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Τίτλος" Width="180" DisplayMemberBinding="{Binding Title}"/>
+                                        <GridViewColumn Header="Περιεχόμενο" Width="410" DisplayMemberBinding="{Binding Body}"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button x:Name="BtnQNCopySnip" Content="Copy Επιλεγμένου" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
+                                <Button x:Name="BtnQNDelSnip" Content="Διαγραφή" Style="{StaticResource DangerButton}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10">
+                        <TextBlock x:Name="TxtQNStatus" Text="Οι σημειώσεις σου αποθηκεύονται μόνο τοπικά στο PC σου (notes.json)." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
         </Grid>
     </Grid>
 </Window>
@@ -1386,8 +1633,8 @@ $window.Add_Closed({
 # Grab all named UI controls
 $ctrlNames = @(
     'ColSidebar',
-    'BtnNavHome','BtnNavOnDemand','BtnNavClean','BtnNavProcs','BtnNavTools','BtnNavColorPicker','BtnNavQrBarcode','BtnNavImageResizer','BtnNavBatchRenamer','BtnNavFileLocksmith','BtnNavAlwaysOnTop','BtnSidebarSite',
-    'PageHome','PageOnDemand','PageClean','PageProcs','PageTools','PageColorPicker','PageQrBarcode','PageImageResizer','PageBatchRenamer','PageFileLocksmith','PageAlwaysOnTop',
+    'BtnNavHome','BtnNavMyHub','BtnNavOnDemand','BtnNavClean','BtnNavProcs','BtnNavTools','BtnNavColorPicker','BtnNavQrBarcode','BtnNavImageResizer','BtnNavBatchRenamer','BtnNavFileLocksmith','BtnNavAlwaysOnTop','BtnNavHardware','BtnNavImgPdf','BtnNavNotes','BtnSidebarSite',
+    'PageHome','PageMyHub','PageOnDemand','PageClean','PageProcs','PageTools','PageColorPicker','PageQrBarcode','PageImageResizer','PageBatchRenamer','PageFileLocksmith','PageAlwaysOnTop','PageHardware','PageImgPdf','PageNotes',
     'TxtSysSpec','TxtUptime','BtnRefreshHome','TxtRamPct','TxtRamDetail','BarRam','TxtTempSize','TxtBgHeavy','BarTemp',
     'BtnBoost','BtnHomeColorPicker','BtnHomeOnDemand','TxtBoostStatus','ListDrives',
     'BtnQuickClean','BtnQuickProcs','BtnQuickStartup','BtnQuickTaskbar','TxtProcCount',
@@ -1412,7 +1659,11 @@ $ctrlNames = @(
     'BtnIRRun','ZoneIRDrop','BtnIRBrowse','BtnIRClear','CmbIRPreset','TxtIRCustomPx','CmbIRFormat','SliderIRQuality','LblIRQuality','ListIRFiles','BtnIROpenOut','TxtIRStatus',
     'BtnBRUndo','BtnBRApply','ZoneBRDrop','BtnBRBrowse','BtnBRClear','TxtBRFind','TxtBRReplace','TxtBRPrefix','TxtBRSuffix','ChkBRSeoSlug','ChkBRNumbering','ListBRPreview','TxtBRStatus',
     'ZoneFLDrop','BtnFLBrowse','BtnFLScan','TxtFLPath','ListFLLocks','BtnFLKill','TxtFLStatus',
-    'BtnAOTUnpinAll','BtnAOTRefresh','ListAOTWindows','BtnAOTToggle','TxtAOTStatus'
+    'BtnAOTUnpinAll','BtnAOTRefresh','ListAOTWindows','BtnAOTToggle','TxtAOTStatus',
+    'BtnHubRefresh','BtnHubCleanRam','TxtHubRamInfo','BtnHubCleanFF','TxtHubFFInfo','BtnHubRunBackup','TxtHubBackupInfo','BtnHubToggleGPhonor','TxtHubGPhonorInfo','TxtHubStatus',
+    'BtnHWCopy','BtnHWRefresh','ListHWSpecs','TxtHWStatus',
+    'BtnPdfBuild','ZonePdfDrop','BtnPdfBrowse','BtnPdfClear','CmbPdfPage','CmbPdfQuality','BtnPdfUp','BtnPdfDown','ListPdfFiles','TxtPdfStatus',
+    'BtnQNSaveScratch','TxtQNScratch','TxtQNSnipTitle','TxtQNSnipBody','BtnQNAddSnip','ListQNSnippets','BtnQNCopySnip','BtnQNDelSnip','TxtQNStatus'
 )
 $ui = @{}
 foreach ($n in $ctrlNames) {
@@ -1684,6 +1935,7 @@ function Set-ActivePage([string]$Page) {
     }
     $pages = @{
         Home          = $ui.PageHome
+        MyHub         = $ui.PageMyHub
         OnDemand      = $ui.PageOnDemand
         Clean         = $ui.PageClean
         Procs         = $ui.PageProcs
@@ -1694,6 +1946,9 @@ function Set-ActivePage([string]$Page) {
         BatchRenamer  = $ui.PageBatchRenamer
         FileLocksmith = $ui.PageFileLocksmith
         AlwaysOnTop   = $ui.PageAlwaysOnTop
+        Hardware      = $ui.PageHardware
+        ImgPdf        = $ui.PageImgPdf
+        Notes         = $ui.PageNotes
     }
     foreach ($k in $pages.Keys) {
         $pages[$k].Visibility = if ($k -eq $Page) { 'Visible' } else { 'Collapsed' }
@@ -1702,6 +1957,7 @@ function Set-ActivePage([string]$Page) {
     $conv = [Windows.Media.BrushConverter]::new()
     $navMap = @{
         Home          = $ui.BtnNavHome
+        MyHub         = $ui.BtnNavMyHub
         OnDemand      = $ui.BtnNavOnDemand
         Clean         = $ui.BtnNavClean
         Procs         = $ui.BtnNavProcs
@@ -1712,6 +1968,9 @@ function Set-ActivePage([string]$Page) {
         BatchRenamer  = $ui.BtnNavBatchRenamer
         FileLocksmith = $ui.BtnNavFileLocksmith
         AlwaysOnTop   = $ui.BtnNavAlwaysOnTop
+        Hardware      = $ui.BtnNavHardware
+        ImgPdf        = $ui.BtnNavImgPdf
+        Notes         = $ui.BtnNavNotes
     }
     foreach ($k in $navMap.Keys) {
         if ($k -eq $Page) {
@@ -1787,6 +2046,46 @@ function Open-AlwaysOnTopPage {
     }
 }
 
+function Open-MyHubPage {
+    try {
+        Ensure-ToolLoaded 'MyHub'
+        Initialize-MyHubTool -MainWindow $window -UiMap $ui
+        Set-ActivePage 'MyHub'
+    } catch {
+        Add-Content -Path (Join-Path $PSScriptRoot "error.log") -Value "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] MyHub error: $($_.Exception.Message)" -ErrorAction SilentlyContinue
+    }
+}
+
+function Open-HardwarePage {
+    try {
+        Ensure-ToolLoaded 'HardwareSpecs'
+        Initialize-HardwareSpecsTool -MainWindow $window -UiMap $ui
+        Set-ActivePage 'Hardware'
+    } catch {
+        Add-Content -Path (Join-Path $PSScriptRoot "error.log") -Value "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] Hardware error: $($_.Exception.Message)" -ErrorAction SilentlyContinue
+    }
+}
+
+function Open-ImgPdfPage {
+    try {
+        Ensure-ToolLoaded 'ImagesToPdf'
+        Initialize-ImagesToPdfTool -MainWindow $window -UiMap $ui
+        Set-ActivePage 'ImgPdf'
+    } catch {
+        Add-Content -Path (Join-Path $PSScriptRoot "error.log") -Value "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] ImagesToPdf error: $($_.Exception.Message)" -ErrorAction SilentlyContinue
+    }
+}
+
+function Open-NotesPage {
+    try {
+        Ensure-ToolLoaded 'QuickNotes'
+        Initialize-QuickNotesTool -MainWindow $window -UiMap $ui -RootDir $PSScriptRoot
+        Set-ActivePage 'Notes'
+    } catch {
+        Add-Content -Path (Join-Path $PSScriptRoot "error.log") -Value "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] QuickNotes error: $($_.Exception.Message)" -ErrorAction SilentlyContinue
+    }
+}
+
 function Restart-TaskbarExplorer {
     Stop-Process -Name "explorer" -Force -ErrorAction SilentlyContinue
     Start-Sleep -Milliseconds 600
@@ -1795,6 +2094,7 @@ function Restart-TaskbarExplorer {
 
 # Wire Navigation
 $ui.BtnNavHome.Add_Click({ Set-ActivePage 'Home'; Refresh-HomeStats })
+$ui.BtnNavMyHub.Add_Click({ Open-MyHubPage })
 $ui.BtnNavOnDemand.Add_Click({ Set-ActivePage 'OnDemand'; Refresh-OnDemandPage })
 $ui.BtnNavClean.Add_Click({ Set-ActivePage 'Clean'; Scan-CleanupTargets })
 $ui.BtnNavProcs.Add_Click({ Set-ActivePage 'Procs'; Refresh-Processes })
@@ -1805,6 +2105,9 @@ $ui.BtnNavImageResizer.Add_Click({ Open-ImageResizerPage })
 $ui.BtnNavBatchRenamer.Add_Click({ Open-BatchRenamerPage })
 $ui.BtnNavFileLocksmith.Add_Click({ Open-FileLocksmithPage })
 $ui.BtnNavAlwaysOnTop.Add_Click({ Open-AlwaysOnTopPage })
+$ui.BtnNavHardware.Add_Click({ Open-HardwarePage })
+$ui.BtnNavImgPdf.Add_Click({ Open-ImgPdfPage })
+$ui.BtnNavNotes.Add_Click({ Open-NotesPage })
 
 $ui.BtnSidebarSite.Add_Click({ Start-Process $AppWebsite })
 $ui.BtnAboutSite.Add_Click({ Start-Process $AppWebsite })
@@ -1957,8 +2260,12 @@ if ($TestOnly) {
     $slugTest = Convert-GreekToSeoSlug -Text "Φωτογραφία Προϊόντος 01"
     Open-FileLocksmithPage
     Open-AlwaysOnTopPage
-    $aotCount = @($ui.ListAOTWindows.ItemsSource).Count
-    Write-Output "SELF-TEST PASSED! Version=$AppVersion | RAM=$($ui.TxtRamPct.Text) | Drives=$($ui.ListDrives.ItemsSource.Count) | ColorPicker=$($ui.ValCPHex.Text)/$($ui.ValCPCmyk.Text) | QR=[$qrMeta] | BC=[$bcMeta] | Slug=[$slugTest] | AOTWins=$aotCount"
+    Open-MyHubPage
+    Open-HardwarePage
+    Open-ImgPdfPage
+    Open-NotesPage
+    $hwRows = @($ui.ListHWSpecs.ItemsSource).Count
+    Write-Output "SELF-TEST PASSED! Version=$AppVersion | RAM=$($ui.TxtRamPct.Text) | Drives=$($ui.ListDrives.ItemsSource.Count) | ColorPicker=$($ui.ValCPHex.Text)/$($ui.ValCPCmyk.Text) | QR=[$qrMeta] | BC=[$bcMeta] | Slug=[$slugTest] | HWRows=$hwRows | HubRAM=[$($ui.TxtHubRamInfo.Text)]"
     exit 0
 }
 

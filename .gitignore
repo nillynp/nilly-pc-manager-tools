@@ -1,5 +1,6 @@
 # Client / local private data (NEVER committed to public GitHub!)
 saved_codes.json
+notes.json
 error.log
 hostinger-qr/links.json
 hostinger-qr/config.php
