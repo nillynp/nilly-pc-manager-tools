@@ -3088,6 +3088,17 @@ $ui.BtnStorageSense.Add_Click({ Start-Process "ms-settings:storagesense" })
 $ui.BtnOpenScripts.Add_Click({ Start-Process "explorer.exe" -ArgumentList "`"$PSScriptRoot`"" })
 $ui.BtnTaskbarRepair2.Add_Click({ Restart-TaskbarExplorer })
 
+# Auto-ensure NillyChatterBlocker (Chatter Blocker + Instant Ctrl+Alt+S QuickSnap) is ALWAYS running!
+if (-not $TestOnly) {
+    $cbExeAuto = Join-Path $PSScriptRoot "NillyChatterBlocker.exe"
+    if ((Test-Path $cbExeAuto) -and -not (Get-Process -Name 'NillyChatterBlocker' -ErrorAction SilentlyContinue)) {
+        try {
+            Start-Process -FilePath $cbExeAuto -WorkingDirectory $PSScriptRoot
+            Start-Sleep -Milliseconds 350
+        } catch {}
+    }
+}
+
 # Initial Load (supports direct deep-link e.g. from Nilly Chatter Blocker Tray icon!)
 Refresh-HomeStats
 if ($StartPage -eq 'ChatterBlocker') {

@@ -38,6 +38,8 @@ namespace NillyChatterBlocker {
         private const uint WM_TOGGLE_EN  = 0x8003;
         private const uint WM_EXIT_APP   = 0x8004;
         private const uint WM_RESET_STAT = 0x8005;
+        private const uint WM_DO_SNAP    = 0x8006;
+        private const uint WM_CLOSE_SNAP = 0x8007;
 
         private const uint NIM_ADD    = 0x00000000;
         private const uint NIM_MODIFY = 0x00000001;
@@ -316,18 +318,23 @@ namespace NillyChatterBlocker {
         [DllImport("user32.dll")]
         private static extern bool CloseClipboard();
 
+        [DllImport("user32.dll")]
+        private static extern bool PostMessageW(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr SetFocus(IntPtr hWnd);
+
         [StructLayout(LayoutKind.Sequential)]
         private struct RECT { public int Left, Top, Right, Bottom; }
 
         [StructLayout(LayoutKind.Sequential)]
         private struct PAINTSTRUCT {
             public IntPtr hdc;
-            public bool fErase;
+            public int fErase;
             public RECT rcPaint;
-            public bool fRestore;
-            public bool fIncUpdate;
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
-            public byte[] rgbReserved;
+            public int fRestore;
+            public int fIncUpdate;
+            public ulong r0, r1, r2, r3;
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -651,6 +658,21 @@ namespace NillyChatterBlocker {
                     ulong timeNow = GetTimeMs();
 
                     if (isDown) {
+                        // Esc while QuickSnap overlay is open -> ALWAYS close cleanly regardless of focus!
+                        if (vk == 0x1B && _snapHwnd != IntPtr.Zero) {
+                            PostMessageW(_hWnd, WM_CLOSE_SNAP, IntPtr.Zero, IntPtr.Zero);
+                            return (IntPtr)1;
+                        }
+                        // Instant Global Hotkey: Ctrl + Alt + S (detected right in WH_KEYBOARD_LL -> 100% immune to conflicts, Greek & English!)
+                        if (vk == 0x53 && _snapHwnd == IntPtr.Zero) {
+                            bool ctrlNow = ((GetAsyncKeyState(0x11) & 0x8000) != 0);
+                            bool altNow  = ((GetAsyncKeyState(0x12) & 0x8000) != 0);
+                            bool winNow  = ((GetAsyncKeyState(0x5B) & 0x8000) != 0) || ((GetAsyncKeyState(0x5C) & 0x8000) != 0);
+                            if (ctrlNow && altNow && !winNow) {
+                                PostMessageW(_hWnd, WM_DO_SNAP, IntPtr.Zero, IntPtr.Zero);
+                                return (IntPtr)1;
+                            }
+                        }
                         if (!_isEnabled || _isAutoDisabled) {
                             return CallNextHookEx(_hHook, nCode, wParam, lParam);
                         }
@@ -1139,10 +1161,18 @@ namespace NillyChatterBlocker {
                 // WS_EX_TOPMOST (0x8) | WS_EX_TOOLWINDOW (0x80) | WS_POPUP (0x80000000) | WS_VISIBLE (0x10000000)
                 _snapHwnd = CreateWindowExW(0x00000088, "NillyInstantSnap_Overlay", "NillyQuickSnap", 0x90000000,
                     _snapVX, _snapVY, _snapVW, _snapVH, IntPtr.Zero, IntPtr.Zero, hInst, IntPtr.Zero);
+                if (_snapHwnd == IntPtr.Zero) {
+                    throw new Exception("CreateWindowExW returned 0, err=" + Marshal.GetLastWin32Error());
+                }
                 ShowWindow(_snapHwnd, 5);
                 SetForegroundWindow(_snapHwnd);
+                SetFocus(_snapHwnd);
                 UpdateWindow(_snapHwnd);
-            } catch {
+            } catch (Exception ex) {
+                try {
+                    File.AppendAllText(Path.Combine(_baseDir, "error.log"),
+                        "[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "] QuickSnap error: " + ex.Message + Environment.NewLine);
+                } catch {}
                 CloseInstantSnap();
             }
         }
@@ -1178,6 +1208,8 @@ namespace NillyChatterBlocker {
                 LaunchQuickSnap();
                 return IntPtr.Zero;
             }
+            if (msg == WM_DO_SNAP)    { LaunchQuickSnap(); return IntPtr.Zero; }
+            if (msg == WM_CLOSE_SNAP) { CloseInstantSnap(); return IntPtr.Zero; }
             if (msg == WM_RELOAD_CFG) { _lastFgHwnd = IntPtr.Zero; LoadConfig(); DumpStats(); return IntPtr.Zero; }
             if (msg == WM_DUMP_STATS) { DumpStats(); return IntPtr.Zero; }
             if (msg == WM_TOGGLE_EN)  { _isEnabled = !_isEnabled; UpdateTrayTip(); DumpStats(); return IntPtr.Zero; }
@@ -1245,7 +1277,7 @@ namespace NillyChatterBlocker {
                     0, 0, 0, 0, IntPtr.Zero, IntPtr.Zero, hInst, IntPtr.Zero);
 
                 AddTrayIcon();
-                // Side-by-side backup screenshot hotkey: Ctrl+Alt+S (never conflicts with Win+Shift+S!)
+                // Side-by-side backup screenshot hotkey: Ctrl+Alt+S (handled BOTH via WH_KEYBOARD_LL & RegisterHotKey!)
                 RegisterHotKey(_hWnd, HOTKEY_SNAP, MOD_CONTROL | MOD_ALT | MOD_NOREPEAT, 0x53);
 
                 _hookDelegate = new LowLevelKeyboardProc(HookCallback);
