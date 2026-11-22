@@ -1,12 +1,13 @@
-# Nilly PC Manager & Tools v4.1
+# Nilly PC Manager & Tools v4.2
 
-**Ultra-lightweight (< 520 KB, ~140 KB ZIP), zero-background-RAM Windows 10/11 System Manager, Graphic Design & SEO Suite + Ultra-Light Win32 Keyboard Chatter Blocker + QuickSnap.**
+**Ultra-lightweight (< 520 KB, ~140 KB ZIP), zero-background-RAM Windows 10/11 System Manager, Graphic Design & SEO Suite + Ultra-Light Win32 Keyboard Chatter Blocker + QuickSnap + 1-Click NillyDoc Pro Launcher.**
 
 Built to replace heavy background bloatware & 13+ separate apps (Microsoft PC Manager, PowerToys 1.3+ GB, 47 MB KeyboardChatterBlocker, CPU-Z, GPU-Z, Sticky Notes, online expiring QR/barcode sites, DPI calculators, SEO/Base64 web tools, RAM/cache scripts) with **one** sleek, dark-themed, native, 100% portable desktop suite.
 
 > **created by Nilly graphics (Sotiris Christos)**
 > Official Website: **[https://nillygraphics.com/](https://nillygraphics.com/)**
 > Direct Portable Download: **[Latest GitHub Release (ZIP + SHA-256)](https://github.com/nillynp/nilly-pc-manager-tools/releases/latest)**
+> Companion PDF Studio (~2 MB): **[NillyDoc Pro — Ultra-Light Acrobat-Style PDF Editor](https://github.com/nillynp/nillydoc-pro)**
 
 ---
 
@@ -39,10 +40,11 @@ Built to replace heavy background bloatware & 13+ separate apps (Microsoft PC Ma
 3. **Print, DPI & Social Sizes Calculator (`tools/PrintDpi.psm1`):** `mm/cm ↔ px` (`72/150/300/600 DPI`), automatic **+3mm / +5mm Bleed**, 15 Print & Social presets, Aspect Ratio, Megapixels & proportional scale.
 4. **Nilly QuickSnap & Pixel Ruler (`tools/PixelRuler.psm1` + `tools/NillySnap.cs`):** Ultra-fast `0 MB` background RAM screen capture (`Ctrl+Alt+S`, side-by-side backup to Windows Snipping Tool without touching `Win+Shift+S`!) with live `W × H px` Pixel Ruler, Fullscreen (`F`), 3s Delay, Arrow (`A`), Box (`R`), Pen (`P`), Highlighter (`H`), **Blur/Pixelate (`B`)**, Undo (`Ctrl+Z`), Auto-Copy PNG (`Enter`) & Save PNG (`Ctrl+S`).
 5. **Image Resizer & Converter (`tools/ImageResizer.psm1`):** Drag & Drop batch resize with EXIF orientation support, presets, JPG quality slider & PNG conversion (saves safely into `_resized/`).
-6. **Images → PDF Creator (`tools/ImagesToPdf.psm1`):** Pure zero-dependency C# PDF 1.4 writer — Drag & Drop images, reorder pages, A4 Portrait/Landscape/Full-Bleed & quality presets.
-7. **Batch Renamer & SEO Slug (`tools/BatchRenamer.psm1`):** Drag & Drop batch renaming with **Greek → Latin SEO URL Slug** conversion, Find/Replace, numbering, Live Preview & 1-Click Undo.
-8. **SEO, Text & Password Toolkit (`tools/SeoText.psm1`):** Google SERP Title (60c) & Meta Desc (155c) live checker/preview + Greek→SEO Slug + HTML Meta tags, Plain Text Cleaner & Case Converter, and Crypto Password Generator.
-9. **SVG / Image → Base64 & File Hash (`tools/Base64Hash.psm1`):** Drag & Drop SVG/PNG/JPG/WebP/ICO → Data URI, HTML `<img>` & CSS `url()` + native SHA-256 & MD5 hashes.
+6. **NillyDoc Pro (1-Click PDF Studio Launcher):** Instant auto-detecting launcher for **[NillyDoc Pro](https://github.com/nillynp/nillydoc-pro)** (~2 MB Acrobat-style PDF editor with Greek editing, comments, signatures & Multi-Image→PDF resize) — opens locally if installed or links to the free GitHub release on new PCs.
+7. **Images → PDF Creator (`tools/ImagesToPdf.psm1`):** Pure zero-dependency C# PDF 1.4 writer — Drag & Drop images, reorder pages, A4 Portrait/Landscape/Full-Bleed & quality presets.
+8. **Batch Renamer & SEO Slug (`tools/BatchRenamer.psm1`):** Drag & Drop batch renaming with **Greek → Latin SEO URL Slug** conversion, Find/Replace, numbering, Live Preview & 1-Click Undo.
+9. **SEO, Text & Password Toolkit (`tools/SeoText.psm1`):** Google SERP Title (60c) & Meta Desc (155c) live checker/preview + Greek→SEO Slug + HTML Meta tags, Plain Text Cleaner & Case Converter, and Crypto Password Generator.
+10. **SVG / Image → Base64 & File Hash (`tools/Base64Hash.psm1`):** Drag & Drop SVG/PNG/JPG/WebP/ICO → Data URI, HTML `<img>` & CSS `url()` + native SHA-256 & MD5 hashes.
 
 ### Utilities
 10. **Quick Notes & Client Snippets (`tools/QuickNotes.psm1`):** Lightweight **Sticky Notes replacement** — local scratchpad + 1-click Copy snippets stored privately in `notes.json` (gitignored).

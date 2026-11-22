@@ -22,7 +22,7 @@ param(
 )
 
 $ErrorActionPreference = "SilentlyContinue"
-$AppVersion = "4.1"
+$AppVersion = "4.2"
 $AppAuthor  = "created by Nilly graphics (Sotiris Christos)"
 $AppWebsite = "https://nillygraphics.com/"
 $AppRepoApi = "https://api.github.com/repos/nillynp/nilly-pc-manager-tools/releases/latest"
@@ -161,7 +161,7 @@ if (-not $TestOnly) {
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Nilly PC Manager &amp; Tools v4.1 — created by Nilly graphics (Sotiris Christos)"
+        Title="Nilly PC Manager &amp; Tools v4.2 — created by Nilly graphics (Sotiris Christos)"
         Height="700" Width="880"
         MinHeight="600" MinWidth="740"
         WindowStartupLocation="CenterScreen"
@@ -535,7 +535,7 @@ if (-not $TestOnly) {
                     <DockPanel>
                         <TextBlock Text="PC Manager &amp; Tools" FontSize="14.5" FontWeight="Bold" Foreground="#F8FAFC" VerticalAlignment="Center"/>
                         <Border Background="#0C2A3E" BorderBrush="#1E4E6D" BorderThickness="1" CornerRadius="5" Padding="5,2" HorizontalAlignment="Right" VerticalAlignment="Center">
-                            <TextBlock Text="v4.1" FontSize="9.5" FontWeight="Bold" Foreground="#38BDF8"/>
+                            <TextBlock Text="v4.2" FontSize="9.5" FontWeight="Bold" Foreground="#38BDF8"/>
                         </Border>
                     </DockPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
@@ -653,6 +653,12 @@ if (-not $TestOnly) {
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEB9F;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
                                 <TextBlock Text="Image Resizer" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="BtnLaunchNillyDoc" Style="{StaticResource NavButton}" ToolTip="NillyDoc Pro — Πανάλαφρος Acrobat-Style PDF Editor (~2 MB, 0 MB RAM)">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8A5;" FontSize="14.5" Foreground="#38BDF8" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="NillyDoc Pro (PDF)" Foreground="#E0F2FE" FontWeight="SemiBold" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
                         <Button x:Name="BtnNavImgPdf" Style="{StaticResource NavButton}">
@@ -1060,7 +1066,7 @@ if (-not $TestOnly) {
                                     <Button x:Name="BtnAboutSite" Content="Επίσκεψη Site →" Style="{StaticResource PrimaryButton}" Padding="13,7" FontSize="12"/>
                                 </StackPanel>
                                 <StackPanel Margin="0,0,12,0">
-                                    <TextBlock Text="Nilly PC Manager &amp; Tools v4.1 — Ultra-Light Public Edition" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                                    <TextBlock Text="Nilly PC Manager &amp; Tools v4.2 — Ultra-Light Public Edition" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
                                     <TextBlock Text="created by Nilly graphics (Sotiris Christos)" FontSize="12.5" FontWeight="SemiBold" Foreground="#38BDF8" Margin="0,4,0,2"/>
                                     <TextBlock Text="https://nillygraphics.com/  •  0 MB RAM στο παρασκήνιο  •  16 Modular QuickTools" FontSize="11.5" Foreground="#94A3B8" TextWrapping="Wrap"/>
                                 </StackPanel>
@@ -2363,7 +2369,7 @@ $window.Add_Closed({
 # Grab all named UI controls
 $ctrlNames = @(
     'ColSidebar',
-    'BtnNavHome','BtnNavMyHub','BtnNavChatter','BtnNavOnDemand','BtnNavStartup','BtnNavClean','BtnNavProcs','BtnNavTools','BtnNavColorPicker','BtnNavQrBarcode','BtnNavPrintDpi','BtnNavPixelRuler','BtnNavImageResizer','BtnNavBatchRenamer','BtnNavSeoText','BtnNavBase64Hash','BtnNavFileLocksmith','BtnNavAlwaysOnTop','BtnNavHardware','BtnNavImgPdf','BtnNavNotes','BtnSidebarSite',
+    'BtnNavHome','BtnNavMyHub','BtnNavChatter','BtnNavOnDemand','BtnNavStartup','BtnNavClean','BtnNavProcs','BtnNavTools','BtnNavColorPicker','BtnNavQrBarcode','BtnNavPrintDpi','BtnNavPixelRuler','BtnNavImageResizer','BtnNavBatchRenamer','BtnNavSeoText','BtnNavBase64Hash','BtnNavFileLocksmith','BtnNavAlwaysOnTop','BtnNavHardware','BtnNavImgPdf','BtnNavNotes','BtnLaunchNillyDoc','BtnSidebarSite',
     'PageHome','PageMyHub','PageChatter','PageOnDemand','PageStartup','PageClean','PageProcs','PageTools','PageColorPicker','PageQrBarcode','PagePrintDpi','PagePixelRuler','PageImageResizer','PageBatchRenamer','PageSeoText','PageBase64Hash','PageFileLocksmith','PageAlwaysOnTop','PageHardware','PageImgPdf','PageNotes',
     'TxtSysSpec','TxtUptime','BtnRefreshHome','TxtRamPct','TxtRamDetail','BarRam','TxtTempSize','TxtBgHeavy','BarTemp',
     'BtnBoost','BtnHomeColorPicker','BtnHomeOnDemand','TxtBoostStatus','ListDrives',
@@ -2939,6 +2945,38 @@ $ui.BtnNavAlwaysOnTop.Add_Click({ Open-AlwaysOnTopPage })
 $ui.BtnNavHardware.Add_Click({ Open-HardwarePage })
 $ui.BtnNavImgPdf.Add_Click({ Open-ImgPdfPage })
 $ui.BtnNavNotes.Add_Click({ Open-NotesPage })
+$ui.BtnLaunchNillyDoc.Add_Click({
+    $exePath = $null
+    try {
+        $regCmd = (Get-ItemProperty -Path 'HKCU:\Software\Classes\Applications\NillyDocPro.exe\shell\open\command' -ErrorAction SilentlyContinue).'(Default)'
+        if ($regCmd -match '"([^"]+NillyDocPro\.exe)"') {
+            if (Test-Path $Matches[1]) { $exePath = $Matches[1] }
+        }
+    } catch {}
+    if (-not $exePath) {
+        $parentDir = Split-Path -Parent $PSScriptRoot
+        foreach ($cand in @(
+            (Join-Path $parentDir 'NillyDocPro\NillyDocPro.exe'),
+            (Join-Path $PSScriptRoot 'NillyDocPro\NillyDocPro.exe'),
+            (Join-Path $env:LOCALAPPDATA 'NillyDocPro\NillyDocPro.exe')
+        )) {
+            if (Test-Path $cand) { $exePath = $cand; break }
+        }
+    }
+    if ($exePath) {
+        Start-Process -FilePath $exePath -WorkingDirectory (Split-Path -Parent $exePath)
+    } else {
+        $ans = [System.Windows.MessageBox]::Show(
+            "Το NillyDoc Pro (δωρεάν ~2 MB PDF Editor της Nilly graphics) δεν βρέθηκε εγκατεστημένο σε αυτό το PC.`r`n`r`nΘες να ανοίξω τη σελίδα δωρεάν λήψης (GitHub Release);",
+            "NillyDoc Pro — Nilly graphics",
+            [System.Windows.MessageBoxButton]::YesNo,
+            [System.Windows.MessageBoxImage]::Information
+        )
+        if ($ans -eq [System.Windows.MessageBoxResult]::Yes) {
+            Start-Process "https://github.com/nillynp/nillydoc-pro/releases/latest"
+        }
+    }
+})
 
 $ui.BtnSidebarSite.Add_Click({ Start-Process $AppWebsite })
 $ui.BtnAboutSite.Add_Click({ Start-Process $AppWebsite })
