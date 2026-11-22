@@ -219,7 +219,7 @@ function Ensure-NillySnapCompiled {
 }
 
 function Invoke-NillyQuickSnap {
-    param([int]$DelaySec = 0)
+    param([int]$DelaySec = 0, [switch]$EditMode)
     if (-not (Ensure-NillySnapCompiled)) {
         $script:PRState.Ui.TxtPRStatus.Text = "Αποτυχία compile του NillySnap.exe."
         return
@@ -233,8 +233,10 @@ function Invoke-NillyQuickSnap {
     $mw.Hide()
     Start-Sleep -Milliseconds 160
     try {
-        $argList = if ($DelaySec -gt 0) { "-delay $DelaySec -out `"$outPng`"" } else { "-out `"$outPng`"" }
-        $p = Start-Process -FilePath $script:PRState.SnapExe -ArgumentList $argList -PassThru
+        $argParts = @("-out `"$outPng`"")
+        if ($DelaySec -gt 0) { $argParts += "-delay $DelaySec" }
+        if ($EditMode) { $argParts += "-edit" }
+        $p = Start-Process -FilePath $script:PRState.SnapExe -ArgumentList ($argParts -join ' ') -PassThru
         $p.WaitForExit()
     } finally {
         $mw.Show()
@@ -288,10 +290,10 @@ function Initialize-PixelRulerTool {
     }
 
     if ($UiMap.BtnPRQuickSnap) {
-        $UiMap.BtnPRQuickSnap.Add_Click({ Invoke-NillyQuickSnap -DelaySec 0 })
+        $UiMap.BtnPRQuickSnap.Add_Click({ Invoke-NillyQuickSnap -DelaySec 0 -EditMode })
     }
     if ($UiMap.BtnPRDelay3) {
-        $UiMap.BtnPRDelay3.Add_Click({ Invoke-NillyQuickSnap -DelaySec 3 })
+        $UiMap.BtnPRDelay3.Add_Click({ Invoke-NillyQuickSnap -DelaySec 3 -EditMode })
     }
 
     $UiMap.BtnPRStart.Add_Click({

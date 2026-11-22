@@ -49,11 +49,13 @@ namespace NillySnap {
         private readonly Dictionary<DrawTool, Button> _toolBtns = new Dictionary<DrawTool, Button>();
         private readonly List<Button> _colorBtns = new List<Button>();
         private string _outPreviewPath;
+        private bool _editMode;
 
         public bool InitOk { get; private set; }
 
-        public SnapForm(int delaySec, string outPreviewPath) {
+        public SnapForm(int delaySec, string outPreviewPath, bool editMode) {
             _outPreviewPath = outPreviewPath;
+            _editMode = editMode;
             try { SetProcessDPIAware(); } catch {}
 
             if (delaySec > 0) Thread.Sleep(delaySec * 1000);
@@ -367,8 +369,12 @@ namespace NillySnap {
             if (!_hasSelection && e.KeyCode == Keys.F) {
                 _selRect = new Rectangle(0, 0, _screenBmp.Width, _screenBmp.Height);
                 _hasSelection = true;
-                PositionToolbar();
-                this.Invalidate();
+                if (_editMode || e.Shift) {
+                    PositionToolbar();
+                    this.Invalidate();
+                } else {
+                    DoCopyAndClose();
+                }
                 return;
             }
             if (_hasSelection) {
@@ -436,7 +442,13 @@ namespace NillySnap {
                 if (r.Width >= 8 && r.Height >= 8) {
                     _selRect = r;
                     _hasSelection = true;
-                    PositionToolbar();
+                    bool wantEdit = _editMode || ((Control.ModifierKeys & Keys.Shift) == Keys.Shift);
+                    if (wantEdit) {
+                        PositionToolbar();
+                    } else {
+                        DoCopyAndClose();
+                        return;
+                    }
                 }
                 this.Invalidate();
             } else if (_drawing && e.Button == MouseButtons.Left) {
@@ -475,7 +487,7 @@ namespace NillySnap {
                 string ratio = activeRect.Height > 0 ? string.Format("{0:F2}:1", (double)activeRect.Width / activeRect.Height) : "-";
                 string badge = _hasSelection
                     ? string.Format("{0} × {1} px ({2})  |  Enter = Copy  |  Ctrl+S = Save  |  Esc = Cancel", activeRect.Width, activeRect.Height, ratio)
-                    : string.Format("{0} × {1} px ({2})  |  Release = Επιλογή & Εργαλεία  |  Esc = Cancel", activeRect.Width, activeRect.Height, ratio);
+                    : string.Format("{0} × {1} px ({2})  |  Άφησε = Άμεσο Copy  |  Shift+Άφησε = Σχεδίαση", activeRect.Width, activeRect.Height, ratio);
                 using (Font f = new Font("Consolas", 9.5f, FontStyle.Bold)) {
                     SizeF sz = g.MeasureString(badge, f);
                     int bx = Math.Max(8, Math.Min(_screenBmp.Width - (int)sz.Width - 20, activeRect.Left));
@@ -489,7 +501,9 @@ namespace NillySnap {
                     }
                 }
             } else {
-                string hint = "Nilly QuickSnap  •  Σύρε για Περιοχή  |  F = Ολόκληρη Οθόνη  |  Esc = Ακύρωση";
+                string hint = _editMode
+                    ? "Nilly QuickSnap (Σχεδίαση)  •  Σύρε Περιοχή για Βέλος/Πλαίσιο/Blur  |  F = Όλη η Οθόνη  |  Esc = Ακύρωση"
+                    : "Nilly QuickSnap  •  Σύρε & Άφησε = Άμεσο Copy (Ctrl+V)  |  Κράτα Shift = Σχεδίαση  |  F = Όλη η Οθόνη  |  Esc = Ακύρωση";
                 using (Font f = new Font("Segoe UI", 11f, FontStyle.Bold)) {
                     SizeF sz = g.MeasureString(hint, f);
                     int bx = (_screenBmp.Width - (int)sz.Width) / 2 - 14;
@@ -517,17 +531,20 @@ namespace NillySnap {
 
                 int delaySec = 0;
                 string outPath = null;
+                bool editMode = false;
                 for (int i = 0; i < args.Length; i++) {
                     if (args[i].Equals("-delay", StringComparison.OrdinalIgnoreCase) && i + 1 < args.Length) {
                         int.TryParse(args[++i], out delaySec);
                     } else if (args[i].Equals("-out", StringComparison.OrdinalIgnoreCase) && i + 1 < args.Length) {
                         outPath = args[++i];
+                    } else if (args[i].Equals("-edit", StringComparison.OrdinalIgnoreCase)) {
+                        editMode = true;
                     }
                 }
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                using (SnapForm frm = new SnapForm(delaySec, outPath)) {
+                using (SnapForm frm = new SnapForm(delaySec, outPath, editMode)) {
                     if (frm.InitOk) Application.Run(frm);
                 }
                 return 0;
