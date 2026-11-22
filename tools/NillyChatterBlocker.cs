@@ -22,8 +22,13 @@ namespace NillyChatterBlocker {
         private const int WM_SYSKEYUP    = 0x0105;
         private const int WM_DESTROY     = 0x0002;
         private const int WM_TIMER       = 0x0113;
+        private const int WM_HOTKEY      = 0x0312;
         private const int WM_RBUTTONUP   = 0x0205;
         private const int WM_LBUTTONDBLCLK = 0x0203;
+        private const uint MOD_ALT       = 0x0001;
+        private const uint MOD_CONTROL   = 0x0002;
+        private const uint MOD_NOREPEAT  = 0x4000;
+        private const int  HOTKEY_SNAP   = 9001;
         private const uint LLKHF_LOWER_IL_INJECTED = 0x02;
         private const uint LLKHF_INJECTED = 0x10;
 
@@ -51,6 +56,7 @@ namespace NillyChatterBlocker {
         private const uint IDM_TOGGLE   = 1001;
         private const uint IDM_SETTINGS = 1002;
         private const uint IDM_RELOAD   = 1003;
+        private const uint IDM_SNAP     = 1005;
         private const uint IDM_EXIT     = 1004;
 
         private const uint IMAGE_ICON      = 1;
@@ -184,6 +190,12 @@ namespace NillyChatterBlocker {
 
         [DllImport("user32.dll")]
         private static extern bool KillTimer(IntPtr hWnd, UIntPtr uIDEvent);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
         [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
         private static extern bool Shell_NotifyIconW(uint dwMessage, ref NOTIFYICONDATAW lpData);
@@ -646,6 +658,7 @@ namespace NillyChatterBlocker {
                 AppendMenuW(hMenu, MF_STRING | MF_GRAYED, UIntPtr.Zero, "Nilly Chatter Blocker — Blocked: " + _blockedTotal);
                 AppendMenuW(hMenu, MF_SEPARATOR, UIntPtr.Zero, null);
                 AppendMenuW(hMenu, MF_STRING | (_isEnabled ? MF_CHECKED : 0), (UIntPtr)IDM_TOGGLE, _isEnabled ? "Ενεργό (Κλικ για Παύση)" : "Σε Παύση (Κλικ για Ενεργοποίηση)");
+                AppendMenuW(hMenu, MF_STRING, (UIntPtr)IDM_SNAP, "Γρήγορο Screenshot (Ctrl+Alt+S)");
                 AppendMenuW(hMenu, MF_STRING, (UIntPtr)IDM_SETTINGS, "Ρυθμίσεις (PC Manager & Tools)");
                 AppendMenuW(hMenu, MF_STRING, (UIntPtr)IDM_RELOAD, "Επαναφόρτωση Ρυθμίσεων");
                 AppendMenuW(hMenu, MF_SEPARATOR, UIntPtr.Zero, null);
@@ -658,6 +671,8 @@ namespace NillyChatterBlocker {
                 if (cmd == IDM_TOGGLE) {
                     _isEnabled = !_isEnabled;
                     UpdateTrayTip();
+                } else if (cmd == IDM_SNAP) {
+                    LaunchQuickSnap();
                 } else if (cmd == IDM_SETTINGS) {
                     OpenSettingsUi();
                 } else if (cmd == IDM_RELOAD) {
@@ -668,6 +683,15 @@ namespace NillyChatterBlocker {
             } finally {
                 DestroyMenu(hMenu);
             }
+        }
+
+        private static void LaunchQuickSnap() {
+            try {
+                string snapExe = Path.Combine(_baseDir, "NillySnap.exe");
+                if (File.Exists(snapExe)) {
+                    Process.Start(snapExe);
+                }
+            } catch {}
         }
 
         private static void OpenSettingsUi() {
@@ -695,6 +719,10 @@ namespace NillyChatterBlocker {
                 int ev = (int)(lParam.ToInt64() & 0xFFFF);
                 if (ev == WM_RBUTTONUP) ShowTrayMenu();
                 else if (ev == WM_LBUTTONDBLCLK) OpenSettingsUi();
+                return IntPtr.Zero;
+            }
+            if (msg == WM_HOTKEY && wParam.ToInt32() == HOTKEY_SNAP) {
+                LaunchQuickSnap();
                 return IntPtr.Zero;
             }
             if (msg == WM_RELOAD_CFG) { _lastFgHwnd = IntPtr.Zero; LoadConfig(); DumpStats(); return IntPtr.Zero; }
@@ -763,6 +791,8 @@ namespace NillyChatterBlocker {
                     0, 0, 0, 0, IntPtr.Zero, IntPtr.Zero, hInst, IntPtr.Zero);
 
                 AddTrayIcon();
+                // Side-by-side backup screenshot hotkey: Ctrl+Alt+S (never conflicts with Win+Shift+S!)
+                RegisterHotKey(_hWnd, HOTKEY_SNAP, MOD_CONTROL | MOD_ALT | MOD_NOREPEAT, 0x53);
 
                 _hookDelegate = new LowLevelKeyboardProc(HookCallback);
                 _hHook = SetWindowsHookEx(WH_KEYBOARD_LL, _hookDelegate, hInst, 0);
@@ -781,6 +811,7 @@ namespace NillyChatterBlocker {
                 }
 
                 if (_hHook != IntPtr.Zero) UnhookWindowsHookEx(_hHook);
+                UnregisterHotKey(_hWnd, HOTKEY_SNAP);
                 RemoveTrayIcon();
                 if (_hIcon != IntPtr.Zero) DestroyIcon(_hIcon);
                 if (_hWnd != IntPtr.Zero) DestroyWindow(_hWnd);

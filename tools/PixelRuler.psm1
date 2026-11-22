@@ -179,8 +179,90 @@ $script:PRState = @{
     Initialized = $false
     MainWindow  = $null
     Ui          = $null
+    RootDir     = $null
+    SnapExe     = $null
+    SnapSrc     = $null
     LastCrop    = $null
     LastDims    = ""
+}
+
+function Ensure-NillySnapCompiled {
+    param([switch]$ForceRebuild)
+    $exe = $script:PRState.SnapExe
+    $src = $script:PRState.SnapSrc
+    if (-not $src -or -not (Test-Path $src)) { return $false }
+
+    $needBuild = $ForceRebuild -or (-not (Test-Path $exe))
+    if (-not $needBuild) {
+        if ((Get-Item $src).LastWriteTimeUtc -gt (Get-Item $exe).LastWriteTimeUtc) { $needBuild = $true }
+    }
+    if (-not $needBuild) { return $true }
+
+    $csc = "C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe"
+    if (-not (Test-Path $csc)) { $csc = "C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe" }
+    if (-not (Test-Path $csc)) { return $false }
+
+    $ico = Join-Path $script:PRState.RootDir "PCManagerLite.ico"
+    $args = @('/nologo','/target:winexe','/optimize+','/platform:x64','/r:System.Drawing.dll','/r:System.Windows.Forms.dll')
+    if (Test-Path $ico) { $args += "/win32icon:`"$ico`"" }
+    $args += "/out:`"$exe`""
+    $args += "`"$src`""
+
+    $psi = New-Object System.Diagnostics.ProcessStartInfo
+    $psi.FileName = $csc
+    $psi.Arguments = ($args -join ' ')
+    $psi.CreateNoWindow = $true
+    $psi.UseShellExecute = $false
+    $p = [System.Diagnostics.Process]::Start($psi)
+    $p.WaitForExit(15000) | Out-Null
+    return (Test-Path $exe)
+}
+
+function Invoke-NillyQuickSnap {
+    param([int]$DelaySec = 0)
+    if (-not (Ensure-NillySnapCompiled)) {
+        $script:PRState.Ui.TxtPRStatus.Text = "Αποτυχία compile του NillySnap.exe."
+        return
+    }
+    $mw = $script:PRState.MainWindow
+    $prevState = $mw.WindowState
+    $outPng = Join-Path $script:PRState.RootDir "last_snap.png"
+    $outMeta = "$outPng.meta"
+    Remove-Item $outPng, $outMeta -Force -ErrorAction SilentlyContinue
+
+    $mw.Hide()
+    Start-Sleep -Milliseconds 160
+    try {
+        $argList = if ($DelaySec -gt 0) { "-delay $DelaySec -out `"$outPng`"" } else { "-out `"$outPng`"" }
+        $p = Start-Process -FilePath $script:PRState.SnapExe -ArgumentList $argList -PassThru
+        $p.WaitForExit()
+    } finally {
+        $mw.Show()
+        $mw.WindowState = $prevState
+        $mw.Activate() | Out-Null
+    }
+
+    if (Test-Path $outPng) {
+        try {
+            $bytes = [System.IO.File]::ReadAllBytes($outPng)
+            $ms = New-Object System.IO.MemoryStream(,$bytes)
+            $bmp = New-Object System.Drawing.Bitmap($ms)
+            $clone = New-Object System.Drawing.Bitmap($bmp)
+            $bmp.Dispose(); $ms.Dispose()
+            if ($script:PRState.LastCrop) { $script:PRState.LastCrop.Dispose() }
+            $script:PRState.LastCrop = $clone
+            $script:PRState.Ui.ImgPRPreview.Source = Convert-RulerBmpToWpf $clone
+            $dims = "$($clone.Width) × $($clone.Height) px"
+            $ratio = if ($clone.Height -gt 0) { [math]::Round($clone.Width / $clone.Height, 2) } else { 0 }
+            $script:PRState.LastDims = $dims
+            $script:PRState.Ui.TxtPRDims.Text = "$dims  •  Ratio ${ratio}:1  •  Nilly QuickSnap (έτοιμο στο Clipboard!)"
+            $script:PRState.Ui.TxtPRStatus.Text = "Έτοιμο Screenshot ($dims) με QuickSnap — αντιγράφηκε ήδη στο Clipboard (Ctrl+V)!"
+        } catch {
+            $script:PRState.Ui.TxtPRStatus.Text = "Η λήψη ολοκληρώθηκε."
+        }
+    } else {
+        $script:PRState.Ui.TxtPRStatus.Text = "Ακυρώθηκε η λήψη QuickSnap (0 MB background RAM)."
+    }
 }
 
 function Convert-RulerBmpToWpf([System.Drawing.Bitmap]$Bmp) {
@@ -194,11 +276,23 @@ function Convert-RulerBmpToWpf([System.Drawing.Bitmap]$Bmp) {
 }
 
 function Initialize-PixelRulerTool {
-    param([System.Windows.Window]$MainWindow, [hashtable]$UiMap)
+    param([System.Windows.Window]$MainWindow, [hashtable]$UiMap, [string]$RootDir = "")
     if ($script:PRState.Initialized) { return }
     $script:PRState.Initialized = $true
     $script:PRState.MainWindow  = $MainWindow
     $script:PRState.Ui          = $UiMap
+    if ($RootDir) {
+        $script:PRState.RootDir = $RootDir
+        $script:PRState.SnapExe = Join-Path $RootDir "NillySnap.exe"
+        $script:PRState.SnapSrc = Join-Path (Join-Path $RootDir "tools") "NillySnap.cs"
+    }
+
+    if ($UiMap.BtnPRQuickSnap) {
+        $UiMap.BtnPRQuickSnap.Add_Click({ Invoke-NillyQuickSnap -DelaySec 0 })
+    }
+    if ($UiMap.BtnPRDelay3) {
+        $UiMap.BtnPRDelay3.Add_Click({ Invoke-NillyQuickSnap -DelaySec 3 })
+    }
 
     $UiMap.BtnPRStart.Add_Click({
         $mw = $script:PRState.MainWindow
@@ -273,4 +367,4 @@ function Initialize-PixelRulerTool {
     })
 }
 
-Export-ModuleMember -Function Initialize-PixelRulerTool
+Export-ModuleMember -Function Initialize-PixelRulerTool, Ensure-NillySnapCompiled

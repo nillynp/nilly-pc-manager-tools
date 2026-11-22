@@ -22,7 +22,7 @@ param(
 )
 
 $ErrorActionPreference = "SilentlyContinue"
-$AppVersion = "4.0"
+$AppVersion = "4.1"
 $AppAuthor  = "created by Nilly graphics (Sotiris Christos)"
 $AppWebsite = "https://nillygraphics.com/"
 $AppRepoApi = "https://api.github.com/repos/nillynp/nilly-pc-manager-tools/releases/latest"
@@ -161,7 +161,7 @@ if (-not $TestOnly) {
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Nilly PC Manager &amp; Tools v4.0 — created by Nilly graphics (Sotiris Christos)"
+        Title="Nilly PC Manager &amp; Tools v4.1 — created by Nilly graphics (Sotiris Christos)"
         Height="700" Width="880"
         MinHeight="600" MinWidth="740"
         WindowStartupLocation="CenterScreen"
@@ -535,7 +535,7 @@ if (-not $TestOnly) {
                     <DockPanel>
                         <TextBlock Text="PC Manager &amp; Tools" FontSize="14.5" FontWeight="Bold" Foreground="#F8FAFC" VerticalAlignment="Center"/>
                         <Border Background="#0C2A3E" BorderBrush="#1E4E6D" BorderThickness="1" CornerRadius="5" Padding="5,2" HorizontalAlignment="Right" VerticalAlignment="Center">
-                            <TextBlock Text="v4.0" FontSize="9.5" FontWeight="Bold" Foreground="#38BDF8"/>
+                            <TextBlock Text="v4.1" FontSize="9.5" FontWeight="Bold" Foreground="#38BDF8"/>
                         </Border>
                     </DockPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
@@ -589,6 +589,12 @@ if (-not $TestOnly) {
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE7E8;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
                                 <TextBlock Text="On-Demand Apps" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="BtnNavStartup" Style="{StaticResource NavButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE7B5;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Startup Manager" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
                         <Button x:Name="BtnNavClean" Style="{StaticResource NavButton}">
@@ -1054,9 +1060,9 @@ if (-not $TestOnly) {
                                     <Button x:Name="BtnAboutSite" Content="Επίσκεψη Site →" Style="{StaticResource PrimaryButton}" Padding="13,7" FontSize="12"/>
                                 </StackPanel>
                                 <StackPanel Margin="0,0,12,0">
-                                    <TextBlock Text="Nilly PC Manager &amp; Tools v4.0 — Ultra-Light Public Edition" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                                    <TextBlock Text="Nilly PC Manager &amp; Tools v4.1 — Ultra-Light Public Edition" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
                                     <TextBlock Text="created by Nilly graphics (Sotiris Christos)" FontSize="12.5" FontWeight="SemiBold" Foreground="#38BDF8" Margin="0,4,0,2"/>
-                                    <TextBlock Text="https://nillygraphics.com/  •  0 MB RAM στο παρασκήνιο  •  15 Modular QuickTools" FontSize="11.5" Foreground="#94A3B8" TextWrapping="Wrap"/>
+                                    <TextBlock Text="https://nillygraphics.com/  •  0 MB RAM στο παρασκήνιο  •  16 Modular QuickTools" FontSize="11.5" Foreground="#94A3B8" TextWrapping="Wrap"/>
                                 </StackPanel>
                             </DockPanel>
                             <TextBlock x:Name="TxtUpdateStatus" Text="" FontSize="11.5" Foreground="#22C55E" Margin="0,8,0,0" TextWrapping="Wrap" Visibility="Collapsed"/>
@@ -1931,21 +1937,26 @@ if (-not $TestOnly) {
                 </StackPanel>
             </ScrollViewer>
 
-            <!-- PAGE 17: SCREEN PIXEL RULER & QUICK REGION SCREENSHOT -->
+            <!-- PAGE 17: SCREEN PIXEL RULER & NILLY QUICKSNAP (BACKUP SNIPPING TOOL) -->
             <ScrollViewer x:Name="PagePixelRuler" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
                 <StackPanel MaxWidth="1100">
                     <DockPanel Margin="0,0,0,10">
-                        <StackPanel>
-                            <TextBlock Text="Pixel Ruler &amp; Quick Capture" FontSize="20" FontWeight="SemiBold" Foreground="#F8FAFC"/>
-                            <TextBlock Text="Μέτρηση διαστάσεων οθόνης σε pixels (W × H) &amp; άμεσο Screenshot με Copy στο Clipboard (120 FPS)" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
+                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center" Margin="10,0,0,0">
+                            <Button x:Name="BtnPRQuickSnap" Content="QuickSnap + Σχεδίαση" Style="{StaticResource PrimaryButton}" Padding="14,9" Margin="0,0,8,0"/>
+                            <Button x:Name="BtnPRDelay3" Content="3&quot; Delay" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
+                            <Button x:Name="BtnPRStart" Content="Μέτρηση Pixels" Style="{StaticResource SecondaryButton}"/>
                         </StackPanel>
-                        <Button x:Name="BtnPRStart" Content="Μέτρηση &amp; Λήψη Οθόνης" Style="{StaticResource PrimaryButton}" DockPanel.Dock="Right" VerticalAlignment="Center" Padding="16,9"/>
+                        <StackPanel>
+                            <TextBlock Text="Nilly QuickSnap &amp; Pixel Ruler" FontSize="20" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                            <TextBlock Text="Εφεδρικό Snipping Tool (Ctrl+Alt+S · 0 MB RAM) με Βέλος, Πλαίσιο, Στυλό, Marker, Blur &amp; Pixel Ruler — το Win+Shift+S μένει 100% ανέπαφο!" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0" TextWrapping="Wrap"/>
+                        </StackPanel>
                     </DockPanel>
 
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,2,0,12">
-                        <DockPanel>
-                            <CheckBox x:Name="ChkPRAutoCopy" Content="Αυτόματη αντιγραφή Screenshot στο Clipboard (έτοιμο για Ctrl+V σε Photoshop / Figma / Chat)" IsChecked="True" Margin="0"/>
-                        </DockPanel>
+                    <Border Background="#111C2D" BorderBrush="#1E3A5F" BorderThickness="1" CornerRadius="10" Padding="12" Margin="0,2,0,12">
+                        <StackPanel>
+                            <TextBlock Text="Συντομεύσεις QuickSnap:  Ctrl+Alt+S (οποτεδήποτε στα Windows)  •  F = Ολόκληρη Οθόνη  •  A=Βέλος  R=Πλαίσιο  P=Στυλό  H=Marker  B=Blur  •  Enter = Copy &amp; Κλείσιμο  •  Ctrl+S = PNG" FontSize="11.5" Foreground="#CBD5E1" TextWrapping="Wrap"/>
+                            <CheckBox x:Name="ChkPRAutoCopy" Content="Αυτόματη αντιγραφή Screenshot στο Clipboard (έτοιμο για Ctrl+V σε Photoshop / Figma / Chat)" IsChecked="True" Margin="0,6,0,0"/>
+                        </StackPanel>
                     </Border>
 
                     <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,12">
@@ -2277,6 +2288,43 @@ if (-not $TestOnly) {
                 </StackPanel>
             </ScrollViewer>
 
+            <!-- PAGE 21: WINDOWS STARTUP MANAGER (AUTORUNS / TASK MANAGER STARTUP REPLACEMENT) -->
+            <Grid x:Name="PageStartup" Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <DockPanel Grid.Row="0" Margin="0,0,0,10">
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center" Margin="10,0,0,0">
+                        <Button x:Name="BtnSMToggle" Content="Εναλλαγή On / Off" Style="{StaticResource PrimaryButton}" Margin="0,0,8,0" Padding="14,8"/>
+                        <Button x:Name="BtnSMRefresh" Content="Ανανέωση" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
+                        <Button x:Name="BtnSMOpenWin" Content="Windows Settings" Style="{StaticResource SecondaryButton}"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Text="Startup Manager (Εκκίνηση Windows)" FontSize="20" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                        <TextBlock Text="1-κλικ Ενεργοποίηση / Απενεργοποίηση προγραμμάτων εκκίνησης (HKCU, HKLM, Startup Folder) · 100% αναστρέψιμο" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </DockPanel>
+
+                <ListView x:Name="ListSMItems" Grid.Row="1" Background="#131924" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="12">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Πρόγραμμα" Width="155" DisplayMemberBinding="{Binding Name}"/>
+                            <GridViewColumn Header="Κατάσταση" Width="115" DisplayMemberBinding="{Binding Status}"/>
+                            <GridViewColumn Header="RAM Τώρα" Width="76" DisplayMemberBinding="{Binding LiveRam}"/>
+                            <GridViewColumn Header="Θέση" Width="105" DisplayMemberBinding="{Binding Location}"/>
+                            <GridViewColumn Header="Εντολή / Αρχείο" Width="210" DisplayMemberBinding="{Binding Command}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+                <Border Grid.Row="2" Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10" Margin="0,10,0,0">
+                    <TextBlock x:Name="TxtSMStatus" Text="Σάρωση προγραμμάτων εκκίνησης..." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                </Border>
+            </Grid>
+
         </Grid>
     </Grid>
 </Window>
@@ -2315,8 +2363,8 @@ $window.Add_Closed({
 # Grab all named UI controls
 $ctrlNames = @(
     'ColSidebar',
-    'BtnNavHome','BtnNavMyHub','BtnNavChatter','BtnNavOnDemand','BtnNavClean','BtnNavProcs','BtnNavTools','BtnNavColorPicker','BtnNavQrBarcode','BtnNavPrintDpi','BtnNavPixelRuler','BtnNavImageResizer','BtnNavBatchRenamer','BtnNavSeoText','BtnNavBase64Hash','BtnNavFileLocksmith','BtnNavAlwaysOnTop','BtnNavHardware','BtnNavImgPdf','BtnNavNotes','BtnSidebarSite',
-    'PageHome','PageMyHub','PageChatter','PageOnDemand','PageClean','PageProcs','PageTools','PageColorPicker','PageQrBarcode','PagePrintDpi','PagePixelRuler','PageImageResizer','PageBatchRenamer','PageSeoText','PageBase64Hash','PageFileLocksmith','PageAlwaysOnTop','PageHardware','PageImgPdf','PageNotes',
+    'BtnNavHome','BtnNavMyHub','BtnNavChatter','BtnNavOnDemand','BtnNavStartup','BtnNavClean','BtnNavProcs','BtnNavTools','BtnNavColorPicker','BtnNavQrBarcode','BtnNavPrintDpi','BtnNavPixelRuler','BtnNavImageResizer','BtnNavBatchRenamer','BtnNavSeoText','BtnNavBase64Hash','BtnNavFileLocksmith','BtnNavAlwaysOnTop','BtnNavHardware','BtnNavImgPdf','BtnNavNotes','BtnSidebarSite',
+    'PageHome','PageMyHub','PageChatter','PageOnDemand','PageStartup','PageClean','PageProcs','PageTools','PageColorPicker','PageQrBarcode','PagePrintDpi','PagePixelRuler','PageImageResizer','PageBatchRenamer','PageSeoText','PageBase64Hash','PageFileLocksmith','PageAlwaysOnTop','PageHardware','PageImgPdf','PageNotes',
     'TxtSysSpec','TxtUptime','BtnRefreshHome','TxtRamPct','TxtRamDetail','BarRam','TxtTempSize','TxtBgHeavy','BarTemp',
     'BtnBoost','BtnHomeColorPicker','BtnHomeOnDemand','TxtBoostStatus','ListDrives',
     'BtnQuickClean','BtnQuickProcs','BtnQuickStartup','BtnQuickTaskbar','TxtProcCount',
@@ -2347,10 +2395,11 @@ $ctrlNames = @(
     'BtnPdfBuild','ZonePdfDrop','BtnPdfBrowse','BtnPdfClear','CmbPdfPage','CmbPdfQuality','BtnPdfUp','BtnPdfDown','ListPdfFiles','TxtPdfStatus',
     'BtnQNSaveScratch','TxtQNScratch','TxtQNSnipTitle','TxtQNSnipBody','BtnQNAddSnip','ListQNSnippets','BtnQNCopySnip','BtnQNDelSnip','TxtQNStatus',
     'CmbPDPreset','TxtPDWidth','TxtPDHeight','CmbPDUnit','CmbPDDpi','CmbPDBleed','BtnPDSwap','BtnPDCopy','ValPDPixels','ValPDMm','ValPDBleed','ValPDRatio','TxtPDScaleW','TxtPDScaleRes','TxtPDStatus',
-    'BtnPRStart','ChkPRAutoCopy','ImgPRPreview','TxtPRDims','BtnPRCopyImg','BtnPRCopyDims','BtnPRSavePng','TxtPRStatus',
+    'BtnPRQuickSnap','BtnPRDelay3','BtnPRStart','ChkPRAutoCopy','ImgPRPreview','TxtPRDims','BtnPRCopyImg','BtnPRCopyDims','BtnPRSavePng','TxtPRStatus',
     'TxtSEOTitle','LblSEOTitleCount','BarSEOTitle','TxtSEODesc','LblSEODescCount','BarSEODesc','TxtSEOSlugOut','PrevSEOTitle','PrevSEODesc','BtnSEOCopySlug','BtnSEOCopyMeta','TxtSEOCleaner','LblSEOTextStats','BtnSEOCleanSpaces','BtnSEOUpper','BtnSEOLower','BtnSEOTitleCase','BtnSEOCopyPlain','CmbSEOPassLen','ChkSEOPassSym','TxtSEOPassOut','BtnSEOGenPass','TxtSEOStatus',
     'ZoneB64Drop','BtnB64Browse','TxtB64Info','ValB64Sha','ValB64Md5','TxtB64Output','BtnB64CopyUri','BtnB64CopyHtml','BtnB64CopyCss','BtnB64CopySha','BtnB64CopyMd5','TxtB64Status',
-    'TxtCBStatusBadge','BtnCBToggleRun','BtnCBPause','BtnCBRefresh','BtnCBResetStats','ChkCBStartup','ChkCBStableCursor','ChkCBLiveRefresh','ListCBStats','TxtCBGlobalMs','TxtCBMinMs','CmbCBMeasure','ChkCBFullscreen','ChkCBOtherResets','ChkCBExcludeInj','TxtCBAutoProgs','BtnCBSaveApply','TxtCBNewKey','TxtCBNewKeyMs','BtnCBAddKey','BtnCBDelKey','ListCBKeys','ListCBLog','TxtCBFooterStatus'
+    'TxtCBStatusBadge','BtnCBToggleRun','BtnCBPause','BtnCBRefresh','BtnCBResetStats','ChkCBStartup','ChkCBStableCursor','ChkCBLiveRefresh','ListCBStats','TxtCBGlobalMs','TxtCBMinMs','CmbCBMeasure','ChkCBFullscreen','ChkCBOtherResets','ChkCBExcludeInj','TxtCBAutoProgs','BtnCBSaveApply','TxtCBNewKey','TxtCBNewKeyMs','BtnCBAddKey','BtnCBDelKey','ListCBKeys','ListCBLog','TxtCBFooterStatus',
+    'BtnSMToggle','BtnSMRefresh','BtnSMOpenWin','ListSMItems','TxtSMStatus'
 )
 $ui = @{}
 foreach ($n in $ctrlNames) {
@@ -2642,6 +2691,7 @@ function Set-ActivePage([string]$Page) {
         MyHub         = $ui.PageMyHub
         ChatterBlocker= $ui.PageChatter
         OnDemand      = $ui.PageOnDemand
+        Startup       = $ui.PageStartup
         Clean         = $ui.PageClean
         Procs         = $ui.PageProcs
         Tools         = $ui.PageTools
@@ -2669,6 +2719,7 @@ function Set-ActivePage([string]$Page) {
         MyHub         = $ui.BtnNavMyHub
         ChatterBlocker= $ui.BtnNavChatter
         OnDemand      = $ui.BtnNavOnDemand
+        Startup       = $ui.BtnNavStartup
         Clean         = $ui.BtnNavClean
         Procs         = $ui.BtnNavProcs
         Tools         = $ui.BtnNavTools
@@ -2813,10 +2864,20 @@ function Open-PrintDpiPage {
 function Open-PixelRulerPage {
     try {
         Ensure-ToolLoaded 'PixelRuler'
-        Initialize-PixelRulerTool -MainWindow $window -UiMap $ui
+        Initialize-PixelRulerTool -MainWindow $window -UiMap $ui -RootDir $PSScriptRoot
         Set-ActivePage 'PixelRuler'
     } catch {
         Add-Content -Path (Join-Path $PSScriptRoot "error.log") -Value "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] PixelRuler error: $($_.Exception.Message)" -ErrorAction SilentlyContinue
+    }
+}
+
+function Open-StartupPage {
+    try {
+        Ensure-ToolLoaded 'StartupManager'
+        Initialize-StartupManagerTool -MainWindow $window -UiMap $ui
+        Set-ActivePage 'Startup'
+    } catch {
+        Add-Content -Path (Join-Path $PSScriptRoot "error.log") -Value "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] StartupManager error: $($_.Exception.Message)" -ErrorAction SilentlyContinue
     }
 }
 
@@ -2861,6 +2922,7 @@ $ui.BtnNavHome.Add_Click({ Set-ActivePage 'Home'; Refresh-HomeStats })
 $ui.BtnNavMyHub.Add_Click({ Open-MyHubPage })
 $ui.BtnNavChatter.Add_Click({ Open-ChatterPage })
 $ui.BtnNavOnDemand.Add_Click({ Set-ActivePage 'OnDemand'; Refresh-OnDemandPage })
+$ui.BtnNavStartup.Add_Click({ Open-StartupPage })
 $ui.BtnNavClean.Add_Click({ Set-ActivePage 'Clean'; Scan-CleanupTargets })
 $ui.BtnNavProcs.Add_Click({ Set-ActivePage 'Procs'; Refresh-Processes })
 $ui.BtnNavTools.Add_Click({ Set-ActivePage 'Tools'; Refresh-DefenderInfo })
@@ -2911,7 +2973,7 @@ $ui.BtnHomeColorPicker.Add_Click({ Open-ColorPickerPage })
 $ui.BtnHomeOnDemand.Add_Click({ Set-ActivePage 'OnDemand'; Refresh-OnDemandPage })
 $ui.BtnQuickClean.Add_Click({ Set-ActivePage 'Clean'; Scan-CleanupTargets })
 $ui.BtnQuickProcs.Add_Click({ Set-ActivePage 'Procs'; Refresh-Processes })
-$ui.BtnQuickStartup.Add_Click({ Start-Process "ms-settings:startupapps" })
+$ui.BtnQuickStartup.Add_Click({ Open-StartupPage })
 $ui.BtnQuickTaskbar.Add_Click({ Restart-TaskbarExplorer; $ui.TxtBoostStatus.Text = "Το Taskbar / Explorer επανεκκινήθηκε." })
 
 # Boost
@@ -3080,8 +3142,10 @@ if ($TestOnly) {
     $b64Ok = $ui.ValB64Sha.Text.Length -eq 64 -and $ui.ValB64Md5.Text.Length -eq 32 -and $ui.TxtB64Output.Text.StartsWith("data:image/x-icon;base64,")
     Open-ChatterPage
     $cbKeys = @($ui.ListCBKeys.ItemsSource).Count
+    Open-StartupPage
+    $smCount = @($ui.ListSMItems.ItemsSource).Count
     $hwRows = @($ui.ListHWSpecs.ItemsSource).Count
-    Write-Output "SELF-TEST PASSED! Version=$AppVersion | Modules=$($script:LoadedTools.Count) | RAM=$($ui.TxtRamPct.Text) | Drives=$($ui.ListDrives.ItemsSource.Count) | ColorPicker=$($ui.ValCPHex.Text)/$($ui.ValCPCmyk.Text) | QR=[$qrMeta] | BC=[$bcMeta] | Slug=[$slugTest] | HWRows=$hwRows | PrintDPI=[$pdPx | $pdBleed] | RulerCtor=$prCtorOk | SeoSlug=[$seoSlug] PwLen=$seoPwLen | B64Hash=$b64Ok | ChatterKeys=$cbKeys"
+    Write-Output "SELF-TEST PASSED! Version=$AppVersion | Modules=$($script:LoadedTools.Count) | RAM=$($ui.TxtRamPct.Text) | Drives=$($ui.ListDrives.ItemsSource.Count) | ColorPicker=$($ui.ValCPHex.Text)/$($ui.ValCPCmyk.Text) | QR=[$qrMeta] | BC=[$bcMeta] | Slug=[$slugTest] | HWRows=$hwRows | PrintDPI=[$pdPx | $pdBleed] | RulerCtor=$prCtorOk | SeoSlug=[$seoSlug] PwLen=$seoPwLen | B64Hash=$b64Ok | ChatterKeys=$cbKeys | StartupItems=$smCount"
     exit 0
 }
 

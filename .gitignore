@@ -5,6 +5,9 @@ error.log
 chatter_config.txt
 chatter_stats.txt
 NillyChatterBlocker.exe
+NillySnap.exe
+last_snap.png
+last_snap.png.meta
 hostinger-qr/links.json
 hostinger-qr/config.php
 *.bak

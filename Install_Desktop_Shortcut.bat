@@ -1,7 +1,7 @@
 @echo off
-title Setup - Nilly PC Manager & Tools v4.0
+title Setup - Nilly PC Manager & Tools v4.1
 echo =====================================================================
-echo   Nilly PC Manager ^& Tools v4.0 — Portable Setup (0 MB background)
+echo   Nilly PC Manager ^& Tools v4.1 — Portable Setup (0 MB background)
 echo   created by Nilly graphics (Sotiris Christos)
 echo   https://nillygraphics.com/
 echo =====================================================================
@@ -23,7 +23,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command ^
   "  $sc.Arguments = '\"' + (Join-Path $dir 'Launch_PCManagerLite.vbs') + '\"';" ^
   "  $sc.WorkingDirectory = $dir;" ^
   "  $sc.IconLocation = (Join-Path $dir 'PCManagerLite.ico') + ',0';" ^
-  "  $sc.Description = 'Nilly PC Manager & Tools v4.0 - created by Nilly graphics (Sotiris Christos) | https://nillygraphics.com/';" ^
+  "  $sc.Description = 'Nilly PC Manager & Tools v4.1 - created by Nilly graphics (Sotiris Christos) | https://nillygraphics.com/';" ^
   "  $sc.Save();" ^
   "}" ^
   "Write-Host '[OK] Files unblocked (Windows MOTW cleared)!' -ForegroundColor Green;" ^
