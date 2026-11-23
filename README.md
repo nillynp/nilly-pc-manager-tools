@@ -1,13 +1,13 @@
-# Nilly PC Manager & Tools v4.2
+# Nilly PC Manager & Tools v4.3
 
-**Ultra-lightweight (< 520 KB, ~140 KB ZIP), zero-background-RAM Windows 10/11 System Manager, Graphic Design & SEO Suite + Ultra-Light Win32 Keyboard Chatter Blocker + QuickSnap + 1-Click NillyDoc Pro Launcher.**
+**Ultra-lightweight (< 540 KB, ~150 KB ZIP), zero-background-RAM Windows 10/11 System Manager, Graphic Design & SEO Suite + Ultra-Light Win32 Keyboard Chatter Blocker + QuickSnap + Native XInput Gamepad Tester + 1-Click NillyDoc Pro & NillyView Pro Launchers.**
 
-Built to replace heavy background bloatware & 13+ separate apps (Microsoft PC Manager, PowerToys 1.3+ GB, 47 MB KeyboardChatterBlocker, CPU-Z, GPU-Z, Sticky Notes, online expiring QR/barcode sites, DPI calculators, SEO/Base64 web tools, RAM/cache scripts) with **one** sleek, dark-themed, native, 100% portable desktop suite.
+Built to replace heavy background bloatware & 15+ separate apps (Microsoft PC Manager, PowerToys 1.3+ GB, 47 MB KeyboardChatterBlocker, CPU-Z, GPU-Z, Sticky Notes, Store Controller Tester, online expiring QR/barcode sites, DPI calculators, SEO/Base64 web tools, RAM/cache scripts) with **one** sleek, dark-themed, native, 100% portable desktop suite.
 
 > **created by Nilly graphics (Sotiris Christos)**
 > Official Website: **[https://nillygraphics.com/](https://nillygraphics.com/)**
 > Direct Portable Download: **[Latest GitHub Release (ZIP + SHA-256)](https://github.com/nillynp/nilly-pc-manager-tools/releases/latest)**
-> Companion PDF Studio (~2 MB): **[NillyDoc Pro — Ultra-Light Acrobat-Style PDF Editor](https://github.com/nillynp/nillydoc-pro)**
+> Companion Studio Apps: **[NillyDoc Pro (PDF Studio)](https://github.com/nillynp/nillydoc-pro)** · **[NillyView Pro (65-Format Image & RAW Studio)](https://github.com/nillynp/nillyview-pro)**
 
 ---
 

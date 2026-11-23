@@ -22,7 +22,7 @@ param(
 )
 
 $ErrorActionPreference = "SilentlyContinue"
-$AppVersion = "4.2"
+$AppVersion = "4.3"
 $AppAuthor  = "created by Nilly graphics (Sotiris Christos)"
 $AppWebsite = "https://nillygraphics.com/"
 $AppRepoApi = "https://api.github.com/repos/nillynp/nilly-pc-manager-tools/releases/latest"
@@ -161,7 +161,7 @@ if (-not $TestOnly) {
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Nilly PC Manager &amp; Tools v4.2 — created by Nilly graphics (Sotiris Christos)"
+        Title="Nilly PC Manager &amp; Tools v4.3 — created by Nilly graphics (Sotiris Christos)"
         Height="700" Width="880"
         MinHeight="600" MinWidth="740"
         WindowStartupLocation="CenterScreen"
@@ -535,7 +535,7 @@ if (-not $TestOnly) {
                     <DockPanel>
                         <TextBlock Text="PC Manager &amp; Tools" FontSize="14.5" FontWeight="Bold" Foreground="#F8FAFC" VerticalAlignment="Center"/>
                         <Border Background="#0C2A3E" BorderBrush="#1E4E6D" BorderThickness="1" CornerRadius="5" Padding="5,2" HorizontalAlignment="Right" VerticalAlignment="Center">
-                            <TextBlock Text="v4.2" FontSize="9.5" FontWeight="Bold" Foreground="#38BDF8"/>
+                            <TextBlock Text="v4.3" FontSize="9.5" FontWeight="Bold" Foreground="#38BDF8"/>
                         </Border>
                     </DockPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
@@ -661,6 +661,12 @@ if (-not $TestOnly) {
                                 <TextBlock Text="NillyDoc Pro (PDF)" Foreground="#E0F2FE" FontWeight="SemiBold" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
+                        <Button x:Name="BtnLaunchNillyView" Style="{StaticResource NavButton}" ToolTip="NillyView Pro — 65-Format Image, Camera RAW, SVG &amp; PSD Studio (~240 KB, 0 MB RAM)">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEB9F;" FontSize="14.5" Foreground="#38BDF8" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="NillyView Pro (RAW)" Foreground="#E0F2FE" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                         <Button x:Name="BtnNavImgPdf" Style="{StaticResource NavButton}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEA90;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
@@ -705,6 +711,12 @@ if (-not $TestOnly) {
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE718;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
                                 <TextBlock Text="Always On Top" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="BtnNavGamepad" Style="{StaticResource NavButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE7FC;" FontSize="14.5" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Gamepad Tester" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
                     </StackPanel>
@@ -1066,9 +1078,9 @@ if (-not $TestOnly) {
                                     <Button x:Name="BtnAboutSite" Content="Επίσκεψη Site →" Style="{StaticResource PrimaryButton}" Padding="13,7" FontSize="12"/>
                                 </StackPanel>
                                 <StackPanel Margin="0,0,12,0">
-                                    <TextBlock Text="Nilly PC Manager &amp; Tools v4.2 — Ultra-Light Public Edition" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                                    <TextBlock Text="Nilly PC Manager &amp; Tools v4.3 — Ultra-Light Public Edition" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
                                     <TextBlock Text="created by Nilly graphics (Sotiris Christos)" FontSize="12.5" FontWeight="SemiBold" Foreground="#38BDF8" Margin="0,4,0,2"/>
-                                    <TextBlock Text="https://nillygraphics.com/  •  0 MB RAM στο παρασκήνιο  •  16 Modular QuickTools" FontSize="11.5" Foreground="#94A3B8" TextWrapping="Wrap"/>
+                                    <TextBlock Text="https://nillygraphics.com/  •  0 MB RAM στο παρασκήνιο  •  17 Modular QuickTools" FontSize="11.5" Foreground="#94A3B8" TextWrapping="Wrap"/>
                                 </StackPanel>
                             </DockPanel>
                             <TextBlock x:Name="TxtUpdateStatus" Text="" FontSize="11.5" Foreground="#22C55E" Margin="0,8,0,0" TextWrapping="Wrap" Visibility="Collapsed"/>
@@ -1824,6 +1836,97 @@ if (-not $TestOnly) {
                 </StackPanel>
             </ScrollViewer>
 
+            <!-- PAGE 15B: ULTRA-LIGHT XINPUT GAMEPAD / CONTROLLER TESTER -->
+            <ScrollViewer x:Name="PageGamepad" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
+                <StackPanel MaxWidth="1100">
+                    <DockPanel Margin="0,0,0,10">
+                        <StackPanel>
+                            <TextBlock Text="Gamepad / Controller Tester (Native XInput)" FontSize="20" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                            <TextBlock Text="Πανάλαφρος έλεγχος Stick Drift, Circularity %, Triggers (LT/RT), κουμπιών, μπαταρίας &amp; δόνησης (0% CPU όταν είναι κλειστό)" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
+                            <ComboBox x:Name="CmbGPSlot" Width="96" FontSize="12" Padding="7,5" Margin="0,0,8,0"/>
+                            <Button x:Name="BtnGPRumble" Content="Δοκιμή Δόνησης" Style="{StaticResource PrimaryButton}" Padding="12,7" Margin="0,0,8,0"/>
+                            <Button x:Name="BtnGPResetCirc" Content="Μηδενισμός" Style="{StaticResource SecondaryButton}" Padding="10,7"/>
+                        </StackPanel>
+                    </DockPanel>
+
+                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="12" Margin="0,0,0,12">
+                        <TextBlock x:Name="TxtGPStatus" Text="Αναζήτηση χειριστηρίου..." FontSize="12.5" FontWeight="SemiBold" Foreground="#F59E0B" TextWrapping="Wrap"/>
+                    </Border>
+
+                    <!-- Sticks & Triggers -->
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Left Stick Radar -->
+                        <Border Grid.Column="0" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14">
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="Left Stick (LS)" FontSize="12.5" FontWeight="SemiBold" Foreground="#E2E8F0" HorizontalAlignment="Center" Margin="0,0,0,8"/>
+                                <Canvas Width="150" Height="150" Background="#0B0F17">
+                                    <Ellipse Width="124" Height="124" Canvas.Left="13" Canvas.Top="13" Stroke="#273449" StrokeThickness="1.5"/>
+                                    <Line X1="75" Y1="10" X2="75" Y2="140" Stroke="#1E293B" StrokeThickness="1"/>
+                                    <Line X1="10" Y1="75" X2="140" Y2="75" Stroke="#1E293B" StrokeThickness="1"/>
+                                    <Polyline x:Name="PolyGPLeft" Stroke="#38BDF8" StrokeThickness="1.5" Opacity="0.65"/>
+                                    <Ellipse x:Name="DotGPLeft" Width="12" Height="12" Canvas.Left="69" Canvas.Top="69" Fill="#38BDF8" Stroke="#FFFFFF" StrokeThickness="1.5"/>
+                                </Canvas>
+                                <TextBlock x:Name="TxtGPLeftXY" Text="X: 0.000   Y: 0.000" FontFamily="Consolas" FontSize="11.5" Foreground="#E2E8F0" HorizontalAlignment="Center" Margin="0,8,0,2"/>
+                                <TextBlock x:Name="TxtGPLeftDrift" Text="Κέντρο OK" FontSize="11" Foreground="#94A3B8" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Right Stick Radar -->
+                        <Border Grid.Column="2" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14">
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="Right Stick (RS)" FontSize="12.5" FontWeight="SemiBold" Foreground="#E2E8F0" HorizontalAlignment="Center" Margin="0,0,0,8"/>
+                                <Canvas Width="150" Height="150" Background="#0B0F17">
+                                    <Ellipse Width="124" Height="124" Canvas.Left="13" Canvas.Top="13" Stroke="#273449" StrokeThickness="1.5"/>
+                                    <Line X1="75" Y1="10" X2="75" Y2="140" Stroke="#1E293B" StrokeThickness="1"/>
+                                    <Line X1="10" Y1="75" X2="140" Y2="75" Stroke="#1E293B" StrokeThickness="1"/>
+                                    <Polyline x:Name="PolyGPRight" Stroke="#10B981" StrokeThickness="1.5" Opacity="0.65"/>
+                                    <Ellipse x:Name="DotGPRight" Width="12" Height="12" Canvas.Left="69" Canvas.Top="69" Fill="#10B981" Stroke="#FFFFFF" StrokeThickness="1.5"/>
+                                </Canvas>
+                                <TextBlock x:Name="TxtGPRightXY" Text="X: 0.000   Y: 0.000" FontFamily="Consolas" FontSize="11.5" Foreground="#E2E8F0" HorizontalAlignment="Center" Margin="0,8,0,2"/>
+                                <TextBlock x:Name="TxtGPRightDrift" Text="Κέντρο OK" FontSize="11" Foreground="#94A3B8" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Analog Triggers -->
+                        <Border Grid.Column="4" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14">
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Αναλογικές Σκανδάλες" FontSize="12.5" FontWeight="SemiBold" Foreground="#E2E8F0" Margin="0,0,0,14"/>
+                                <DockPanel Margin="0,0,0,5">
+                                    <TextBlock Text="Left Trigger (LT)" FontSize="11.5" Foreground="#94A3B8"/>
+                                    <TextBlock x:Name="TxtGPLT" Text="0 / 255" FontFamily="Consolas" FontSize="11.5" Foreground="#38BDF8" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                </DockPanel>
+                                <ProgressBar x:Name="BarGPLT" Minimum="0" Maximum="255" Value="0" Height="14" Background="#0B0F17" Foreground="#38BDF8" BorderBrush="#273449" Margin="0,0,0,18"/>
+
+                                <DockPanel Margin="0,0,0,5">
+                                    <TextBlock Text="Right Trigger (RT)" FontSize="11.5" Foreground="#94A3B8"/>
+                                    <TextBlock x:Name="TxtGPRT" Text="0 / 255" FontFamily="Consolas" FontSize="11.5" Foreground="#10B981" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                </DockPanel>
+                                <ProgressBar x:Name="BarGPRT" Minimum="0" Maximum="255" Value="0" Height="14" Background="#0B0F17" Foreground="#10B981" BorderBrush="#273449" Margin="0,0,0,14"/>
+                                <TextBlock Text="Tip: Κάνε 1 πλήρη κύκλο με κάθε stick για μέτρηση Circularity %." FontSize="10.8" Foreground="#64748B" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <!-- 14 Digital Buttons Matrix -->
+                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14">
+                        <StackPanel>
+                            <TextBlock Text="Κουμπιά &amp; D-Pad (ανάβουν ζωντανά με κάθε πάτημα):" FontSize="12" Foreground="#94A3B8" Margin="0,0,0,10"/>
+                            <WrapPanel x:Name="WrapGPButtons"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
             <!-- PAGE 16: PRINT, DPI & SOCIAL SIZES CALCULATOR -->
             <ScrollViewer x:Name="PagePrintDpi" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
                 <StackPanel MaxWidth="1100">
@@ -2369,8 +2472,8 @@ $window.Add_Closed({
 # Grab all named UI controls
 $ctrlNames = @(
     'ColSidebar',
-    'BtnNavHome','BtnNavMyHub','BtnNavChatter','BtnNavOnDemand','BtnNavStartup','BtnNavClean','BtnNavProcs','BtnNavTools','BtnNavColorPicker','BtnNavQrBarcode','BtnNavPrintDpi','BtnNavPixelRuler','BtnNavImageResizer','BtnNavBatchRenamer','BtnNavSeoText','BtnNavBase64Hash','BtnNavFileLocksmith','BtnNavAlwaysOnTop','BtnNavHardware','BtnNavImgPdf','BtnNavNotes','BtnLaunchNillyDoc','BtnSidebarSite',
-    'PageHome','PageMyHub','PageChatter','PageOnDemand','PageStartup','PageClean','PageProcs','PageTools','PageColorPicker','PageQrBarcode','PagePrintDpi','PagePixelRuler','PageImageResizer','PageBatchRenamer','PageSeoText','PageBase64Hash','PageFileLocksmith','PageAlwaysOnTop','PageHardware','PageImgPdf','PageNotes',
+    'BtnNavHome','BtnNavMyHub','BtnNavChatter','BtnNavOnDemand','BtnNavStartup','BtnNavClean','BtnNavProcs','BtnNavTools','BtnNavColorPicker','BtnNavQrBarcode','BtnNavPrintDpi','BtnNavPixelRuler','BtnNavImageResizer','BtnNavBatchRenamer','BtnNavSeoText','BtnNavBase64Hash','BtnNavFileLocksmith','BtnNavAlwaysOnTop','BtnNavHardware','BtnNavImgPdf','BtnNavNotes','BtnNavGamepad','BtnLaunchNillyDoc','BtnLaunchNillyView','BtnSidebarSite',
+    'PageHome','PageMyHub','PageChatter','PageOnDemand','PageStartup','PageClean','PageProcs','PageTools','PageColorPicker','PageQrBarcode','PagePrintDpi','PagePixelRuler','PageImageResizer','PageBatchRenamer','PageSeoText','PageBase64Hash','PageFileLocksmith','PageAlwaysOnTop','PageHardware','PageImgPdf','PageNotes','PageGamepad',
     'TxtSysSpec','TxtUptime','BtnRefreshHome','TxtRamPct','TxtRamDetail','BarRam','TxtTempSize','TxtBgHeavy','BarTemp',
     'BtnBoost','BtnHomeColorPicker','BtnHomeOnDemand','TxtBoostStatus','ListDrives',
     'BtnQuickClean','BtnQuickProcs','BtnQuickStartup','BtnQuickTaskbar','TxtProcCount',
@@ -2405,7 +2508,8 @@ $ctrlNames = @(
     'TxtSEOTitle','LblSEOTitleCount','BarSEOTitle','TxtSEODesc','LblSEODescCount','BarSEODesc','TxtSEOSlugOut','PrevSEOTitle','PrevSEODesc','BtnSEOCopySlug','BtnSEOCopyMeta','TxtSEOCleaner','LblSEOTextStats','BtnSEOCleanSpaces','BtnSEOUpper','BtnSEOLower','BtnSEOTitleCase','BtnSEOCopyPlain','CmbSEOPassLen','ChkSEOPassSym','TxtSEOPassOut','BtnSEOGenPass','TxtSEOStatus',
     'ZoneB64Drop','BtnB64Browse','TxtB64Info','ValB64Sha','ValB64Md5','TxtB64Output','BtnB64CopyUri','BtnB64CopyHtml','BtnB64CopyCss','BtnB64CopySha','BtnB64CopyMd5','TxtB64Status',
     'TxtCBStatusBadge','BtnCBToggleRun','BtnCBPause','BtnCBRefresh','BtnCBResetStats','ChkCBStartup','ChkCBStableCursor','ChkCBLiveRefresh','ListCBStats','TxtCBGlobalMs','TxtCBMinMs','CmbCBMeasure','ChkCBFullscreen','ChkCBOtherResets','ChkCBExcludeInj','TxtCBAutoProgs','BtnCBSaveApply','TxtCBNewKey','TxtCBNewKeyMs','BtnCBAddKey','BtnCBDelKey','ListCBKeys','ListCBLog','TxtCBFooterStatus',
-    'BtnSMToggle','BtnSMRefresh','BtnSMOpenWin','ListSMItems','TxtSMStatus'
+    'BtnSMToggle','BtnSMRefresh','BtnSMOpenWin','ListSMItems','TxtSMStatus',
+    'CmbGPSlot','BtnGPRumble','BtnGPResetCirc','TxtGPStatus','PolyGPLeft','DotGPLeft','TxtGPLeftXY','TxtGPLeftDrift','PolyGPRight','DotGPRight','TxtGPRightXY','TxtGPRightDrift','TxtGPLT','BarGPLT','TxtGPRT','BarGPRT','WrapGPButtons'
 )
 $ui = @{}
 foreach ($n in $ctrlNames) {
@@ -2714,6 +2818,10 @@ function Set-ActivePage([string]$Page) {
         Hardware      = $ui.PageHardware
         ImgPdf        = $ui.PageImgPdf
         Notes         = $ui.PageNotes
+        Gamepad       = $ui.PageGamepad
+    }
+    if ($Page -ne 'Gamepad' -and (Get-Command Stop-GamepadTesterPolling -ErrorAction SilentlyContinue)) {
+        Stop-GamepadTesterPolling
     }
     foreach ($k in $pages.Keys) {
         $pages[$k].Visibility = if ($k -eq $Page) { 'Visible' } else { 'Collapsed' }
@@ -2742,6 +2850,7 @@ function Set-ActivePage([string]$Page) {
         Hardware      = $ui.BtnNavHardware
         ImgPdf        = $ui.BtnNavImgPdf
         Notes         = $ui.BtnNavNotes
+        Gamepad       = $ui.BtnNavGamepad
     }
     foreach ($k in $navMap.Keys) {
         if ($k -eq $Page) {
@@ -2857,6 +2966,16 @@ function Open-NotesPage {
     }
 }
 
+function Open-GamepadPage {
+    try {
+        Ensure-ToolLoaded 'GamepadTester'
+        Initialize-GamepadTesterTool -MainWindow $window -UiMap $ui
+        Set-ActivePage 'Gamepad'
+    } catch {
+        Add-Content -Path (Join-Path $PSScriptRoot "error.log") -Value "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] GamepadTester error: $($_.Exception.Message)" -ErrorAction SilentlyContinue
+    }
+}
+
 function Open-PrintDpiPage {
     try {
         Ensure-ToolLoaded 'PrintDpi'
@@ -2945,6 +3064,39 @@ $ui.BtnNavAlwaysOnTop.Add_Click({ Open-AlwaysOnTopPage })
 $ui.BtnNavHardware.Add_Click({ Open-HardwarePage })
 $ui.BtnNavImgPdf.Add_Click({ Open-ImgPdfPage })
 $ui.BtnNavNotes.Add_Click({ Open-NotesPage })
+$ui.BtnNavGamepad.Add_Click({ Open-GamepadPage })
+$ui.BtnLaunchNillyView.Add_Click({
+    $exePath = $null
+    try {
+        $regCmd = (Get-ItemProperty -Path 'HKCU:\Software\Classes\Applications\NillyViewPro.exe\shell\open\command' -ErrorAction SilentlyContinue).'(Default)'
+        if ($regCmd -match '"([^"]+NillyViewPro\.exe)"') {
+            if (Test-Path $Matches[1]) { $exePath = $Matches[1] }
+        }
+    } catch {}
+    if (-not $exePath) {
+        $parentDir = Split-Path -Parent $PSScriptRoot
+        foreach ($cand in @(
+            (Join-Path $parentDir 'NillyViewPro\NillyViewPro.exe'),
+            (Join-Path $PSScriptRoot 'NillyViewPro\NillyViewPro.exe'),
+            (Join-Path $env:LOCALAPPDATA 'NillyViewPro\NillyViewPro.exe')
+        )) {
+            if (Test-Path $cand) { $exePath = $cand; break }
+        }
+    }
+    if ($exePath) {
+        Start-Process -FilePath $exePath -WorkingDirectory (Split-Path -Parent $exePath)
+    } else {
+        $ans = [System.Windows.MessageBox]::Show(
+            "Το NillyView Pro (δωρεάν ~240 KB Image & Camera RAW Viewer της Nilly graphics) δεν βρέθηκε εγκατεστημένο σε αυτό το PC.`r`n`r`nΘες να ανοίξω τη σελίδα δωρεάν λήψης (GitHub Release);",
+            "NillyView Pro — Nilly graphics",
+            [System.Windows.MessageBoxButton]::YesNo,
+            [System.Windows.MessageBoxImage]::Information
+        )
+        if ($ans -eq [System.Windows.MessageBoxResult]::Yes) {
+            Start-Process "https://github.com/nillynp/nillyview-pro/releases/latest"
+        }
+    }
+})
 $ui.BtnLaunchNillyDoc.Add_Click({
     $exePath = $null
     try {
@@ -3173,6 +3325,8 @@ if ($TestOnly) {
     Open-HardwarePage
     Open-ImgPdfPage
     Open-NotesPage
+    Open-GamepadPage
+    Stop-GamepadTesterPolling
     Open-PrintDpiPage
     $pdPx = $ui.ValPDPixels.Text
     $pdBleed = $ui.ValPDBleed.Text
