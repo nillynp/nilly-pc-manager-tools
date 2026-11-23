@@ -5,7 +5,7 @@
 Built to replace heavy background bloatware & 15+ separate apps (Microsoft PC Manager, PowerToys 1.3+ GB, 47 MB KeyboardChatterBlocker, CPU-Z, GPU-Z, Sticky Notes, Store Controller Tester, online expiring QR/barcode sites, DPI calculators, SEO/Base64 web tools, RAM/cache scripts) with **one** sleek, dark-themed, native, 100% portable desktop suite.
 
 > **created by Nilly graphics (Sotiris Christos)**
-> Official Website: **[https://nillygraphics.com/](https://nillygraphics.com/)**
+> Official app pages: **[Ελληνικά](https://nillygraphics.com/nilly-pc-manager-tools/el/)** · **[English](https://nillygraphics.com/nilly-pc-manager-tools/en/)**
 > Direct Portable Download: **[Latest GitHub Release (ZIP + SHA-256)](https://github.com/nillynp/nilly-pc-manager-tools/releases/latest)**
 > Companion Studio Apps: **[NillyDoc Pro (PDF Studio)](https://github.com/nillynp/nillydoc-pro)** · **[NillyView Pro (65-Format Image & RAW Studio)](https://github.com/nillynp/nillyview-pro)**
 
@@ -58,7 +58,7 @@ Built to replace heavy background bloatware & 15+ separate apps (Microsoft PC Ma
 
 ## Quick Start on ANY Windows 10 / 11 PC (100% Portable!)
 
-1. Download **`Nilly-PC-Manager-Tools-v4.0-Portable.zip`** from **[Releases](https://github.com/nillynp/nilly-pc-manager-tools/releases/latest)** and extract anywhere (e.g. `C:\Tools\NillyPCManager`).
+1. Download the `Nilly-PC-Manager-Tools-*-Portable.zip` asset from the **[latest GitHub release](https://github.com/nillynp/nilly-pc-manager-tools/releases/latest)** and extract it anywhere (e.g. `C:\Tools\NillyPCManager`).
 2. Double-click **`Install_Desktop_Shortcut.bat`** *(clears Windows download block & creates Desktop + Start Menu shortcuts — zero admin rights, zero Startup entries, 0 MB background RAM!)*.
    - Or just double-click **`Launch_PCManagerLite.vbs`** directly!
 3. To remove cleanly anytime, double-click **`Uninstall_Shortcuts.bat`** and delete the folder.
@@ -66,5 +66,5 @@ Built to replace heavy background bloatware & 15+ separate apps (Microsoft PC Ma
 ---
 
 **Author:** created by **Nilly graphics (Sotiris Christos)**
-**Website:** [https://nillygraphics.com/](https://nillygraphics.com/)
+**App setup and download guide:** [Ελληνικά](https://nillygraphics.com/nilly-pc-manager-tools/el/) · [English](https://nillygraphics.com/nilly-pc-manager-tools/en/)
 **License:** MIT
