@@ -22,7 +22,7 @@ param(
 )
 
 $ErrorActionPreference = "SilentlyContinue"
-$AppVersion = "4.6"
+$AppVersion = "4.6.1"
 $AppAuthor  = "created by Nilly graphics (Sotiris Christos)"
 $AppWebsite = "https://nillygraphics.com/"
 $AppRepoApi = "https://api.github.com/repos/nillynp/nilly-pc-manager-tools/releases/latest"
@@ -1180,7 +1180,7 @@ if (-not $TestOnly) {
                                 <Button x:Name="BtnCopyRgb" Content="Copy" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" Padding="11,5" FontSize="11.5"/>
                                 <StackPanel Margin="0,0,8,0">
                                     <TextBlock Text="RGB" FontSize="10.5" FontWeight="Bold" Foreground="#64748B"/>
-                                    <TextBlock x:Name="ValCPRgb" Text="rgb(56, 189, 248)" FontFamily="Consolas" FontSize="13" FontWeight="SemiBold" Foreground="#F8FAFC" Margin="0,2,0,0"/>
+                                    <TextBlock x:Name="ValCPRgb" Text="rgb(252, 150, 31)" FontFamily="Consolas" FontSize="13" FontWeight="SemiBold" Foreground="#F8FAFC" Margin="0,2,0,0"/>
                                 </StackPanel>
                             </DockPanel>
                         </Border>
