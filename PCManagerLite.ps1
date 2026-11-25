@@ -22,7 +22,7 @@ param(
 )
 
 $ErrorActionPreference = "SilentlyContinue"
-$AppVersion = "4.5"
+$AppVersion = "4.6"
 $AppAuthor  = "created by Nilly graphics (Sotiris Christos)"
 $AppWebsite = "https://nillygraphics.com/"
 $AppRepoApi = "https://api.github.com/repos/nillynp/nilly-pc-manager-tools/releases/latest"
@@ -197,11 +197,11 @@ if (-not $TestOnly) {
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Nilly PC Manager &amp; Tools v4.3 — created by Nilly graphics (Sotiris Christos)"
+        Title="Nilly PC Manager &amp; Tools v4.6 — created by Nilly graphics (Sotiris Christos)"
         Height="700" Width="880"
         MinHeight="600" MinWidth="740"
         WindowStartupLocation="CenterScreen"
-        Background="#0B0F17"
+        Background="#141519"
         Foreground="#F1F5F9"
         FontFamily="Segoe UI">
 
@@ -223,7 +223,7 @@ if (-not $TestOnly) {
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="bd" Property="Background" Value="#1B2332"/>
+                                <Setter TargetName="bd" Property="Background" Value="#22252E"/>
                                 <Setter Property="Foreground" Value="#F8FAFC"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -233,8 +233,8 @@ if (-not $TestOnly) {
         </Style>
 
         <Style x:Key="PrimaryButton" TargetType="Button">
-            <Setter Property="Background" Value="#38BDF8"/>
-            <Setter Property="Foreground" Value="#072235"/>
+            <Setter Property="Background" Value="#FC961F"/>
+            <Setter Property="Foreground" Value="#121418"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="FontSize" Value="13.5"/>
             <Setter Property="Padding" Value="18,10"/>
@@ -247,13 +247,13 @@ if (-not $TestOnly) {
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="bd" Property="Background" Value="#7DD3FC"/>
+                                <Setter TargetName="bd" Property="Background" Value="#FFA940"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="bd" Property="Background" Value="#0EA5E9"/>
+                                <Setter TargetName="bd" Property="Background" Value="#E0760C"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="bd" Property="Background" Value="#273244"/>
+                                <Setter TargetName="bd" Property="Background" Value="#343946"/>
                                 <Setter Property="Foreground" Value="#64748B"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -285,7 +285,7 @@ if (-not $TestOnly) {
         </Style>
 
         <Style x:Key="SecondaryButton" TargetType="Button">
-            <Setter Property="Background" Value="#1C2433"/>
+            <Setter Property="Background" Value="#22252E"/>
             <Setter Property="Foreground" Value="#E2E8F0"/>
             <Setter Property="FontSize" Value="12.5"/>
             <Setter Property="Padding" Value="13,8"/>
@@ -293,13 +293,13 @@ if (-not $TestOnly) {
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="bd" Background="{TemplateBinding Background}" BorderBrush="#2C384D" BorderThickness="1" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}" BorderBrush="#363B48" BorderThickness="1" CornerRadius="8" Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="bd" Property="Background" Value="#253045"/>
-                                <Setter TargetName="bd" Property="BorderBrush" Value="#38BDF8"/>
+                                <Setter TargetName="bd" Property="Background" Value="#2B2F3B"/>
+                                <Setter TargetName="bd" Property="BorderBrush" Value="#FC961F"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -319,7 +319,7 @@ if (-not $TestOnly) {
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="bd" Property="Background" Value="#4C1D2B"/>
-                                <Setter TargetName="bd" Property="BorderBrush" Value="#F43F5E"/>
+                                <Setter TargetName="bd" Property="BorderBrush" Value="#F92672"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -328,7 +328,7 @@ if (-not $TestOnly) {
         </Style>
 
         <Style x:Key="CardButton" TargetType="Button">
-            <Setter Property="Background" Value="#131924"/>
+            <Setter Property="Background" Value="#1A1C22"/>
             <Setter Property="Foreground" Value="#F1F5F9"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="VerticalContentAlignment" Value="Top"/>
@@ -337,13 +337,13 @@ if (-not $TestOnly) {
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="bd" Background="{TemplateBinding Background}" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="{TemplateBinding Padding}">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="{TemplateBinding Padding}">
                             <ContentPresenter/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="bd" Property="Background" Value="#1A2232"/>
-                                <Setter TargetName="bd" Property="BorderBrush" Value="#38BDF8"/>
+                                <Setter TargetName="bd" Property="Background" Value="#22252E"/>
+                                <Setter TargetName="bd" Property="BorderBrush" Value="#FC961F"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -353,7 +353,7 @@ if (-not $TestOnly) {
 
         <Style x:Key="LinkButton" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#38BDF8"/>
+            <Setter Property="Foreground" Value="#FC961F"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
@@ -365,7 +365,7 @@ if (-not $TestOnly) {
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="tb" Property="TextDecorations" Value="Underline"/>
-                                <Setter Property="Foreground" Value="#7DD3FC"/>
+                                <Setter Property="Foreground" Value="#FFA940"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -381,13 +381,13 @@ if (-not $TestOnly) {
         </Style>
 
         <Style TargetType="GridViewColumnHeader">
-            <Setter Property="Background" Value="#0F141F"/>
+            <Setter Property="Background" Value="#17191F"/>
             <Setter Property="Foreground" Value="#94A3B8"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="Padding" Value="10,8"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="BorderBrush" Value="#1F293B"/>
+            <Setter Property="BorderBrush" Value="#303440"/>
             <Setter Property="BorderThickness" Value="0,0,1,1"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -406,18 +406,18 @@ if (-not $TestOnly) {
             <Setter Property="Foreground" Value="#E2E8F0"/>
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="#1E3A5F"/>
+                    <Setter Property="Background" Value="#2D2418"/>
                     <Setter Property="Foreground" Value="#FFFFFF"/>
                 </Trigger>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#1B2537"/>
+                    <Setter Property="Background" Value="#2B2F3B"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
 
         <!-- Full Dark-Theme ComboBox & ComboBoxItem (eliminates light Windows Aero dropdowns!) -->
         <Style TargetType="ComboBoxItem">
-            <Setter Property="Background" Value="#0F141F"/>
+            <Setter Property="Background" Value="#17191F"/>
             <Setter Property="Foreground" Value="#E2E8F0"/>
             <Setter Property="Padding" Value="10,7"/>
             <Setter Property="Cursor" Value="Hand"/>
@@ -429,12 +429,12 @@ if (-not $TestOnly) {
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsHighlighted" Value="True">
-                                <Setter TargetName="bd" Property="Background" Value="#1E3A5F"/>
+                                <Setter TargetName="bd" Property="Background" Value="#2D2418"/>
                                 <Setter Property="Foreground" Value="#FFFFFF"/>
                             </Trigger>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="bd" Property="Background" Value="#172A45"/>
-                                <Setter Property="Foreground" Value="#38BDF8"/>
+                                <Setter TargetName="bd" Property="Background" Value="#2D2418"/>
+                                <Setter Property="Foreground" Value="#FC961F"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -443,9 +443,9 @@ if (-not $TestOnly) {
         </Style>
 
         <Style TargetType="ComboBox">
-            <Setter Property="Background" Value="#0B0F17"/>
+            <Setter Property="Background" Value="#141519"/>
             <Setter Property="Foreground" Value="#F8FAFC"/>
-            <Setter Property="BorderBrush" Value="#2C384D"/>
+            <Setter Property="BorderBrush" Value="#363B48"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Padding" Value="8,6"/>
             <Setter Property="Cursor" Value="Hand"/>
@@ -457,7 +457,7 @@ if (-not $TestOnly) {
                                           IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
                                 <ToggleButton.Template>
                                     <ControlTemplate TargetType="ToggleButton">
-                                        <Border x:Name="tbBd" Background="#0B0F17" BorderBrush="#2C384D" BorderThickness="1" CornerRadius="6">
+                                        <Border x:Name="tbBd" Background="#141519" BorderBrush="#363B48" BorderThickness="1" CornerRadius="6">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*"/>
@@ -468,8 +468,8 @@ if (-not $TestOnly) {
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="tbBd" Property="BorderBrush" Value="#38BDF8"/>
-                                                <Setter TargetName="tbBd" Property="Background" Value="#111827"/>
+                                                <Setter TargetName="tbBd" Property="BorderBrush" Value="#FC961F"/>
+                                                <Setter TargetName="tbBd" Property="Background" Value="#17191F"/>
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -481,7 +481,7 @@ if (-not $TestOnly) {
                                               Margin="10,5,28,5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                             <Popup x:Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Fade">
                                 <Border MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                                        Background="#0F141F" BorderBrush="#38BDF8" BorderThickness="1" CornerRadius="6" Margin="0,2,0,0">
+                                        Background="#17191F" BorderBrush="#FC961F" BorderThickness="1" CornerRadius="6" Margin="0,2,0,0">
                                     <ScrollViewer SnapsToDevicePixels="True" VerticalScrollBarVisibility="Auto">
                                         <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
                                     </ScrollViewer>
@@ -507,10 +507,10 @@ if (-not $TestOnly) {
                                     <Thumb>
                                         <Thumb.Template>
                                             <ControlTemplate TargetType="Thumb">
-                                                <Border x:Name="th" Background="#253247" CornerRadius="4" Margin="1,2"/>
+                                                <Border x:Name="th" Background="#2B2F3B" CornerRadius="4" Margin="1,2"/>
                                                 <ControlTemplate.Triggers>
                                                     <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter TargetName="th" Property="Background" Value="#38BDF8"/>
+                                                        <Setter TargetName="th" Property="Background" Value="#FC961F"/>
                                                     </Trigger>
                                                 </ControlTemplate.Triggers>
                                             </ControlTemplate>
@@ -537,10 +537,10 @@ if (-not $TestOnly) {
                                             <Thumb>
                                                 <Thumb.Template>
                                                     <ControlTemplate TargetType="Thumb">
-                                                        <Border x:Name="th" Background="#253247" CornerRadius="4" Margin="2,1"/>
+                                                        <Border x:Name="th" Background="#2B2F3B" CornerRadius="4" Margin="2,1"/>
                                                         <ControlTemplate.Triggers>
                                                             <Trigger Property="IsMouseOver" Value="True">
-                                                                <Setter TargetName="th" Property="Background" Value="#38BDF8"/>
+                                                                <Setter TargetName="th" Property="Background" Value="#FC961F"/>
                                                             </Trigger>
                                                         </ControlTemplate.Triggers>
                                                     </ControlTemplate>
@@ -564,32 +564,32 @@ if (-not $TestOnly) {
         </Grid.ColumnDefinitions>
 
         <!-- SIDEBAR -->
-        <Border Grid.Column="0" Background="#0F141F" BorderBrush="#1C2536" BorderThickness="0,0,1,0">
+        <Border Grid.Column="0" Background="#17191F" BorderBrush="#22252E" BorderThickness="0,0,1,0">
             <DockPanel LastChildFill="True">
                 <!-- App Brand -->
                 <StackPanel DockPanel.Dock="Top" Margin="16,18,16,12">
                     <DockPanel>
                         <TextBlock Text="PC Manager &amp; Tools" FontSize="14.5" FontWeight="Bold" Foreground="#F8FAFC" VerticalAlignment="Center"/>
-                        <Border Background="#0C2A3E" BorderBrush="#1E4E6D" BorderThickness="1" CornerRadius="5" Padding="5,2" HorizontalAlignment="Right" VerticalAlignment="Center">
-                            <TextBlock Text="v4.3" FontSize="9.5" FontWeight="Bold" Foreground="#38BDF8"/>
+                        <Border Background="#2A2116" BorderBrush="#382B19" BorderThickness="1" CornerRadius="5" Padding="5,2" HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <TextBlock Text="v4.6" FontSize="9.5" FontWeight="Bold" Foreground="#FC961F"/>
                         </Border>
                     </DockPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
-                        <Ellipse Width="7" Height="7" Fill="#22C55E" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <Ellipse Width="7" Height="7" Fill="#A6E22E" VerticalAlignment="Center" Margin="0,0,6,0"/>
                         <TextBlock Text="0 MB background RAM" FontSize="11" Foreground="#94A3B8"/>
                     </StackPanel>
                 </StackPanel>
 
                 <!-- Bottom Safe Badge + Nilly Graphics SEO Footer -->
                 <StackPanel DockPanel.Dock="Bottom" Margin="12,8,12,14">
-                    <Border Background="#121A26" CornerRadius="8" Padding="9" BorderBrush="#1E2C3E" BorderThickness="1" Margin="0,0,0,8">
+                    <Border Background="#1A1C22" CornerRadius="8" Padding="9" BorderBrush="#2A2116" BorderThickness="1" Margin="0,0,0,8">
                         <StackPanel>
-                            <TextBlock Text="Ασφαλής λειτουργία" FontSize="10.5" FontWeight="SemiBold" Foreground="#22C55E"/>
+                            <TextBlock Text="Ασφαλής λειτουργία" FontSize="10.5" FontWeight="SemiBold" Foreground="#A6E22E"/>
                             <TextBlock Text="Δεν αγγίζει Docker, Documents, Xbox, Phone Link ή WebView2." FontSize="9.8" Foreground="#94A3B8" TextWrapping="Wrap" Margin="0,2,0,0"/>
                         </StackPanel>
                     </Border>
 
-                    <Border Background="#101827" CornerRadius="8" Padding="10" BorderBrush="#1B3049" BorderThickness="1">
+                    <Border Background="#17191F" CornerRadius="8" Padding="10" BorderBrush="#2D2418" BorderThickness="1">
                         <StackPanel>
                             <TextBlock Text="created by Nilly graphics" FontSize="10.5" FontWeight="SemiBold" Foreground="#E2E8F0"/>
                             <TextBlock Text="(Sotiris Christos)" FontSize="10" Foreground="#94A3B8" Margin="0,1,0,4"/>
@@ -658,8 +658,8 @@ if (-not $TestOnly) {
                             </StackPanel>
                         </Button>
 
-                        <Separator Background="#1C2536" Margin="14,8,14,5"/>
-                        <TextBlock Text="DESIGN &amp; SEO" FontSize="10" FontWeight="Bold" Foreground="#38BDF8" Margin="18,2,0,4"/>
+                        <Separator Background="#22252E" Margin="14,8,14,5"/>
+                        <TextBlock Text="DESIGN &amp; SEO" FontSize="10" FontWeight="Bold" Foreground="#FC961F" Margin="18,2,0,4"/>
 
                         <Button x:Name="BtnNavColorPicker" Style="{StaticResource NavButton}">
                             <StackPanel Orientation="Horizontal">
@@ -693,14 +693,14 @@ if (-not $TestOnly) {
                         </Button>
                         <Button x:Name="BtnLaunchNillyDoc" Style="{StaticResource NavButton}" ToolTip="NillyDoc Pro — Πανάλαφρος Acrobat-Style PDF Editor (~2 MB, 0 MB RAM)">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8A5;" FontSize="14.5" Foreground="#38BDF8" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                <TextBlock Text="NillyDoc Pro (PDF)" Foreground="#E0F2FE" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8A5;" FontSize="14.5" Foreground="#FC961F" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="NillyDoc Pro (PDF)" Foreground="#FFE2B8" FontWeight="SemiBold" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
                         <Button x:Name="BtnLaunchNillyView" Style="{StaticResource NavButton}" ToolTip="NillyView Pro — 65-Format Image, Camera RAW, SVG &amp; PSD Studio (~240 KB, 0 MB RAM)">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEB9F;" FontSize="14.5" Foreground="#38BDF8" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                <TextBlock Text="NillyView Pro (RAW)" Foreground="#E0F2FE" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEB9F;" FontSize="14.5" Foreground="#FC961F" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="NillyView Pro (RAW)" Foreground="#FFE2B8" FontWeight="SemiBold" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
                         <Button x:Name="BtnNavImgPdf" Style="{StaticResource NavButton}">
@@ -728,7 +728,7 @@ if (-not $TestOnly) {
                             </StackPanel>
                         </Button>
 
-                        <Separator Background="#1C2536" Margin="14,8,14,5"/>
+                        <Separator Background="#22252E" Margin="14,8,14,5"/>
                         <TextBlock Text="UTILITIES" FontSize="10" FontWeight="Bold" Foreground="#94A3B8" Margin="18,2,0,4"/>
 
                         <Button x:Name="BtnNavNotes" Style="{StaticResource NavButton}">
@@ -775,7 +775,7 @@ if (-not $TestOnly) {
                     </DockPanel>
 
                     <!-- PC Boost Card -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="12" Padding="18" Margin="0,4,0,14">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="12" Padding="18" Margin="0,4,0,14">
                         <StackPanel>
                             <DockPanel Margin="0,0,0,12">
                                 <StackPanel>
@@ -794,20 +794,20 @@ if (-not $TestOnly) {
 
                                 <StackPanel Grid.Column="0">
                                     <DockPanel>
-                                        <TextBlock x:Name="TxtRamPct" Text="--%" FontSize="24" FontWeight="Bold" Foreground="#38BDF8"/>
+                                        <TextBlock x:Name="TxtRamPct" Text="--%" FontSize="24" FontWeight="Bold" Foreground="#FC961F"/>
                                         <TextBlock x:Name="TxtRamDetail" Text="-- / -- GB" FontSize="12" Foreground="#94A3B8" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,0,4"/>
                                     </DockPanel>
                                     <TextBlock Text="Χρήση Μνήμης (RAM)" FontSize="11.5" Foreground="#94A3B8" Margin="0,1,0,6"/>
-                                    <ProgressBar x:Name="BarRam" Height="7" Minimum="0" Maximum="100" Value="0" Background="#1E293B" Foreground="#38BDF8" BorderThickness="0"/>
+                                    <ProgressBar x:Name="BarRam" Height="7" Minimum="0" Maximum="100" Value="0" Background="#22252E" Foreground="#FC961F" BorderThickness="0"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="2">
                                     <DockPanel>
-                                        <TextBlock x:Name="TxtTempSize" Text="-- MB" FontSize="24" FontWeight="Bold" Foreground="#F59E0B"/>
+                                        <TextBlock x:Name="TxtTempSize" Text="-- MB" FontSize="24" FontWeight="Bold" Foreground="#66D9EF"/>
                                         <TextBlock x:Name="TxtBgHeavy" Text="" FontSize="11.5" Foreground="#94A3B8" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,0,4"/>
                                     </DockPanel>
                                     <TextBlock Text="Προσωρινά αρχεία (User Temp)" FontSize="11.5" Foreground="#94A3B8" Margin="0,1,0,6"/>
-                                    <ProgressBar x:Name="BarTemp" Height="7" Minimum="0" Maximum="2048" Value="0" Background="#1E293B" Foreground="#F59E0B" BorderThickness="0"/>
+                                    <ProgressBar x:Name="BarTemp" Height="7" Minimum="0" Maximum="2048" Value="0" Background="#22252E" Foreground="#66D9EF" BorderThickness="0"/>
                                 </StackPanel>
                             </Grid>
 
@@ -823,12 +823,12 @@ if (-not $TestOnly) {
                                 <Button x:Name="BtnHomeColorPicker" Grid.Column="2" Content="Color Picker" Style="{StaticResource SecondaryButton}" Height="40" Padding="15,0"/>
                                 <Button x:Name="BtnHomeOnDemand" Grid.Column="4" Content="On-Demand Apps →" Style="{StaticResource SecondaryButton}" Height="40" Padding="15,0"/>
                             </Grid>
-                            <TextBlock x:Name="TxtBoostStatus" Text="" FontSize="12" Foreground="#22C55E" Margin="0,8,0,0" TextWrapping="Wrap"/>
+                            <TextBlock x:Name="TxtBoostStatus" Text="" FontSize="12" Foreground="#A6E22E" Margin="0,8,0,0" TextWrapping="Wrap"/>
                         </StackPanel>
                     </Border>
 
                     <!-- Multi-Disk Card -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="12" Padding="16" Margin="0,0,0,14">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="12" Padding="16" Margin="0,0,0,14">
                         <StackPanel>
                             <TextBlock Text="Αποθηκευτικός Χώρος Δίσκων" FontSize="14.5" FontWeight="SemiBold" Foreground="#F8FAFC" Margin="0,0,0,10"/>
                             <ItemsControl x:Name="ListDrives">
@@ -839,7 +839,7 @@ if (-not $TestOnly) {
                                                 <TextBlock Text="{Binding Label}" FontSize="12.5" FontWeight="SemiBold" Foreground="#E2E8F0"/>
                                                 <TextBlock Text="{Binding FreeText}" FontSize="12" FontWeight="SemiBold" Foreground="{Binding AccentBrush}" HorizontalAlignment="Right"/>
                                             </DockPanel>
-                                            <ProgressBar Height="6" Minimum="0" Maximum="100" Value="{Binding UsedPct}" Background="#1E293B" Foreground="{Binding AccentBrush}" BorderThickness="0"/>
+                                            <ProgressBar Height="6" Minimum="0" Maximum="100" Value="{Binding UsedPct}" Background="#22252E" Foreground="{Binding AccentBrush}" BorderThickness="0"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -889,20 +889,20 @@ if (-not $TestOnly) {
                     </DockPanel>
                     <TextBlock Text="Κλείσε προσωρινά βαριές background εφαρμογές όταν δουλεύεις ή παίζεις και ξανάνοιξέ τες με 1 κλικ όποτε τις χρειαστείς. Δεν απεγκαθιστά τίποτα!" FontSize="12" Foreground="#94A3B8" Margin="0,0,0,14" TextWrapping="Wrap"/>
 
-                    <Border Background="#111C2D" BorderBrush="#1E3A5F" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,14">
+                    <Border Background="#231D15" BorderBrush="#2D2418" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,14">
                         <DockPanel>
                             <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
                                 <Button x:Name="BtnFocusMode" Content="Focus / Game Mode" Style="{StaticResource EmeraldButton}" Padding="14,8" FontSize="12.5" Margin="0,0,8,0"/>
                                 <Button x:Name="BtnRestoreOD" Content="Άνοιγμα Όλων" Style="{StaticResource SecondaryButton}" Padding="12,8" FontSize="12"/>
                             </StackPanel>
                             <StackPanel Margin="0,0,12,0">
-                                <TextBlock x:Name="TxtODTotal" Text="Συνολική RAM των ανιχνευμένων εφαρμογών: -- MB" FontSize="13.5" FontWeight="SemiBold" Foreground="#38BDF8"/>
+                                <TextBlock x:Name="TxtODTotal" Text="Συνολική RAM των ανιχνευμένων εφαρμογών: -- MB" FontSize="13.5" FontWeight="SemiBold" Foreground="#FC961F"/>
                                 <TextBlock Text="Focus Mode: κλείνει προσωρινά βαριές background εφαρμογές (Dropbox, Razer Synapse, Logi Options+) και κάνει RAM Trim." FontSize="11" Foreground="#94A3B8" Margin="0,3,0,0" TextWrapping="Wrap"/>
                             </StackPanel>
                         </DockPanel>
                     </Border>
 
-                    <Border x:Name="CardODDropbox" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,10">
+                    <Border x:Name="CardODDropbox" Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,10">
                         <DockPanel>
                             <Button x:Name="BtnToggleDropbox" Content="..." Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" MinWidth="135" VerticalAlignment="Center"/>
                             <StackPanel Margin="0,0,12,0">
@@ -912,7 +912,7 @@ if (-not $TestOnly) {
                         </DockPanel>
                     </Border>
 
-                    <Border x:Name="CardODRazer" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,10">
+                    <Border x:Name="CardODRazer" Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,10">
                         <DockPanel>
                             <Button x:Name="BtnToggleRazer" Content="..." Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" MinWidth="135" VerticalAlignment="Center"/>
                             <StackPanel Margin="0,0,12,0">
@@ -922,7 +922,7 @@ if (-not $TestOnly) {
                         </DockPanel>
                     </Border>
 
-                    <Border x:Name="CardODLogiOpt" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,10">
+                    <Border x:Name="CardODLogiOpt" Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,10">
                         <DockPanel>
                             <Button x:Name="BtnToggleLogiOpt" Content="..." Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" MinWidth="135" VerticalAlignment="Center"/>
                             <StackPanel Margin="0,0,12,0">
@@ -932,7 +932,7 @@ if (-not $TestOnly) {
                         </DockPanel>
                     </Border>
 
-                    <Border x:Name="CardODGHUB" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,10">
+                    <Border x:Name="CardODGHUB" Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,10">
                         <DockPanel>
                             <Button x:Name="BtnToggleGHUB" Content="..." Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" MinWidth="135" VerticalAlignment="Center"/>
                             <StackPanel Margin="0,0,12,0">
@@ -942,7 +942,7 @@ if (-not $TestOnly) {
                         </DockPanel>
                     </Border>
 
-                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="11">
+                    <Border Background="#17191F" BorderBrush="#22252E" BorderThickness="1" CornerRadius="8" Padding="11">
                         <TextBlock x:Name="TxtODStatus" Text="Tip: Τα περισσότερα περιφερειακά κρατούν βασικά DPI / On-Board profiles στη μνήμη τους ακόμα κι όταν το software είναι κλειστό." FontSize="11.5" Foreground="#94A3B8" TextWrapping="Wrap"/>
                     </Border>
                 </StackPanel>
@@ -958,38 +958,38 @@ if (-not $TestOnly) {
 
                     <TextBlock Text="Επίλεξε τι θέλεις να καθαριστεί. Δεν διαγράφονται ποτέ cookies, κωδικοί, Docker, Documents ή προσωπικά αρχεία." FontSize="12" Foreground="#94A3B8" Margin="0,0,0,14" TextWrapping="Wrap"/>
 
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="12" Padding="16" Margin="0,0,0,14">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="12" Padding="16" Margin="0,0,0,14">
                         <StackPanel>
                             <DockPanel>
                                 <CheckBox x:Name="ChkTemp" Content="User Temp (Προσωρινά αρχεία Windows)" IsChecked="True"/>
-                                <TextBlock x:Name="LblTemp" Text="..." Foreground="#38BDF8" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="SemiBold"/>
+                                <TextBlock x:Name="LblTemp" Text="..." Foreground="#FC961F" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="SemiBold"/>
                             </DockPanel>
                             <DockPanel>
                                 <CheckBox x:Name="ChkBrowsers" Content="Browser Caches (Firefox / Brave / Chrome / Edge — μόνο Cache)" IsChecked="True"/>
-                                <TextBlock x:Name="LblBrowsers" Text="..." Foreground="#38BDF8" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="SemiBold"/>
+                                <TextBlock x:Name="LblBrowsers" Text="..." Foreground="#FC961F" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="SemiBold"/>
                             </DockPanel>
                             <DockPanel>
                                 <CheckBox x:Name="ChkChromeAI" Content="Chrome On-Device AI Model Cache (OptGuideOnDeviceModel)" IsChecked="True"/>
-                                <TextBlock x:Name="LblChromeAI" Text="..." Foreground="#38BDF8" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="SemiBold"/>
+                                <TextBlock x:Name="LblChromeAI" Text="..." Foreground="#FC961F" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="SemiBold"/>
                             </DockPanel>
                             <DockPanel>
                                 <CheckBox x:Name="ChkDev" Content="Dev &amp; Updater Caches (npm-cache, pip, CrashDumps, updaters)" IsChecked="True"/>
-                                <TextBlock x:Name="LblDev" Text="..." Foreground="#38BDF8" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="SemiBold"/>
+                                <TextBlock x:Name="LblDev" Text="..." Foreground="#FC961F" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="SemiBold"/>
                             </DockPanel>
                             <DockPanel>
                                 <CheckBox x:Name="ChkSpotify" Content="Spotify Cache (Browser &amp; Default Cache — κρατάει login/playlists)" IsChecked="False"/>
-                                <TextBlock x:Name="LblSpotify" Text="..." Foreground="#F59E0B" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="SemiBold"/>
+                                <TextBlock x:Name="LblSpotify" Text="..." Foreground="#66D9EF" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="SemiBold"/>
                             </DockPanel>
                             <DockPanel>
                                 <CheckBox x:Name="ChkRecycle" Content="Κάδος Ανακύκλωσης (Recycle Bin)" IsChecked="False"/>
-                                <TextBlock x:Name="LblRecycle" Text="..." Foreground="#F59E0B" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="SemiBold"/>
+                                <TextBlock x:Name="LblRecycle" Text="..." Foreground="#66D9EF" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="SemiBold"/>
                             </DockPanel>
 
-                            <Separator Background="#1F293B" Margin="0,10"/>
+                            <Separator Background="#303440" Margin="0,10"/>
 
                             <DockPanel>
                                 <TextBlock Text="Σύνολο επιλεγμένων:" FontSize="13.5" FontWeight="SemiBold" Foreground="#F8FAFC" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="LblCleanTotal" Text="0 MB" FontSize="16" FontWeight="Bold" Foreground="#22C55E" HorizontalAlignment="Right"/>
+                                <TextBlock x:Name="LblCleanTotal" Text="0 MB" FontSize="16" FontWeight="Bold" Foreground="#A6E22E" HorizontalAlignment="Right"/>
                             </DockPanel>
                         </StackPanel>
                     </Border>
@@ -999,7 +999,7 @@ if (-not $TestOnly) {
                         <Button x:Name="BtnWinUpdateClean" Content="Windows Update Cleanup (Admin)" Style="{StaticResource SecondaryButton}" Margin="0,0,0,6"/>
                     </WrapPanel>
 
-                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="12">
+                    <Border Background="#17191F" BorderBrush="#22252E" BorderThickness="1" CornerRadius="8" Padding="12">
                         <TextBlock x:Name="TxtCleanLog" Text="Πάτα 'Σάρωση' για ενημέρωση μεγεθών ή 'Καθαρισμός Επιλεγμένων'." FontSize="12" Foreground="#CBD5E1" TextWrapping="Wrap"/>
                     </Border>
                 </StackPanel>
@@ -1021,10 +1021,10 @@ if (-not $TestOnly) {
 
                 <DockPanel Grid.Row="1" Margin="0,0,0,10">
                     <TextBlock Text="Φίλτρο:" Foreground="#94A3B8" VerticalAlignment="Center" Margin="0,0,8,0" FontSize="12.5"/>
-                    <TextBox x:Name="TxtProcFilter" Background="#131924" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#263349" BorderThickness="1" Padding="8,6" FontSize="12.5"/>
+                    <TextBox x:Name="TxtProcFilter" Background="#1A1C22" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#2B2F3B" BorderThickness="1" Padding="8,6" FontSize="12.5"/>
                 </DockPanel>
 
-                <ListView x:Name="ListProcs" Grid.Row="2" Background="#131924" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="12.5">
+                <ListView x:Name="ListProcs" Grid.Row="2" Background="#1A1C22" Foreground="#E2E8F0" BorderBrush="#303440" BorderThickness="1" FontSize="12.5">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Εφαρμογή" Width="260" DisplayMemberBinding="{Binding Name}"/>
@@ -1046,7 +1046,7 @@ if (-not $TestOnly) {
                 <StackPanel MaxWidth="1100">
                     <TextBlock Text="Προστασία, Συντομεύσεις &amp; Πληροφορίες" FontSize="20" FontWeight="SemiBold" Foreground="#F8FAFC" Margin="0,0,0,14"/>
 
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,10">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,10">
                         <DockPanel>
                             <Button x:Name="BtnDefenderScan" Content="Quick Scan" Style="{StaticResource PrimaryButton}" DockPanel.Dock="Right" Padding="16,8" FontSize="13"/>
                             <StackPanel Margin="0,0,10,0">
@@ -1056,7 +1056,7 @@ if (-not $TestOnly) {
                         </DockPanel>
                     </Border>
 
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,12">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,12">
                         <DockPanel>
                             <Button x:Name="BtnNetCheck" Content="Έλεγχος &amp; Flush DNS" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right"/>
                             <StackPanel Margin="0,0,10,0">
@@ -1106,7 +1106,7 @@ if (-not $TestOnly) {
                     </UniformGrid>
 
                     <!-- SEO Branding About Card + On-Demand GitHub Update Checker -->
-                    <Border Background="#101827" BorderBrush="#1E3A5F" BorderThickness="1" CornerRadius="10" Padding="16">
+                    <Border Background="#17191F" BorderBrush="#2D2418" BorderThickness="1" CornerRadius="10" Padding="16">
                         <StackPanel>
                             <DockPanel>
                                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
@@ -1114,12 +1114,12 @@ if (-not $TestOnly) {
                                     <Button x:Name="BtnAboutSite" Content="Επίσκεψη Site →" Style="{StaticResource PrimaryButton}" Padding="13,7" FontSize="12"/>
                                 </StackPanel>
                                 <StackPanel Margin="0,0,12,0">
-                                    <TextBlock Text="Nilly PC Manager &amp; Tools v4.3 — Ultra-Light Public Edition" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
-                                    <TextBlock Text="created by Nilly graphics (Sotiris Christos)" FontSize="12.5" FontWeight="SemiBold" Foreground="#38BDF8" Margin="0,4,0,2"/>
+                                    <TextBlock Text="Nilly PC Manager &amp; Tools v4.6 — Ultra-Light Public Edition" FontSize="14" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                                    <TextBlock Text="created by Nilly graphics (Sotiris Christos)" FontSize="12.5" FontWeight="SemiBold" Foreground="#FC961F" Margin="0,4,0,2"/>
                                     <TextBlock Text="https://nillygraphics.com/  •  0 MB RAM στο παρασκήνιο  •  17 Modular QuickTools" FontSize="11.5" Foreground="#94A3B8" TextWrapping="Wrap"/>
                                 </StackPanel>
                             </DockPanel>
-                            <TextBlock x:Name="TxtUpdateStatus" Text="" FontSize="11.5" Foreground="#22C55E" Margin="0,8,0,0" TextWrapping="Wrap" Visibility="Collapsed"/>
+                            <TextBlock x:Name="TxtUpdateStatus" Text="" FontSize="11.5" Foreground="#A6E22E" Margin="0,8,0,0" TextWrapping="Wrap" Visibility="Collapsed"/>
                         </StackPanel>
                     </Border>
                 </StackPanel>
@@ -1140,7 +1140,7 @@ if (-not $TestOnly) {
                     </DockPanel>
 
                     <!-- Main Swatch Preview + Manual HEX Input -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="12" Padding="16" Margin="0,4,0,12">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="12" Padding="16" Margin="0,4,0,12">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="150"/>
@@ -1148,15 +1148,15 @@ if (-not $TestOnly) {
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Border x:Name="BoxCPPreview" Grid.Column="0" Height="96" CornerRadius="10" Background="#38BDF8" BorderBrush="#334155" BorderThickness="1">
-                                <TextBlock x:Name="TxtCPPreviewHex" Text="#38BDF8" FontFamily="Consolas" FontSize="16" FontWeight="Bold" Foreground="#0B0F17" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border x:Name="BoxCPPreview" Grid.Column="0" Height="96" CornerRadius="10" Background="#FC961F" BorderBrush="#334155" BorderThickness="1">
+                                <TextBlock x:Name="TxtCPPreviewHex" Text="#FC961F" FontFamily="Consolas" FontSize="16" FontWeight="Bold" Foreground="#141519" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
 
                             <StackPanel Grid.Column="2" VerticalAlignment="Center">
                                 <TextBlock Text="Εισαγωγή ή επικόλληση HEX (Enter για μετατροπή):" FontSize="12" Foreground="#94A3B8" Margin="0,0,0,6"/>
                                 <DockPanel Margin="0,0,0,10">
                                     <Button x:Name="BtnCPApplyHex" Content="Εφαρμογή" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" Margin="8,0,0,0" Padding="14,7"/>
-                                    <TextBox x:Name="TxtCPInputHex" Text="#38BDF8" FontFamily="Consolas" FontSize="14" FontWeight="SemiBold" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="10,7"/>
+                                    <TextBox x:Name="TxtCPInputHex" Text="#FC961F" FontFamily="Consolas" FontSize="14" FontWeight="SemiBold" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="10,7"/>
                                 </DockPanel>
                                 <TextBlock x:Name="TxtCPContrast" Text="WCAG Contrast..." FontSize="11.5" Foreground="#CBD5E1" TextWrapping="Wrap"/>
                             </StackPanel>
@@ -1165,17 +1165,17 @@ if (-not $TestOnly) {
 
                     <!-- Responsive Copy Format Cards -->
                     <UniformGrid Columns="2" Margin="-5,0,-5,10">
-                        <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="9" Padding="12" Margin="5">
+                        <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="9" Padding="12" Margin="5">
                             <DockPanel>
                                 <Button x:Name="BtnCopyHex" Content="Copy" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" Padding="11,5" FontSize="11.5"/>
                                 <StackPanel Margin="0,0,8,0">
                                     <TextBlock Text="HEX" FontSize="10.5" FontWeight="Bold" Foreground="#64748B"/>
-                                    <TextBlock x:Name="ValCPHex" Text="#38BDF8" FontFamily="Consolas" FontSize="13.5" FontWeight="SemiBold" Foreground="#F8FAFC" Margin="0,2,0,0"/>
+                                    <TextBlock x:Name="ValCPHex" Text="#FC961F" FontFamily="Consolas" FontSize="13.5" FontWeight="SemiBold" Foreground="#F8FAFC" Margin="0,2,0,0"/>
                                 </StackPanel>
                             </DockPanel>
                         </Border>
 
-                        <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="9" Padding="12" Margin="5">
+                        <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="9" Padding="12" Margin="5">
                             <DockPanel>
                                 <Button x:Name="BtnCopyRgb" Content="Copy" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" Padding="11,5" FontSize="11.5"/>
                                 <StackPanel Margin="0,0,8,0">
@@ -1185,7 +1185,7 @@ if (-not $TestOnly) {
                             </DockPanel>
                         </Border>
 
-                        <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="9" Padding="12" Margin="5">
+                        <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="9" Padding="12" Margin="5">
                             <DockPanel>
                                 <Button x:Name="BtnCopyHsl" Content="Copy" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" Padding="11,5" FontSize="11.5"/>
                                 <StackPanel Margin="0,0,8,0">
@@ -1195,11 +1195,11 @@ if (-not $TestOnly) {
                             </DockPanel>
                         </Border>
 
-                        <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="9" Padding="12" Margin="5">
+                        <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="9" Padding="12" Margin="5">
                             <DockPanel>
                                 <Button x:Name="BtnCopyCmyk" Content="Copy" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" Padding="11,5" FontSize="11.5"/>
                                 <StackPanel Margin="0,0,8,0">
-                                    <TextBlock Text="CMYK (Εκτύπωση)" FontSize="10.5" FontWeight="Bold" Foreground="#38BDF8"/>
+                                    <TextBlock Text="CMYK (Εκτύπωση)" FontSize="10.5" FontWeight="Bold" Foreground="#FC961F"/>
                                     <TextBlock x:Name="ValCPCmyk" Text="cmyk(77%, 24%, 0%, 3%)" FontFamily="Consolas" FontSize="12.5" FontWeight="SemiBold" Foreground="#F8FAFC" Margin="0,2,0,0"/>
                                 </StackPanel>
                             </DockPanel>
@@ -1207,18 +1207,18 @@ if (-not $TestOnly) {
                     </UniformGrid>
 
                     <!-- CSS Variable Row -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="9" Padding="12" Margin="0,0,0,12">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="9" Padding="12" Margin="0,0,0,12">
                         <DockPanel>
                             <Button x:Name="BtnCopyCss" Content="Copy CSS" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" Padding="12,5" FontSize="11.5"/>
                             <StackPanel Margin="0,0,8,0">
                                 <TextBlock Text="CSS VARIABLE" FontSize="10.5" FontWeight="Bold" Foreground="#64748B"/>
-                                <TextBlock x:Name="ValCPCss" Text="--brand-color: #38BDF8;" FontFamily="Consolas" FontSize="13" FontWeight="SemiBold" Foreground="#F8FAFC" Margin="0,2,0,0"/>
+                                <TextBlock x:Name="ValCPCss" Text="--brand-color: #FC961F;" FontFamily="Consolas" FontSize="13" FontWeight="SemiBold" Foreground="#F8FAFC" Margin="0,2,0,0"/>
                             </StackPanel>
                         </DockPanel>
                     </Border>
 
                     <!-- Tints & Shades Strip -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,12">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,12">
                         <StackPanel>
                             <TextBlock Text="Αποχρώσεις (Tints &amp; Shades — κλικ σε οποιοδήποτε πλακίδιο για αντιγραφή)" FontSize="12" FontWeight="SemiBold" Foreground="#CBD5E1" Margin="0,0,0,8"/>
                             <UniformGrid x:Name="PanelCPShades" Columns="7"/>
@@ -1226,7 +1226,7 @@ if (-not $TestOnly) {
                     </Border>
 
                     <!-- Recent Colors History -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,10">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,10">
                         <StackPanel>
                             <DockPanel Margin="0,0,0,8">
                                 <TextBlock Text="Πρόσφατα Χρώματα" FontSize="12" FontWeight="SemiBold" Foreground="#CBD5E1" VerticalAlignment="Center"/>
@@ -1236,8 +1236,8 @@ if (-not $TestOnly) {
                         </StackPanel>
                     </Border>
 
-                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10">
-                        <TextBlock x:Name="TxtCPStatus" Text="Πάτα 'Επιλογή από Οθόνη (Loupe)' · Αριστερό κλικ = αντιγραφή HEX · Βελάκια = μετακίνηση 1 pixel · Esc = ακύρωση." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                    <Border Background="#17191F" BorderBrush="#22252E" BorderThickness="1" CornerRadius="8" Padding="10">
+                        <TextBlock x:Name="TxtCPStatus" Text="Πάτα 'Επιλογή από Οθόνη (Loupe)' · Αριστερό κλικ = αντιγραφή HEX · Βελάκια = μετακίνηση 1 pixel · Esc = ακύρωση." FontSize="11.5" Foreground="#A6E22E" TextWrapping="Wrap"/>
                     </Border>
                 </StackPanel>
             </ScrollViewer>
@@ -1262,7 +1262,7 @@ if (-not $TestOnly) {
                         </Grid.ColumnDefinitions>
 
                         <!-- LEFT: Inputs & Options -->
-                        <Border Grid.Column="0" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="12" Padding="15">
+                        <Border Grid.Column="0" Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="12" Padding="15">
                             <StackPanel>
                                 <!-- Mode & Template Selectors -->
                                 <Grid Margin="0,0,0,10">
@@ -1312,20 +1312,20 @@ if (-not $TestOnly) {
                                     <Button x:Name="BtnQRSample" Content="Παράδειγμα" Style="{StaticResource LinkButton}" DockPanel.Dock="Right" FontSize="11" FontWeight="SemiBold" Visibility="Collapsed"/>
                                     <TextBlock x:Name="LblQRMain" Text="URL / Website:" FontSize="11.5" Foreground="#CBD5E1" TextWrapping="Wrap"/>
                                 </DockPanel>
-                                <TextBox x:Name="TxtQRMain" Text="https://nillygraphics.com/" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="9,7" FontSize="13" Margin="0,0,0,8"/>
+                                <TextBox x:Name="TxtQRMain" Text="https://nillygraphics.com/" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="9,7" FontSize="13" Margin="0,0,0,8"/>
 
                                 <!-- Extra dynamic fields (vCard / WiFi / WhatsApp) -->
                                 <StackPanel x:Name="RowQRExtra1" Visibility="Collapsed" Margin="0,0,0,7">
                                     <TextBlock x:Name="LblQRExtra1" Text="Πεδίο 1:" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,3"/>
-                                    <TextBox x:Name="TxtQRExtra1" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6" FontSize="12.5"/>
+                                    <TextBox x:Name="TxtQRExtra1" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="8,6" FontSize="12.5"/>
                                 </StackPanel>
                                 <StackPanel x:Name="RowQRExtra2" Visibility="Collapsed" Margin="0,0,0,7">
                                     <TextBlock x:Name="LblQRExtra2" Text="Πεδίο 2:" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,3"/>
-                                    <TextBox x:Name="TxtQRExtra2" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6" FontSize="12.5"/>
+                                    <TextBox x:Name="TxtQRExtra2" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="8,6" FontSize="12.5"/>
                                 </StackPanel>
                                 <StackPanel x:Name="RowQRExtra3" Visibility="Collapsed" Margin="0,0,0,7">
                                     <TextBlock x:Name="LblQRExtra3" Text="Πεδίο 3:" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,3"/>
-                                    <TextBox x:Name="TxtQRExtra3" Text="https://nillygraphics.com/" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6" FontSize="12.5"/>
+                                    <TextBox x:Name="TxtQRExtra3" Text="https://nillygraphics.com/" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="8,6" FontSize="12.5"/>
                                 </StackPanel>
 
                                 <!-- Caption & Colors & ECC -->
@@ -1339,15 +1339,15 @@ if (-not $TestOnly) {
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Column="0">
                                         <TextBlock Text="Λεζάντα κάτω (προαιρετικό):" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,3"/>
-                                        <TextBox x:Name="TxtQRCaption" Text="nillygraphics.com" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6" FontSize="12"/>
+                                        <TextBox x:Name="TxtQRCaption" Text="nillygraphics.com" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="8,6" FontSize="12"/>
                                     </StackPanel>
                                     <StackPanel Grid.Column="2">
                                         <TextBlock Text="Χρώμα:" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,3"/>
-                                        <TextBox x:Name="TxtQRFg" Text="#000000" FontFamily="Consolas" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="7,6" FontSize="12"/>
+                                        <TextBox x:Name="TxtQRFg" Text="#000000" FontFamily="Consolas" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="7,6" FontSize="12"/>
                                     </StackPanel>
                                     <StackPanel Grid.Column="4">
                                         <TextBlock Text="Φόντο:" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,3"/>
-                                        <TextBox x:Name="TxtQRBg" Text="#FFFFFF" FontFamily="Consolas" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="7,6" FontSize="12"/>
+                                        <TextBox x:Name="TxtQRBg" Text="#FFFFFF" FontFamily="Consolas" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="7,6" FontSize="12"/>
                                     </StackPanel>
                                 </Grid>
 
@@ -1367,7 +1367,7 @@ if (-not $TestOnly) {
                         </Border>
 
                         <!-- RIGHT: Live Preview & Export Buttons -->
-                        <Border Grid.Column="2" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="12" Padding="14">
+                        <Border Grid.Column="2" Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="12" Padding="14">
                             <StackPanel>
                                 <Border Background="#FFFFFF" CornerRadius="8" Padding="10" Height="225" Margin="0,0,0,10">
                                     <Image x:Name="ImgQRPreview" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality"/>
@@ -1383,16 +1383,16 @@ if (-not $TestOnly) {
                     </Grid>
 
                     <!-- Client Archive (Saved locally in saved_codes.json — ready for GitHub backup!) -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,10">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,10">
                         <StackPanel>
                             <DockPanel Margin="0,0,0,8">
                                 <TextBlock Text="Αρχείο Κωδικών Πελατών (saved_codes.json — διπλό κλικ για φόρτωση)" FontSize="12" FontWeight="SemiBold" Foreground="#CBD5E1" VerticalAlignment="Center"/>
                                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
-                                    <TextBox x:Name="TxtQRClientName" Width="170" ToolTip="Όνομα πελάτη / project" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="7,4" FontSize="12" Margin="0,0,6,0"/>
+                                    <TextBox x:Name="TxtQRClientName" Width="170" ToolTip="Όνομα πελάτη / project" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="7,4" FontSize="12" Margin="0,0,6,0"/>
                                     <Button x:Name="BtnQRSaveClient" Content="Αποθήκευση Πελάτη" Style="{StaticResource SecondaryButton}" Padding="10,5" FontSize="11.5"/>
                                 </StackPanel>
                             </DockPanel>
-                            <ListView x:Name="ListQRSaved" Height="105" Background="#0B0F17" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="11.5">
+                            <ListView x:Name="ListQRSaved" Height="105" Background="#141519" Foreground="#E2E8F0" BorderBrush="#303440" BorderThickness="1" FontSize="11.5">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Πελάτης / Project" Width="165" DisplayMemberBinding="{Binding Client}"/>
@@ -1405,8 +1405,8 @@ if (-not $TestOnly) {
                         </StackPanel>
                     </Border>
 
-                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10">
-                        <TextBlock x:Name="TxtQRStatus" Text="100% Static ISO κωδικοί — δεν λήγουν ποτέ και σκανάρονται ακαριαία σε iPhone &amp; Android!" FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                    <Border Background="#17191F" BorderBrush="#22252E" BorderThickness="1" CornerRadius="8" Padding="10">
+                        <TextBlock x:Name="TxtQRStatus" Text="100% Static ISO κωδικοί — δεν λήγουν ποτέ και σκανάρονται ακαριαία σε iPhone &amp; Android!" FontSize="11.5" Foreground="#A6E22E" TextWrapping="Wrap"/>
                     </Border>
                 </StackPanel>
             </ScrollViewer>
@@ -1422,21 +1422,21 @@ if (-not $TestOnly) {
                         <Button x:Name="BtnIRRun" Content="Εκτέλεση Resize" Style="{StaticResource PrimaryButton}" DockPanel.Dock="Right" VerticalAlignment="Center" Padding="16,9"/>
                     </DockPanel>
 
-                    <Border x:Name="ZoneIRDrop" AllowDrop="True" Background="#111C2D" BorderBrush="#38BDF8" BorderThickness="1" CornerRadius="10" Padding="16" Margin="0,2,0,12">
+                    <Border x:Name="ZoneIRDrop" AllowDrop="True" Background="#231D15" BorderBrush="#FC961F" BorderThickness="1" CornerRadius="10" Padding="16" Margin="0,2,0,12">
                         <DockPanel>
                             <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
                                 <Button x:Name="BtnIRBrowse" Content="Επιλογή Εικόνων" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
                                 <Button x:Name="BtnIRClear" Content="Καθαρισμός" Style="{StaticResource SecondaryButton}"/>
                             </StackPanel>
                             <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="Ρίξε εδώ εικόνες ή φάκελο (Drag &amp; Drop)" FontSize="13.5" FontWeight="SemiBold" Foreground="#38BDF8"/>
+                                <TextBlock Text="Ρίξε εδώ εικόνες ή φάκελο (Drag &amp; Drop)" FontSize="13.5" FontWeight="SemiBold" Foreground="#FC961F"/>
                                 <TextBlock Text="Υποστηρίζει PNG, JPG, JPEG, BMP, GIF, TIFF" FontSize="11.5" Foreground="#94A3B8" Margin="0,2,0,0"/>
                             </StackPanel>
                         </DockPanel>
                     </Border>
 
                     <!-- Presets & Quality -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,12">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,12">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1.3*"/>
@@ -1460,7 +1460,7 @@ if (-not $TestOnly) {
                             </StackPanel>
                             <StackPanel Grid.Column="2">
                                 <TextBlock Text="Custom px:" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,4"/>
-                                <TextBox x:Name="TxtIRCustomPx" Text="1600" IsEnabled="False" Background="#0B0F17" Foreground="#F8FAFC" BorderBrush="#2C384D" BorderThickness="1" Padding="7,6" FontSize="12"/>
+                                <TextBox x:Name="TxtIRCustomPx" Text="1600" IsEnabled="False" Background="#141519" Foreground="#F8FAFC" BorderBrush="#363B48" BorderThickness="1" Padding="7,6" FontSize="12"/>
                             </StackPanel>
                             <StackPanel Grid.Column="4">
                                 <TextBlock Text="Μορφή Εξόδου:" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,4"/>
@@ -1473,14 +1473,14 @@ if (-not $TestOnly) {
                             <StackPanel Grid.Column="6" VerticalAlignment="Center">
                                 <DockPanel Margin="0,0,0,4">
                                     <TextBlock Text="Ποιότητα JPG:" FontSize="11" Foreground="#94A3B8"/>
-                                    <TextBlock x:Name="LblIRQuality" Text="85%" FontSize="11" FontWeight="Bold" Foreground="#38BDF8" HorizontalAlignment="Right"/>
+                                    <TextBlock x:Name="LblIRQuality" Text="85%" FontSize="11" FontWeight="Bold" Foreground="#FC961F" HorizontalAlignment="Right"/>
                                 </DockPanel>
                                 <Slider x:Name="SliderIRQuality" Minimum="50" Maximum="100" Value="85" TickFrequency="5" IsSnapToTickEnabled="True"/>
                             </StackPanel>
                         </Grid>
                     </Border>
 
-                    <ListView x:Name="ListIRFiles" AllowDrop="True" Height="215" Background="#131924" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="12" Margin="0,0,0,10">
+                    <ListView x:Name="ListIRFiles" AllowDrop="True" Height="215" Background="#1A1C22" Foreground="#E2E8F0" BorderBrush="#303440" BorderThickness="1" FontSize="12" Margin="0,0,0,10">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Αρχείο" Width="260" DisplayMemberBinding="{Binding Name}"/>
@@ -1492,8 +1492,8 @@ if (-not $TestOnly) {
 
                     <DockPanel>
                         <Button x:Name="BtnIROpenOut" Content="Άνοιγμα _resized" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" Margin="10,0,0,0"/>
-                        <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10">
-                            <TextBlock x:Name="TxtIRStatus" Text="Ρίξε εικόνες και πάτα 'Εκτέλεση Resize'." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                        <Border Background="#17191F" BorderBrush="#22252E" BorderThickness="1" CornerRadius="8" Padding="10">
+                            <TextBlock x:Name="TxtIRStatus" Text="Ρίξε εικόνες και πάτα 'Εκτέλεση Resize'." FontSize="11.5" Foreground="#A6E22E" TextWrapping="Wrap"/>
                         </Border>
                     </DockPanel>
                 </StackPanel>
@@ -1513,34 +1513,34 @@ if (-not $TestOnly) {
                         </StackPanel>
                     </DockPanel>
 
-                    <Border x:Name="ZoneBRDrop" AllowDrop="True" Background="#111C2D" BorderBrush="#38BDF8" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,2,0,12">
+                    <Border x:Name="ZoneBRDrop" AllowDrop="True" Background="#231D15" BorderBrush="#FC961F" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,2,0,12">
                         <DockPanel>
                             <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
                                 <Button x:Name="BtnBRBrowse" Content="Επιλογή Αρχείων" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
                                 <Button x:Name="BtnBRClear" Content="Καθαρισμός" Style="{StaticResource SecondaryButton}"/>
                             </StackPanel>
-                            <TextBlock Text="Ρίξε εδώ αρχεία ή φάκελο για Live Preview μετονομασίας" FontSize="13" FontWeight="SemiBold" Foreground="#38BDF8" VerticalAlignment="Center"/>
+                            <TextBlock Text="Ρίξε εδώ αρχεία ή φάκελο για Live Preview μετονομασίας" FontSize="13" FontWeight="SemiBold" Foreground="#FC961F" VerticalAlignment="Center"/>
                         </DockPanel>
                     </Border>
 
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,12">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,12">
                         <StackPanel>
                             <UniformGrid Columns="4" Margin="-4,0,-4,8">
                                 <StackPanel Margin="4,0">
                                     <TextBlock Text="Αναζήτηση (Find):" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,3"/>
-                                    <TextBox x:Name="TxtBRFind" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="7,5" FontSize="12"/>
+                                    <TextBox x:Name="TxtBRFind" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="7,5" FontSize="12"/>
                                 </StackPanel>
                                 <StackPanel Margin="4,0">
                                     <TextBlock Text="Αντικατάσταση:" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,3"/>
-                                    <TextBox x:Name="TxtBRReplace" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="7,5" FontSize="12"/>
+                                    <TextBox x:Name="TxtBRReplace" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="7,5" FontSize="12"/>
                                 </StackPanel>
                                 <StackPanel Margin="4,0">
                                     <TextBlock Text="Πρόθεμα (Prefix):" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,3"/>
-                                    <TextBox x:Name="TxtBRPrefix" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="7,5" FontSize="12"/>
+                                    <TextBox x:Name="TxtBRPrefix" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="7,5" FontSize="12"/>
                                 </StackPanel>
                                 <StackPanel Margin="4,0">
                                     <TextBlock Text="Επίθεμα (Suffix):" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,3"/>
-                                    <TextBox x:Name="TxtBRSuffix" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="7,5" FontSize="12"/>
+                                    <TextBox x:Name="TxtBRSuffix" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="7,5" FontSize="12"/>
                                 </StackPanel>
                             </UniformGrid>
                             <WrapPanel>
@@ -1550,7 +1550,7 @@ if (-not $TestOnly) {
                         </StackPanel>
                     </Border>
 
-                    <ListView x:Name="ListBRPreview" AllowDrop="True" Height="220" Background="#131924" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="12" Margin="0,0,0,10">
+                    <ListView x:Name="ListBRPreview" AllowDrop="True" Height="220" Background="#1A1C22" Foreground="#E2E8F0" BorderBrush="#303440" BorderThickness="1" FontSize="12" Margin="0,0,0,10">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Παλιό Όνομα" Width="255" DisplayMemberBinding="{Binding OldName}"/>
@@ -1560,8 +1560,8 @@ if (-not $TestOnly) {
                         </ListView.View>
                     </ListView>
 
-                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10">
-                        <TextBlock x:Name="TxtBRStatus" Text="Παράδειγμα SEO Slug: 'Φωτογραφία Προϊόντος 01.JPG' → 'fotografia-proiontos-01.jpg'." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                    <Border Background="#17191F" BorderBrush="#22252E" BorderThickness="1" CornerRadius="8" Padding="10">
+                        <TextBlock x:Name="TxtBRStatus" Text="Παράδειγμα SEO Slug: 'Φωτογραφία Προϊόντος 01.JPG' → 'fotografia-proiontos-01.jpg'." FontSize="11.5" Foreground="#A6E22E" TextWrapping="Wrap"/>
                     </Border>
                 </StackPanel>
             </ScrollViewer>
@@ -1581,19 +1581,19 @@ if (-not $TestOnly) {
                     <TextBlock Text="Δες ποιο πρόγραμμα κρατάει κλειδωμένο ένα αρχείο που δεν σβήνεται (Windows Restart Manager API)" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
                 </StackPanel>
 
-                <Border x:Name="ZoneFLDrop" Grid.Row="1" AllowDrop="True" Background="#111C2D" BorderBrush="#38BDF8" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,10">
+                <Border x:Name="ZoneFLDrop" Grid.Row="1" AllowDrop="True" Background="#231D15" BorderBrush="#FC961F" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,10">
                     <DockPanel>
                         <Button x:Name="BtnFLBrowse" Content="Επιλογή Αρχείου" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right"/>
-                        <TextBlock Text="Ρίξε εδώ ένα κλειδωμένο αρχείο (Drag &amp; Drop) για άμεσο έλεγχο" FontSize="13" FontWeight="SemiBold" Foreground="#38BDF8" VerticalAlignment="Center"/>
+                        <TextBlock Text="Ρίξε εδώ ένα κλειδωμένο αρχείο (Drag &amp; Drop) για άμεσο έλεγχο" FontSize="13" FontWeight="SemiBold" Foreground="#FC961F" VerticalAlignment="Center"/>
                     </DockPanel>
                 </Border>
 
                 <DockPanel Grid.Row="2" Margin="0,0,0,10">
                     <Button x:Name="BtnFLScan" Content="Έλεγχος" Style="{StaticResource PrimaryButton}" DockPanel.Dock="Right" Margin="8,0,0,0" Padding="16,7"/>
-                    <TextBox x:Name="TxtFLPath" Background="#131924" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="9,7" FontSize="12.5"/>
+                    <TextBox x:Name="TxtFLPath" Background="#1A1C22" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="9,7" FontSize="12.5"/>
                 </DockPanel>
 
-                <ListView x:Name="ListFLLocks" Grid.Row="3" AllowDrop="True" Background="#131924" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="12.5">
+                <ListView x:Name="ListFLLocks" Grid.Row="3" AllowDrop="True" Background="#1A1C22" Foreground="#E2E8F0" BorderBrush="#303440" BorderThickness="1" FontSize="12.5">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Διεργασία" Width="190" DisplayMemberBinding="{Binding ProcessName}"/>
@@ -1606,7 +1606,7 @@ if (-not $TestOnly) {
 
                 <DockPanel Grid.Row="4" Margin="0,10,0,0">
                     <Button x:Name="BtnFLKill" Content="Τερματισμός &amp; Ξεκλείδωμα" Style="{StaticResource DangerButton}" DockPanel.Dock="Right" Margin="10,0,0,0"/>
-                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10">
+                    <Border Background="#17191F" BorderBrush="#22252E" BorderThickness="1" CornerRadius="8" Padding="10">
                         <TextBlock x:Name="TxtFLStatus" Text="Επίλεξε ένα αρχείο για να δεις αν το κλειδώνει κάποια διεργασία." FontSize="11.5" Foreground="#94A3B8" TextWrapping="Wrap"/>
                     </Border>
                 </DockPanel>
@@ -1631,7 +1631,7 @@ if (-not $TestOnly) {
                     </StackPanel>
                 </DockPanel>
 
-                <ListView x:Name="ListAOTWindows" Grid.Row="1" Background="#131924" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="12.5">
+                <ListView x:Name="ListAOTWindows" Grid.Row="1" Background="#1A1C22" Foreground="#E2E8F0" BorderBrush="#303440" BorderThickness="1" FontSize="12.5">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Κατάσταση" Width="95" DisplayMemberBinding="{Binding Status}"/>
@@ -1643,8 +1643,8 @@ if (-not $TestOnly) {
 
                 <DockPanel Grid.Row="2" Margin="0,12,0,0">
                     <Button x:Name="BtnAOTToggle" Content="Pin / Unpin Επιλεγμένου" Style="{StaticResource PrimaryButton}" DockPanel.Dock="Right" Margin="10,0,0,0"/>
-                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10">
-                        <TextBlock x:Name="TxtAOTStatus" Text="Επίλεξε ένα παράθυρο (ή διπλό κλικ) για Pin / Unpin." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                    <Border Background="#17191F" BorderBrush="#22252E" BorderThickness="1" CornerRadius="8" Padding="10">
+                        <TextBlock x:Name="TxtAOTStatus" Text="Επίλεξε ένα παράθυρο (ή διπλό κλικ) για Pin / Unpin." FontSize="11.5" Foreground="#A6E22E" TextWrapping="Wrap"/>
                     </Border>
                 </DockPanel>
             </Grid>
@@ -1661,7 +1661,7 @@ if (-not $TestOnly) {
                     </DockPanel>
 
                     <!-- Card 1: Clean RAM Now -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="15" Margin="0,4,0,10">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="15" Margin="0,4,0,10">
                         <DockPanel>
                             <Button x:Name="BtnHubCleanRam" Content="Clean RAM Τώρα" Style="{StaticResource PrimaryButton}" DockPanel.Dock="Right" MinWidth="165" VerticalAlignment="Center"/>
                             <StackPanel Margin="0,0,12,0">
@@ -1672,7 +1672,7 @@ if (-not $TestOnly) {
                     </Border>
 
                     <!-- Card 2: Firefox Cache Clean & Restart -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="15" Margin="0,0,0,10">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="15" Margin="0,0,0,10">
                         <DockPanel>
                             <Button x:Name="BtnHubCleanFF" Content="Clean &amp; Restart FF" Style="{StaticResource EmeraldButton}" DockPanel.Dock="Right" MinWidth="165" VerticalAlignment="Center"/>
                             <StackPanel Margin="0,0,12,0">
@@ -1683,7 +1683,7 @@ if (-not $TestOnly) {
                     </Border>
 
                     <!-- Card 3: Local Master Backup (auto-hides on PCs without local backup script) -->
-                    <Border x:Name="CardHubBackup" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="15" Margin="0,0,0,10">
+                    <Border x:Name="CardHubBackup" Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="15" Margin="0,0,0,10">
                         <DockPanel>
                             <Button x:Name="BtnHubRunBackup" Content="Backup Τώρα (H:)" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" MinWidth="165" VerticalAlignment="Center"/>
                             <StackPanel Margin="0,0,12,0">
@@ -1694,7 +1694,7 @@ if (-not $TestOnly) {
                     </Border>
 
                     <!-- Card 4: G-Phonor Voice-to-Text (auto-hides on PCs without G-Phonor) -->
-                    <Border x:Name="CardHubGPhonor" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="15" Margin="0,0,0,12">
+                    <Border x:Name="CardHubGPhonor" Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="15" Margin="0,0,0,12">
                         <DockPanel>
                             <Button x:Name="BtnHubToggleGPhonor" Content="Εκκίνηση G-Phonor" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" MinWidth="165" VerticalAlignment="Center"/>
                             <StackPanel Margin="0,0,12,0">
@@ -1704,8 +1704,8 @@ if (-not $TestOnly) {
                         </DockPanel>
                     </Border>
 
-                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="11">
-                        <TextBlock x:Name="TxtHubStatus" Text="Όλα τα προσωπικά σου scripts &amp; γρήγορες ενέργειες σε ένα σημείο (0 MB background RAM)." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                    <Border Background="#17191F" BorderBrush="#22252E" BorderThickness="1" CornerRadius="8" Padding="11">
+                        <TextBlock x:Name="TxtHubStatus" Text="Όλα τα προσωπικά σου scripts &amp; γρήγορες ενέργειες σε ένα σημείο (0 MB background RAM)." FontSize="11.5" Foreground="#A6E22E" TextWrapping="Wrap"/>
                     </Border>
                 </StackPanel>
             </ScrollViewer>
@@ -1730,7 +1730,7 @@ if (-not $TestOnly) {
                     </StackPanel>
                 </DockPanel>
 
-                <ListView x:Name="ListHWSpecs" Grid.Row="1" Background="#131924" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="12">
+                <ListView x:Name="ListHWSpecs" Grid.Row="1" Background="#1A1C22" Foreground="#E2E8F0" BorderBrush="#303440" BorderThickness="1" FontSize="12">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Κατηγορία" Width="90" DisplayMemberBinding="{Binding Category}"/>
@@ -1740,8 +1740,8 @@ if (-not $TestOnly) {
                     </ListView.View>
                 </ListView>
 
-                <Border Grid.Row="2" Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10" Margin="0,10,0,0">
-                    <TextBlock x:Name="TxtHWStatus" Text="Ανάγνωση υλικού..." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                <Border Grid.Row="2" Background="#17191F" BorderBrush="#22252E" BorderThickness="1" CornerRadius="8" Padding="10" Margin="0,10,0,0">
+                    <TextBlock x:Name="TxtHWStatus" Text="Ανάγνωση υλικού..." FontSize="11.5" Foreground="#A6E22E" TextWrapping="Wrap"/>
                 </Border>
             </Grid>
 
@@ -1756,17 +1756,17 @@ if (-not $TestOnly) {
                         <Button x:Name="BtnPdfBuild" Content="Δημιουργία PDF" Style="{StaticResource PrimaryButton}" DockPanel.Dock="Right" VerticalAlignment="Center" Padding="16,9"/>
                     </DockPanel>
 
-                    <Border x:Name="ZonePdfDrop" AllowDrop="True" Background="#111C2D" BorderBrush="#38BDF8" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,2,0,10">
+                    <Border x:Name="ZonePdfDrop" AllowDrop="True" Background="#231D15" BorderBrush="#FC961F" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,2,0,10">
                         <DockPanel>
                             <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
                                 <Button x:Name="BtnPdfBrowse" Content="Επιλογή Εικόνων" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
                                 <Button x:Name="BtnPdfClear" Content="Καθαρισμός" Style="{StaticResource SecondaryButton}"/>
                             </StackPanel>
-                            <TextBlock Text="Ρίξε εδώ 1–100 εικόνες (Drag &amp; Drop) για ένωση σε ένα PDF" FontSize="13" FontWeight="SemiBold" Foreground="#38BDF8" VerticalAlignment="Center"/>
+                            <TextBlock Text="Ρίξε εδώ 1–100 εικόνες (Drag &amp; Drop) για ένωση σε ένα PDF" FontSize="13" FontWeight="SemiBold" Foreground="#FC961F" VerticalAlignment="Center"/>
                         </DockPanel>
                     </Border>
 
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="12" Margin="0,0,0,10">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="12" Margin="0,0,0,10">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -1798,7 +1798,7 @@ if (-not $TestOnly) {
                         </Grid>
                     </Border>
 
-                    <ListView x:Name="ListPdfFiles" AllowDrop="True" Height="220" Background="#131924" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="12" Margin="0,0,0,10">
+                    <ListView x:Name="ListPdfFiles" AllowDrop="True" Height="220" Background="#1A1C22" Foreground="#E2E8F0" BorderBrush="#303440" BorderThickness="1" FontSize="12" Margin="0,0,0,10">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Σελίδα" Width="70" DisplayMemberBinding="{Binding Page}"/>
@@ -1809,8 +1809,8 @@ if (-not $TestOnly) {
                         </ListView.View>
                     </ListView>
 
-                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10">
-                        <TextBlock x:Name="TxtPdfStatus" Text="Ρίξε εικόνες, βάλε τες στη σειρά και πάτα 'Δημιουργία PDF'." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                    <Border Background="#17191F" BorderBrush="#22252E" BorderThickness="1" CornerRadius="8" Padding="10">
+                        <TextBlock x:Name="TxtPdfStatus" Text="Ρίξε εικόνες, βάλε τες στη σειρά και πάτα 'Δημιουργία PDF'." FontSize="11.5" Foreground="#A6E22E" TextWrapping="Wrap"/>
                     </Border>
                 </StackPanel>
             </ScrollViewer>
@@ -1827,15 +1827,15 @@ if (-not $TestOnly) {
                     </DockPanel>
 
                     <!-- Scratchpad -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,2,0,12">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,2,0,12">
                         <StackPanel>
                             <TextBlock Text="Γρήγορες Σημειώσεις (Scratchpad):" FontSize="12" FontWeight="SemiBold" Foreground="#CBD5E1" Margin="0,0,0,6"/>
-                            <TextBox x:Name="TxtQNScratch" Height="130" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="10,8" FontSize="12.5"/>
+                            <TextBox x:Name="TxtQNScratch" Height="130" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="10,8" FontSize="12.5"/>
                         </StackPanel>
                     </Border>
 
                     <!-- Reusable 1-Click Snippets -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,10">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,10">
                         <StackPanel>
                             <TextBlock Text="Έτοιμα Snippets (ΑΦΜ, IBAN, Υπογραφή, SEO — διπλό κλικ για Copy):" FontSize="12" FontWeight="SemiBold" Foreground="#CBD5E1" Margin="0,0,0,8"/>
                             <Grid Margin="0,0,0,8">
@@ -1846,12 +1846,12 @@ if (-not $TestOnly) {
                                     <ColumnDefinition Width="8"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBox x:Name="TxtQNSnipTitle" Grid.Column="0" ToolTip="Τίτλος (π.χ. IBAN / Υπογραφή)" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6" FontSize="12"/>
-                                <TextBox x:Name="TxtQNSnipBody" Grid.Column="2" ToolTip="Κείμενο προς αντιγραφή" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6" FontSize="12"/>
+                                <TextBox x:Name="TxtQNSnipTitle" Grid.Column="0" ToolTip="Τίτλος (π.χ. IBAN / Υπογραφή)" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="8,6" FontSize="12"/>
+                                <TextBox x:Name="TxtQNSnipBody" Grid.Column="2" ToolTip="Κείμενο προς αντιγραφή" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="8,6" FontSize="12"/>
                                 <Button x:Name="BtnQNAddSnip" Grid.Column="4" Content="+ Προσθήκη" Style="{StaticResource EmeraldButton}" Padding="13,6" FontSize="12"/>
                             </Grid>
 
-                            <ListView x:Name="ListQNSnippets" Height="155" Background="#0B0F17" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="12" Margin="0,0,0,8">
+                            <ListView x:Name="ListQNSnippets" Height="155" Background="#141519" Foreground="#E2E8F0" BorderBrush="#303440" BorderThickness="1" FontSize="12" Margin="0,0,0,8">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Τίτλος" Width="180" DisplayMemberBinding="{Binding Title}"/>
@@ -1867,8 +1867,8 @@ if (-not $TestOnly) {
                         </StackPanel>
                     </Border>
 
-                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10">
-                        <TextBlock x:Name="TxtQNStatus" Text="Οι σημειώσεις σου αποθηκεύονται μόνο τοπικά στο PC σου (notes.json)." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                    <Border Background="#17191F" BorderBrush="#22252E" BorderThickness="1" CornerRadius="8" Padding="10">
+                        <TextBlock x:Name="TxtQNStatus" Text="Οι σημειώσεις σου αποθηκεύονται μόνο τοπικά στο PC σου (notes.json)." FontSize="11.5" Foreground="#A6E22E" TextWrapping="Wrap"/>
                     </Border>
                 </StackPanel>
             </ScrollViewer>
@@ -1888,8 +1888,8 @@ if (-not $TestOnly) {
                         </StackPanel>
                     </DockPanel>
 
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="12" Margin="0,0,0,12">
-                        <TextBlock x:Name="TxtGPStatus" Text="Αναζήτηση χειριστηρίου..." FontSize="12.5" FontWeight="SemiBold" Foreground="#F59E0B" TextWrapping="Wrap"/>
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="12" Margin="0,0,0,12">
+                        <TextBlock x:Name="TxtGPStatus" Text="Αναζήτηση χειριστηρίου..." FontSize="12.5" FontWeight="SemiBold" Foreground="#66D9EF" TextWrapping="Wrap"/>
                     </Border>
 
                     <!-- Sticks & Triggers -->
@@ -1903,15 +1903,15 @@ if (-not $TestOnly) {
                         </Grid.ColumnDefinitions>
 
                         <!-- Left Stick Radar -->
-                        <Border Grid.Column="0" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14">
+                        <Border Grid.Column="0" Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="14">
                             <StackPanel HorizontalAlignment="Center">
                                 <TextBlock Text="Left Stick (LS)" FontSize="12.5" FontWeight="SemiBold" Foreground="#E2E8F0" HorizontalAlignment="Center" Margin="0,0,0,8"/>
-                                <Canvas Width="150" Height="150" Background="#0B0F17">
-                                    <Ellipse Width="124" Height="124" Canvas.Left="13" Canvas.Top="13" Stroke="#273449" StrokeThickness="1.5"/>
-                                    <Line X1="75" Y1="10" X2="75" Y2="140" Stroke="#1E293B" StrokeThickness="1"/>
-                                    <Line X1="10" Y1="75" X2="140" Y2="75" Stroke="#1E293B" StrokeThickness="1"/>
-                                    <Polyline x:Name="PolyGPLeft" Stroke="#38BDF8" StrokeThickness="1.5" Opacity="0.65"/>
-                                    <Ellipse x:Name="DotGPLeft" Width="12" Height="12" Canvas.Left="69" Canvas.Top="69" Fill="#38BDF8" Stroke="#FFFFFF" StrokeThickness="1.5"/>
+                                <Canvas Width="150" Height="150" Background="#141519">
+                                    <Ellipse Width="124" Height="124" Canvas.Left="13" Canvas.Top="13" Stroke="#343946" StrokeThickness="1.5"/>
+                                    <Line X1="75" Y1="10" X2="75" Y2="140" Stroke="#22252E" StrokeThickness="1"/>
+                                    <Line X1="10" Y1="75" X2="140" Y2="75" Stroke="#22252E" StrokeThickness="1"/>
+                                    <Polyline x:Name="PolyGPLeft" Stroke="#FC961F" StrokeThickness="1.5" Opacity="0.65"/>
+                                    <Ellipse x:Name="DotGPLeft" Width="12" Height="12" Canvas.Left="69" Canvas.Top="69" Fill="#FC961F" Stroke="#FFFFFF" StrokeThickness="1.5"/>
                                 </Canvas>
                                 <TextBlock x:Name="TxtGPLeftXY" Text="X: 0.000   Y: 0.000" FontFamily="Consolas" FontSize="11.5" Foreground="#E2E8F0" HorizontalAlignment="Center" Margin="0,8,0,2"/>
                                 <TextBlock x:Name="TxtGPLeftDrift" Text="Κέντρο OK" FontSize="11" Foreground="#94A3B8" HorizontalAlignment="Center"/>
@@ -1919,13 +1919,13 @@ if (-not $TestOnly) {
                         </Border>
 
                         <!-- Right Stick Radar -->
-                        <Border Grid.Column="2" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14">
+                        <Border Grid.Column="2" Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="14">
                             <StackPanel HorizontalAlignment="Center">
                                 <TextBlock Text="Right Stick (RS)" FontSize="12.5" FontWeight="SemiBold" Foreground="#E2E8F0" HorizontalAlignment="Center" Margin="0,0,0,8"/>
-                                <Canvas Width="150" Height="150" Background="#0B0F17">
-                                    <Ellipse Width="124" Height="124" Canvas.Left="13" Canvas.Top="13" Stroke="#273449" StrokeThickness="1.5"/>
-                                    <Line X1="75" Y1="10" X2="75" Y2="140" Stroke="#1E293B" StrokeThickness="1"/>
-                                    <Line X1="10" Y1="75" X2="140" Y2="75" Stroke="#1E293B" StrokeThickness="1"/>
+                                <Canvas Width="150" Height="150" Background="#141519">
+                                    <Ellipse Width="124" Height="124" Canvas.Left="13" Canvas.Top="13" Stroke="#343946" StrokeThickness="1.5"/>
+                                    <Line X1="75" Y1="10" X2="75" Y2="140" Stroke="#22252E" StrokeThickness="1"/>
+                                    <Line X1="10" Y1="75" X2="140" Y2="75" Stroke="#22252E" StrokeThickness="1"/>
                                     <Polyline x:Name="PolyGPRight" Stroke="#10B981" StrokeThickness="1.5" Opacity="0.65"/>
                                     <Ellipse x:Name="DotGPRight" Width="12" Height="12" Canvas.Left="69" Canvas.Top="69" Fill="#10B981" Stroke="#FFFFFF" StrokeThickness="1.5"/>
                                 </Canvas>
@@ -1935,27 +1935,27 @@ if (-not $TestOnly) {
                         </Border>
 
                         <!-- Analog Triggers -->
-                        <Border Grid.Column="4" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14">
+                        <Border Grid.Column="4" Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="14">
                             <StackPanel VerticalAlignment="Center">
                                 <TextBlock Text="Αναλογικές Σκανδάλες" FontSize="12.5" FontWeight="SemiBold" Foreground="#E2E8F0" Margin="0,0,0,14"/>
                                 <DockPanel Margin="0,0,0,5">
                                     <TextBlock Text="Left Trigger (LT)" FontSize="11.5" Foreground="#94A3B8"/>
-                                    <TextBlock x:Name="TxtGPLT" Text="0 / 255" FontFamily="Consolas" FontSize="11.5" Foreground="#38BDF8" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                    <TextBlock x:Name="TxtGPLT" Text="0 / 255" FontFamily="Consolas" FontSize="11.5" Foreground="#FC961F" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
                                 </DockPanel>
-                                <ProgressBar x:Name="BarGPLT" Minimum="0" Maximum="255" Value="0" Height="14" Background="#0B0F17" Foreground="#38BDF8" BorderBrush="#273449" Margin="0,0,0,18"/>
+                                <ProgressBar x:Name="BarGPLT" Minimum="0" Maximum="255" Value="0" Height="14" Background="#141519" Foreground="#FC961F" BorderBrush="#343946" Margin="0,0,0,18"/>
 
                                 <DockPanel Margin="0,0,0,5">
                                     <TextBlock Text="Right Trigger (RT)" FontSize="11.5" Foreground="#94A3B8"/>
                                     <TextBlock x:Name="TxtGPRT" Text="0 / 255" FontFamily="Consolas" FontSize="11.5" Foreground="#10B981" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
                                 </DockPanel>
-                                <ProgressBar x:Name="BarGPRT" Minimum="0" Maximum="255" Value="0" Height="14" Background="#0B0F17" Foreground="#10B981" BorderBrush="#273449" Margin="0,0,0,14"/>
+                                <ProgressBar x:Name="BarGPRT" Minimum="0" Maximum="255" Value="0" Height="14" Background="#141519" Foreground="#10B981" BorderBrush="#343946" Margin="0,0,0,14"/>
                                 <TextBlock Text="Tip: Κάνε 1 πλήρη κύκλο με κάθε stick για μέτρηση Circularity %." FontSize="10.8" Foreground="#64748B" TextWrapping="Wrap"/>
                             </StackPanel>
                         </Border>
                     </Grid>
 
                     <!-- 14 Digital Buttons Matrix -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="14">
                         <StackPanel>
                             <TextBlock Text="Κουμπιά &amp; D-Pad (ανάβουν ζωντανά με κάθε πάτημα):" FontSize="12" Foreground="#94A3B8" Margin="0,0,0,10"/>
                             <WrapPanel x:Name="WrapGPButtons"/>
@@ -1975,7 +1975,7 @@ if (-not $TestOnly) {
                         <Button x:Name="BtnPDCopy" Content="Copy Διαστάσεις" Style="{StaticResource PrimaryButton}" DockPanel.Dock="Right" VerticalAlignment="Center" Padding="15,8"/>
                     </DockPanel>
 
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,2,0,12">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,2,0,12">
                         <StackPanel>
                             <TextBlock Text="Έτοιμο Preset (Εκτύπωση &amp; Social Media):" FontSize="11.5" Foreground="#94A3B8" Margin="0,0,0,5"/>
                             <ComboBox x:Name="CmbPDPreset" FontSize="12.5" Padding="8,6" Margin="0,0,0,12"/>
@@ -1997,14 +1997,14 @@ if (-not $TestOnly) {
 
                                 <StackPanel Grid.Column="0">
                                     <TextBlock Text="Πλάτος (W):" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,4"/>
-                                    <TextBox x:Name="TxtPDWidth" Text="210" FontFamily="Consolas" FontSize="13.5" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6"/>
+                                    <TextBox x:Name="TxtPDWidth" Text="210" FontFamily="Consolas" FontSize="13.5" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="8,6"/>
                                 </StackPanel>
 
                                 <Button x:Name="BtnPDSwap" Grid.Column="2" Content="⇄" ToolTip="Εναλλαγή Πλάτους / Ύψους" Style="{StaticResource SecondaryButton}" VerticalAlignment="Bottom" Padding="10,6" FontSize="14"/>
 
                                 <StackPanel Grid.Column="4">
                                     <TextBlock Text="Ύψος (H):" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,4"/>
-                                    <TextBox x:Name="TxtPDHeight" Text="297" FontFamily="Consolas" FontSize="13.5" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6"/>
+                                    <TextBox x:Name="TxtPDHeight" Text="297" FontFamily="Consolas" FontSize="13.5" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="8,6"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="6">
@@ -2040,25 +2040,25 @@ if (-not $TestOnly) {
 
                     <!-- Live Output Cards -->
                     <UniformGrid Columns="2" Margin="-5,0,-5,12">
-                        <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="5">
+                        <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="13" Margin="5">
                             <StackPanel>
-                                <TextBlock Text="ΤΕΛΙΚΕΣ ΔΙΑΣΤΑΣΕΙΣ PIXELS" FontSize="10.5" FontWeight="Bold" Foreground="#38BDF8"/>
+                                <TextBlock Text="ΤΕΛΙΚΕΣ ΔΙΑΣΤΑΣΕΙΣ PIXELS" FontSize="10.5" FontWeight="Bold" Foreground="#FC961F"/>
                                 <TextBlock x:Name="ValPDPixels" Text="--" FontFamily="Consolas" FontSize="15.5" FontWeight="Bold" Foreground="#F8FAFC" Margin="0,5,0,0" TextWrapping="Wrap"/>
                             </StackPanel>
                         </Border>
-                        <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="5">
+                        <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="13" Margin="5">
                             <StackPanel>
                                 <TextBlock Text="ΦΥΣΙΚΟ ΜΕΓΕΘΟΣ ΕΚΤΥΠΩΣΗΣ" FontSize="10.5" FontWeight="Bold" Foreground="#10B981"/>
                                 <TextBlock x:Name="ValPDMm" Text="--" FontFamily="Consolas" FontSize="14.5" FontWeight="SemiBold" Foreground="#F8FAFC" Margin="0,5,0,0" TextWrapping="Wrap"/>
                             </StackPanel>
                         </Border>
-                        <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="5">
+                        <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="13" Margin="5">
                             <StackPanel>
-                                <TextBlock Text="ΜΕ BLEED (ΓΙΑ ΤΥΠΟΓΡΑΦΕΙΟ)" FontSize="10.5" FontWeight="Bold" Foreground="#F59E0B"/>
+                                <TextBlock Text="ΜΕ BLEED (ΓΙΑ ΤΥΠΟΓΡΑΦΕΙΟ)" FontSize="10.5" FontWeight="Bold" Foreground="#66D9EF"/>
                                 <TextBlock x:Name="ValPDBleed" Text="--" FontFamily="Consolas" FontSize="13.5" FontWeight="SemiBold" Foreground="#FDE68A" Margin="0,5,0,0" TextWrapping="Wrap"/>
                             </StackPanel>
                         </Border>
-                        <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="5">
+                        <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="13" Margin="5">
                             <StackPanel>
                                 <TextBlock Text="ASPECT RATIO &amp; MEGAPIXELS" FontSize="10.5" FontWeight="Bold" Foreground="#A78BFA"/>
                                 <TextBlock x:Name="ValPDRatio" Text="--" FontFamily="Consolas" FontSize="14.5" FontWeight="SemiBold" Foreground="#F8FAFC" Margin="0,5,0,0" TextWrapping="Wrap"/>
@@ -2067,17 +2067,17 @@ if (-not $TestOnly) {
                     </UniformGrid>
 
                     <!-- Proportional Resize Helper -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,10">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,10">
                         <DockPanel>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <TextBlock Text="Αναλογική κλίμακα — Αν το νέο Πλάτος είναι:" FontSize="12" Foreground="#CBD5E1" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                                <TextBox x:Name="TxtPDScaleW" Width="90" Text="1080" FontFamily="Consolas" FontSize="13" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,5"/>
+                                <TextBox x:Name="TxtPDScaleW" Width="90" Text="1080" FontFamily="Consolas" FontSize="13" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="8,5"/>
                             </StackPanel>
-                            <TextBlock x:Name="TxtPDScaleRes" Text="—" FontFamily="Consolas" FontSize="13.5" FontWeight="Bold" Foreground="#38BDF8" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="TxtPDScaleRes" Text="—" FontFamily="Consolas" FontSize="13.5" FontWeight="Bold" Foreground="#FC961F" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                         </DockPanel>
                     </Border>
 
-                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10">
+                    <Border Background="#17191F" BorderBrush="#22252E" BorderThickness="1" CornerRadius="8" Padding="10">
                         <TextBlock x:Name="TxtPDStatus" Text="Tip: 300 DPI + 3mm Bleed είναι το στάνταρ για κάρτες, flyers &amp; έντυπα · 150 DPI για banners/roll-ups." FontSize="11.5" Foreground="#94A3B8" TextWrapping="Wrap"/>
                     </Border>
                 </StackPanel>
@@ -2098,31 +2098,31 @@ if (-not $TestOnly) {
                         </StackPanel>
                     </DockPanel>
 
-                    <Border Background="#111C2D" BorderBrush="#1E3A5F" BorderThickness="1" CornerRadius="10" Padding="12" Margin="0,2,0,12">
+                    <Border Background="#231D15" BorderBrush="#2D2418" BorderThickness="1" CornerRadius="10" Padding="12" Margin="0,2,0,12">
                         <StackPanel>
                             <TextBlock Text="Συντομεύσεις QuickSnap:  Ctrl+Alt+S (οποτεδήποτε στα Windows)  •  F = Ολόκληρη Οθόνη  •  A=Βέλος  R=Πλαίσιο  P=Στυλό  H=Marker  B=Blur  •  Enter = Copy &amp; Κλείσιμο  •  Ctrl+S = PNG" FontSize="11.5" Foreground="#CBD5E1" TextWrapping="Wrap"/>
                             <CheckBox x:Name="ChkPRAutoCopy" Content="Αυτόματη αντιγραφή Screenshot στο Clipboard (έτοιμο για Ctrl+V σε Photoshop / Figma / Chat)" IsChecked="True" Margin="0,6,0,0"/>
                         </StackPanel>
                     </Border>
 
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,12">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,12">
                         <StackPanel>
                             <DockPanel Margin="0,0,0,10">
-                                <TextBlock x:Name="TxtPRDims" Text="Καμία μέτρηση ακόμα — πάτα 'Μέτρηση &amp; Λήψη Οθόνης' και σύρε με το ποντίκι." FontFamily="Consolas" FontSize="13" FontWeight="SemiBold" Foreground="#38BDF8" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                <TextBlock x:Name="TxtPRDims" Text="Καμία μέτρηση ακόμα — πάτα 'Μέτρηση &amp; Λήψη Οθόνης' και σύρε με το ποντίκι." FontFamily="Consolas" FontSize="13" FontWeight="SemiBold" Foreground="#FC961F" VerticalAlignment="Center" TextWrapping="Wrap"/>
                                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
                                     <Button x:Name="BtnPRCopyDims" Content="Copy W×H" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
                                     <Button x:Name="BtnPRCopyImg" Content="Copy PNG" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
                                     <Button x:Name="BtnPRSavePng" Content="Αποθήκευση PNG" Style="{StaticResource EmeraldButton}" Padding="13,7" FontSize="12.5"/>
                                 </StackPanel>
                             </DockPanel>
-                            <Border Background="#0B0F17" BorderBrush="#263348" BorderThickness="1" CornerRadius="8" MinHeight="270" MaxHeight="360" Padding="8">
+                            <Border Background="#141519" BorderBrush="#2B2F3B" BorderThickness="1" CornerRadius="8" MinHeight="270" MaxHeight="360" Padding="8">
                                 <Image x:Name="ImgPRPreview" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality"/>
                             </Border>
                         </StackPanel>
                     </Border>
 
-                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10">
-                        <TextBlock x:Name="TxtPRStatus" Text="0 MB background RAM · Esc ή Δεξί κλικ για ακύρωση κατά την επιλογή περιοχής." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                    <Border Background="#17191F" BorderBrush="#22252E" BorderThickness="1" CornerRadius="8" Padding="10">
+                        <TextBlock x:Name="TxtPRStatus" Text="0 MB background RAM · Esc ή Δεξί κλικ για ακύρωση κατά την επιλογή περιοχής." FontSize="11.5" Foreground="#A6E22E" TextWrapping="Wrap"/>
                     </Border>
                 </StackPanel>
             </ScrollViewer>
@@ -2142,27 +2142,27 @@ if (-not $TestOnly) {
                     </DockPanel>
 
                     <!-- Google SERP Checker Card -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,2,0,12">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,2,0,12">
                         <StackPanel>
                             <DockPanel Margin="0,0,0,4">
                                 <TextBlock Text="SEO Title (ιδανικά έως 60 χαρακτήρες):" FontSize="11.5" Foreground="#CBD5E1"/>
-                                <TextBlock x:Name="LblSEOTitleCount" Text="0 / 60 chars" FontFamily="Consolas" FontSize="11.5" FontWeight="Bold" HorizontalAlignment="Right" Foreground="#22C55E"/>
+                                <TextBlock x:Name="LblSEOTitleCount" Text="0 / 60 chars" FontFamily="Consolas" FontSize="11.5" FontWeight="Bold" HorizontalAlignment="Right" Foreground="#A6E22E"/>
                             </DockPanel>
-                            <TextBox x:Name="TxtSEOTitle" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6" FontSize="12.5"/>
-                            <ProgressBar x:Name="BarSEOTitle" Height="4" Minimum="0" Maximum="80" Value="0" Background="#1E293B" Foreground="#38BDF8" BorderThickness="0" Margin="0,4,0,10"/>
+                            <TextBox x:Name="TxtSEOTitle" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="8,6" FontSize="12.5"/>
+                            <ProgressBar x:Name="BarSEOTitle" Height="4" Minimum="0" Maximum="80" Value="0" Background="#22252E" Foreground="#FC961F" BorderThickness="0" Margin="0,4,0,10"/>
 
                             <DockPanel Margin="0,0,0,4">
                                 <TextBlock Text="Meta Description (ιδανικά έως 155 χαρακτήρες):" FontSize="11.5" Foreground="#CBD5E1"/>
-                                <TextBlock x:Name="LblSEODescCount" Text="0 / 155 chars" FontFamily="Consolas" FontSize="11.5" FontWeight="Bold" HorizontalAlignment="Right" Foreground="#22C55E"/>
+                                <TextBlock x:Name="LblSEODescCount" Text="0 / 155 chars" FontFamily="Consolas" FontSize="11.5" FontWeight="Bold" HorizontalAlignment="Right" Foreground="#A6E22E"/>
                             </DockPanel>
-                            <TextBox x:Name="TxtSEODesc" Height="54" AcceptsReturn="True" TextWrapping="Wrap" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6" FontSize="12"/>
-                            <ProgressBar x:Name="BarSEODesc" Height="4" Minimum="0" Maximum="200" Value="0" Background="#1E293B" Foreground="#10B981" BorderThickness="0" Margin="0,4,0,10"/>
+                            <TextBox x:Name="TxtSEODesc" Height="54" AcceptsReturn="True" TextWrapping="Wrap" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="8,6" FontSize="12"/>
+                            <ProgressBar x:Name="BarSEODesc" Height="4" Minimum="0" Maximum="200" Value="0" Background="#22252E" Foreground="#10B981" BorderThickness="0" Margin="0,4,0,10"/>
 
                             <!-- Live Google SERP Preview -->
-                            <Border Background="#0B0F17" BorderBrush="#253349" BorderThickness="1" CornerRadius="8" Padding="11">
+                            <Border Background="#141519" BorderBrush="#2B2F3B" BorderThickness="1" CornerRadius="8" Padding="11">
                                 <StackPanel>
                                     <TextBlock x:Name="TxtSEOSlugOut" Text="https://nillygraphics.com/" FontSize="11" Foreground="#94A3B8" TextTrimming="CharacterEllipsis"/>
-                                    <TextBlock x:Name="PrevSEOTitle" Text="Title Preview" FontSize="14.5" FontWeight="SemiBold" Foreground="#60A5FA" Margin="0,2,0,2" TextWrapping="Wrap"/>
+                                    <TextBlock x:Name="PrevSEOTitle" Text="Title Preview" FontSize="14.5" FontWeight="SemiBold" Foreground="#66D9EF" Margin="0,2,0,2" TextWrapping="Wrap"/>
                                     <TextBlock x:Name="PrevSEODesc" Text="Description Preview" FontSize="11.5" Foreground="#CBD5E1" TextWrapping="Wrap"/>
                                 </StackPanel>
                             </Border>
@@ -2170,13 +2170,13 @@ if (-not $TestOnly) {
                     </Border>
 
                     <!-- Plain Text Cleaner & Case Converter -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,12">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,12">
                         <StackPanel>
                             <DockPanel Margin="0,0,0,6">
                                 <TextBlock Text="Καθαρισμός Κειμένου &amp; Μετατροπή Κεφαλαίων / Πεζών:" FontSize="12" FontWeight="SemiBold" Foreground="#CBD5E1"/>
                                 <TextBlock x:Name="LblSEOTextStats" Text="0 λέξεις • 0 χαρακτήρες • 0 γραμμές" FontFamily="Consolas" FontSize="11" Foreground="#94A3B8" HorizontalAlignment="Right"/>
                             </DockPanel>
-                            <TextBox x:Name="TxtSEOCleaner" Height="82" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6" FontSize="12" Margin="0,0,0,8"/>
+                            <TextBox x:Name="TxtSEOCleaner" Height="82" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="8,6" FontSize="12" Margin="0,0,0,8"/>
                             <WrapPanel>
                                 <Button x:Name="BtnSEOCleanSpaces" Content="Καθαρισμός Κενών" Style="{StaticResource SecondaryButton}" Margin="0,0,8,4"/>
                                 <Button x:Name="BtnSEOUpper" Content="ΚΕΦΑΛΑΙΑ" Style="{StaticResource SecondaryButton}" Margin="0,0,8,4"/>
@@ -2188,7 +2188,7 @@ if (-not $TestOnly) {
                     </Border>
 
                     <!-- Crypto Password Generator -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,10">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,10">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -2199,7 +2199,7 @@ if (-not $TestOnly) {
                                 <ColumnDefinition Width="10"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBox x:Name="TxtSEOPassOut" Grid.Column="0" IsReadOnly="True" FontFamily="Consolas" FontSize="13.5" FontWeight="Bold" Background="#0B0F17" Foreground="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="10,7"/>
+                            <TextBox x:Name="TxtSEOPassOut" Grid.Column="0" IsReadOnly="True" FontFamily="Consolas" FontSize="13.5" FontWeight="Bold" Background="#141519" Foreground="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="10,7"/>
                             <ComboBox x:Name="CmbSEOPassLen" Grid.Column="2" SelectedIndex="1" FontSize="12" Padding="6,6" VerticalAlignment="Center">
                                 <ComboBoxItem Content="12 chars" Tag="12"/>
                                 <ComboBoxItem Content="16 chars" Tag="16"/>
@@ -2210,8 +2210,8 @@ if (-not $TestOnly) {
                         </Grid>
                     </Border>
 
-                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10">
-                        <TextBlock x:Name="TxtSEOStatus" Text="100% offline · Ιδανικό για WordPress, WooCommerce, Elementor, Meta Tags &amp; πελάτες." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                    <Border Background="#17191F" BorderBrush="#22252E" BorderThickness="1" CornerRadius="8" Padding="10">
+                        <TextBlock x:Name="TxtSEOStatus" Text="100% offline · Ιδανικό για WordPress, WooCommerce, Elementor, Meta Tags &amp; πελάτες." FontSize="11.5" Foreground="#A6E22E" TextWrapping="Wrap"/>
                     </Border>
                 </StackPanel>
             </ScrollViewer>
@@ -2227,20 +2227,20 @@ if (-not $TestOnly) {
                         <Button x:Name="BtnB64Browse" Content="Επιλογή Αρχείου" Style="{StaticResource PrimaryButton}" DockPanel.Dock="Right" VerticalAlignment="Center" Padding="15,8"/>
                     </DockPanel>
 
-                    <Border x:Name="ZoneB64Drop" AllowDrop="True" Background="#111C2D" BorderBrush="#38BDF8" BorderThickness="1" CornerRadius="10" Padding="16" Margin="0,2,0,12">
+                    <Border x:Name="ZoneB64Drop" AllowDrop="True" Background="#231D15" BorderBrush="#FC961F" BorderThickness="1" CornerRadius="10" Padding="16" Margin="0,2,0,12">
                         <StackPanel>
-                            <TextBlock Text="Ρίξε εδώ SVG, Logo, PNG, WebP, ICO ή οποιοδήποτε αρχείο (Drag &amp; Drop)" FontSize="13.5" FontWeight="SemiBold" Foreground="#38BDF8"/>
+                            <TextBlock Text="Ρίξε εδώ SVG, Logo, PNG, WebP, ICO ή οποιοδήποτε αρχείο (Drag &amp; Drop)" FontSize="13.5" FontWeight="SemiBold" Foreground="#FC961F"/>
                             <TextBlock x:Name="TxtB64Info" Text="Κανένα αρχείο επιλεγμένο ακόμα." FontSize="11.5" Foreground="#94A3B8" Margin="0,4,0,0"/>
                         </StackPanel>
                     </Border>
 
                     <!-- Hashes Card -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,12">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,12">
                         <StackPanel>
                             <DockPanel Margin="0,0,0,8">
                                 <Button x:Name="BtnB64CopySha" Content="Copy SHA-256" Style="{StaticResource SecondaryButton}" DockPanel.Dock="Right" Padding="11,5" FontSize="11.5"/>
                                 <StackPanel Margin="0,0,10,0">
-                                    <TextBlock Text="SHA-256:" FontSize="10.5" FontWeight="Bold" Foreground="#38BDF8"/>
+                                    <TextBlock Text="SHA-256:" FontSize="10.5" FontWeight="Bold" Foreground="#FC961F"/>
                                     <TextBox x:Name="ValB64Sha" IsReadOnly="True" Text="—" FontFamily="Consolas" FontSize="11.5" Background="Transparent" Foreground="#E2E8F0" BorderThickness="0"/>
                                 </StackPanel>
                             </DockPanel>
@@ -2255,7 +2255,7 @@ if (-not $TestOnly) {
                     </Border>
 
                     <!-- Base64 Output + 1-Click Copy -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,10">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,10">
                         <StackPanel>
                             <DockPanel Margin="0,0,0,8">
                                 <TextBlock Text="Base64 Data URI Προεπισκόπηση:" FontSize="12" FontWeight="SemiBold" Foreground="#CBD5E1" VerticalAlignment="Center"/>
@@ -2265,12 +2265,12 @@ if (-not $TestOnly) {
                                     <Button x:Name="BtnB64CopyCss" Content="Copy CSS url()" Style="{StaticResource EmeraldButton}" Padding="13,7" FontSize="12"/>
                                 </StackPanel>
                             </DockPanel>
-                            <TextBox x:Name="TxtB64Output" Height="115" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" FontFamily="Consolas" FontSize="11.5" Background="#0B0F17" Foreground="#CBD5E1" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6"/>
+                            <TextBox x:Name="TxtB64Output" Height="115" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" FontFamily="Consolas" FontSize="11.5" Background="#141519" Foreground="#CBD5E1" BorderBrush="#363B48" BorderThickness="1" Padding="8,6"/>
                         </StackPanel>
                     </Border>
 
-                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10">
-                        <TextBlock x:Name="TxtB64Status" Text="Tip: Ιδανικό για email υπογραφές, inline SVG icons στο CSS/WordPress &amp; έλεγχο ακεραιότητας αρχείων." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                    <Border Background="#17191F" BorderBrush="#22252E" BorderThickness="1" CornerRadius="8" Padding="10">
+                        <TextBlock x:Name="TxtB64Status" Text="Tip: Ιδανικό για email υπογραφές, inline SVG icons στο CSS/WordPress &amp; έλεγχο ακεραιότητας αρχείων." FontSize="11.5" Foreground="#A6E22E" TextWrapping="Wrap"/>
                     </Border>
                 </StackPanel>
             </ScrollViewer>
@@ -2287,7 +2287,7 @@ if (-not $TestOnly) {
                     </DockPanel>
 
                     <!-- Live Daemon Status & Controls -->
-                    <Border Background="#111C2D" BorderBrush="#1E3A5F" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,2,0,12">
+                    <Border Background="#231D15" BorderBrush="#2D2418" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,2,0,12">
                         <StackPanel>
                             <DockPanel Margin="0,0,0,8">
                                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
@@ -2296,7 +2296,7 @@ if (-not $TestOnly) {
                                     <Button x:Name="BtnCBRefresh" Content="Ανανέωση" Style="{StaticResource SecondaryButton}" Padding="11,7" Margin="0,0,6,0"/>
                                     <Button x:Name="BtnCBResetStats" Content="Μηδενισμός" Style="{StaticResource SecondaryButton}" Padding="11,7"/>
                                 </StackPanel>
-                                <TextBlock x:Name="TxtCBStatusBadge" Text="Έλεγχος κατάστασης..." FontSize="12.5" FontWeight="SemiBold" Foreground="#38BDF8" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,10,0"/>
+                                <TextBlock x:Name="TxtCBStatusBadge" Text="Έλεγχος κατάστασης..." FontSize="12.5" FontWeight="SemiBold" Foreground="#FC961F" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,10,0"/>
                             </DockPanel>
                             <WrapPanel>
                                 <CheckBox x:Name="ChkCBStartup" Content="Αυτόματη εκκίνηση με Windows (Startup)" Margin="0,2,18,0"/>
@@ -2307,12 +2307,12 @@ if (-not $TestOnly) {
                     </Border>
 
                     <!-- FULL-WIDTH ANALYTICS TABLE (ALL KEYS — FIND BROKEN SWITCHES INSTANTLY!) -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,12">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,0,0,12">
                         <StackPanel>
                             <DockPanel Margin="0,0,0,8">
                                 <TextBlock Text="Αναλυτικά Στατιστικά Όλων των Πλήκτρων (τα προβληματικά ανεβαίνουν πρώτα — διπλό κλικ για ρύθμιση ορίου):" FontSize="12.5" FontWeight="SemiBold" Foreground="#F8FAFC" TextWrapping="Wrap"/>
                             </DockPanel>
-                            <ListView x:Name="ListCBStats" Height="195" Background="#0B0F17" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="12">
+                            <ListView x:Name="ListCBStats" Height="195" Background="#141519" Foreground="#E2E8F0" BorderBrush="#303440" BorderThickness="1" FontSize="12">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Πλήκτρο" Width="88" DisplayMemberBinding="{Binding Key}"/>
@@ -2329,7 +2329,7 @@ if (-not $TestOnly) {
                     </Border>
 
                     <!-- Global Settings Card -->
-                    <Border Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,12">
+                    <Border Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,0,0,12">
                         <StackPanel>
                             <TextBlock Text="Γενικές Ρυθμίσεις:" FontSize="12.5" FontWeight="SemiBold" Foreground="#CBD5E1" Margin="0,0,0,8"/>
                             <Grid Margin="0,0,0,10">
@@ -2344,11 +2344,11 @@ if (-not $TestOnly) {
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0">
                                     <TextBlock Text="Global Όριο (ms):" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,4"/>
-                                    <TextBox x:Name="TxtCBGlobalMs" Text="50" FontFamily="Consolas" FontSize="13" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6"/>
+                                    <TextBox x:Name="TxtCBGlobalMs" Text="50" FontFamily="Consolas" FontSize="13" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="8,6"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="2">
                                     <TextBlock Text="Ελάχιστο (ms):" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,4"/>
-                                    <TextBox x:Name="TxtCBMinMs" Text="0" FontFamily="Consolas" FontSize="13" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6"/>
+                                    <TextBox x:Name="TxtCBMinMs" Text="0" FontFamily="Consolas" FontSize="13" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="8,6"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="4">
                                     <TextBlock Text="Μέτρηση από:" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,4"/>
@@ -2359,7 +2359,7 @@ if (-not $TestOnly) {
                                 </StackPanel>
                                 <StackPanel Grid.Column="6">
                                     <TextBlock Text="Εξαίρεση προγραμμάτων (/ ή ,):" FontSize="11" Foreground="#94A3B8" Margin="0,0,0,4"/>
-                                    <TextBox x:Name="TxtCBAutoProgs" Text="" FontFamily="Consolas" FontSize="12" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,6"/>
+                                    <TextBox x:Name="TxtCBAutoProgs" Text="" FontFamily="Consolas" FontSize="12" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="8,6"/>
                                 </StackPanel>
                             </Grid>
 
@@ -2380,7 +2380,7 @@ if (-not $TestOnly) {
                         </Grid.ColumnDefinitions>
 
                         <!-- Per-Key Overrides -->
-                        <Border Grid.Column="0" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13">
+                        <Border Grid.Column="0" Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="13">
                             <StackPanel>
                                 <TextBlock Text="Ειδικά Όρια ανά Πλήκτρο (π.χ. I, E, M, Back, Space):" FontSize="12" FontWeight="SemiBold" Foreground="#CBD5E1" Margin="0,0,0,8"/>
                                 <Grid Margin="0,0,0,8">
@@ -2391,12 +2391,12 @@ if (-not $TestOnly) {
                                         <ColumnDefinition Width="8"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBox x:Name="TxtCBNewKey" Grid.Column="0" Text="I" ToolTip="Όνομα πλήκτρου (π.χ. I, E, M, Back, Space, OemPeriod)" FontFamily="Consolas" FontSize="12.5" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="8,5"/>
-                                    <TextBox x:Name="TxtCBNewKeyMs" Grid.Column="2" Text="125" FontFamily="Consolas" FontSize="12.5" Background="#0B0F17" Foreground="#F8FAFC" CaretBrush="#38BDF8" BorderBrush="#2C384D" BorderThickness="1" Padding="7,5"/>
+                                    <TextBox x:Name="TxtCBNewKey" Grid.Column="0" Text="I" ToolTip="Όνομα πλήκτρου (π.χ. I, E, M, Back, Space, OemPeriod)" FontFamily="Consolas" FontSize="12.5" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="8,5"/>
+                                    <TextBox x:Name="TxtCBNewKeyMs" Grid.Column="2" Text="125" FontFamily="Consolas" FontSize="12.5" Background="#141519" Foreground="#F8FAFC" CaretBrush="#FC961F" BorderBrush="#363B48" BorderThickness="1" Padding="7,5"/>
                                     <Button x:Name="BtnCBAddKey" Grid.Column="4" Content="+ Ορισμός" Style="{StaticResource EmeraldButton}" Padding="11,5" FontSize="12"/>
                                 </Grid>
 
-                                <ListView x:Name="ListCBKeys" Height="165" Background="#0B0F17" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="12" Margin="0,0,0,8">
+                                <ListView x:Name="ListCBKeys" Height="165" Background="#141519" Foreground="#E2E8F0" BorderBrush="#303440" BorderThickness="1" FontSize="12" Margin="0,0,0,8">
                                     <ListView.View>
                                         <GridView>
                                             <GridViewColumn Header="Πλήκτρο" Width="115" DisplayMemberBinding="{Binding Key}"/>
@@ -2411,10 +2411,10 @@ if (-not $TestOnly) {
                         </Border>
 
                         <!-- Live Blocked Chatter Log -->
-                        <Border Grid.Column="2" Background="#131924" BorderBrush="#1F293B" BorderThickness="1" CornerRadius="10" Padding="13">
+                        <Border Grid.Column="2" Background="#1A1C22" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="13">
                             <StackPanel>
                                 <TextBlock Text="Live Log Διπλοπατημάτων (Τελευταία 50):" FontSize="12" FontWeight="SemiBold" Foreground="#CBD5E1" Margin="0,0,0,8"/>
-                                <ListView x:Name="ListCBLog" Height="234" Background="#0B0F17" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="11.5">
+                                <ListView x:Name="ListCBLog" Height="234" Background="#141519" Foreground="#E2E8F0" BorderBrush="#303440" BorderThickness="1" FontSize="11.5">
                                     <ListView.View>
                                         <GridView>
                                             <GridViewColumn Header="Ώρα" Width="64" DisplayMemberBinding="{Binding Time}"/>
@@ -2428,8 +2428,8 @@ if (-not $TestOnly) {
                         </Border>
                     </Grid>
 
-                    <Border Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10">
-                        <TextBlock x:Name="TxtCBFooterStatus" Text="Tip: Κάνε διπλό κλικ σε οποιοδήποτε πλήκτρο στον πίνακα στατιστικών για να σου προτείνει αυτόματα το ιδανικό όριο ms!" FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                    <Border Background="#17191F" BorderBrush="#22252E" BorderThickness="1" CornerRadius="8" Padding="10">
+                        <TextBlock x:Name="TxtCBFooterStatus" Text="Tip: Κάνε διπλό κλικ σε οποιοδήποτε πλήκτρο στον πίνακα στατιστικών για να σου προτείνει αυτόματα το ιδανικό όριο ms!" FontSize="11.5" Foreground="#A6E22E" TextWrapping="Wrap"/>
                     </Border>
                 </StackPanel>
             </ScrollViewer>
@@ -2454,7 +2454,7 @@ if (-not $TestOnly) {
                     </StackPanel>
                 </DockPanel>
 
-                <ListView x:Name="ListSMItems" Grid.Row="1" Background="#131924" Foreground="#E2E8F0" BorderBrush="#1F293B" BorderThickness="1" FontSize="12">
+                <ListView x:Name="ListSMItems" Grid.Row="1" Background="#1A1C22" Foreground="#E2E8F0" BorderBrush="#303440" BorderThickness="1" FontSize="12">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Πρόγραμμα" Width="155" DisplayMemberBinding="{Binding Name}"/>
@@ -2466,8 +2466,8 @@ if (-not $TestOnly) {
                     </ListView.View>
                 </ListView>
 
-                <Border Grid.Row="2" Background="#0F141F" BorderBrush="#1C2536" BorderThickness="1" CornerRadius="8" Padding="10" Margin="0,10,0,0">
-                    <TextBlock x:Name="TxtSMStatus" Text="Σάρωση προγραμμάτων εκκίνησης..." FontSize="11.5" Foreground="#22C55E" TextWrapping="Wrap"/>
+                <Border Grid.Row="2" Background="#17191F" BorderBrush="#22252E" BorderThickness="1" CornerRadius="8" Padding="10" Margin="0,10,0,0">
+                    <TextBlock x:Name="TxtSMStatus" Text="Σάρωση προγραμμάτων εκκίνησης..." FontSize="11.5" Foreground="#A6E22E" TextWrapping="Wrap"/>
                 </Border>
             </Grid>
 
@@ -2787,7 +2787,7 @@ function Refresh-HomeStats {
         $freeGB = [math]::Round($drv.AvailableFreeSpace / 1GB, 1)
         $usedD  = [math]::Round($totGB - $freeGB, 1)
         $usedP  = if ($totGB -gt 0) { [math]::Round(($usedD / $totGB) * 100, 0) } else { 0 }
-        $brush  = if ($usedP -ge 85) { "#F59E0B" } elseif ($drv.Name -eq "C:\") { "#38BDF8" } else { "#22C55E" }
+        $brush  = if ($usedP -ge 85) { "#66D9EF" } elseif ($drv.Name -eq "C:\") { "#FC961F" } else { "#A6E22E" }
         $vol    = if ($drv.VolumeLabel) { " ($($drv.VolumeLabel))" } else { "" }
         $driveRows += [PSCustomObject]@{
             Label       = "Δίσκος $($drv.Name.TrimEnd('\'))$vol  —  $usedD / $totGB GB ($usedP%)"
@@ -2904,8 +2904,8 @@ function Set-ActivePage([string]$Page) {
     }
     foreach ($k in $navMap.Keys) {
         if ($k -eq $Page) {
-            $navMap[$k].Background = $conv.ConvertFromString('#182436')
-            $navMap[$k].Foreground = $conv.ConvertFromString('#38BDF8')
+            $navMap[$k].Background = $conv.ConvertFromString('#231D15')
+            $navMap[$k].Foreground = $conv.ConvertFromString('#FC961F')
         } else {
             $navMap[$k].Background = [Windows.Media.Brushes]::Transparent
             $navMap[$k].Foreground = $conv.ConvertFromString('#94A3B8')
