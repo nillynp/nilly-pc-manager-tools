@@ -182,7 +182,35 @@ function Refresh-HardwareSpecs {
         }
     }
 
-    # 7. OS & Local IP
+    # 7. Laptop Battery Health & Wear % (NillySysInfo — Design vs Full Charge Capacity & Cycles)
+    try {
+        $bats = @(Get-CimInstance Win32_Battery -ErrorAction SilentlyContinue)
+        if ($bats.Count -gt 0) {
+            $stat = Get-CimInstance -Namespace root\wmi -ClassName BatteryStaticData -ErrorAction SilentlyContinue | Select-Object -First 1
+            $full = Get-CimInstance -Namespace root\wmi -ClassName BatteryFullChargedCapacity -ErrorAction SilentlyContinue | Select-Object -First 1
+            $cyc  = Get-CimInstance -Namespace root\wmi -ClassName BatteryCycleCount -ErrorAction SilentlyContinue | Select-Object -First 1
+            $idxB = 1
+            foreach ($b in $bats) {
+                $chg = if ($null -ne $b.EstimatedChargeRemaining) { "$($b.EstimatedChargeRemaining)%" } else { "-" }
+                $acTxt = switch ([int]$b.BatteryStatus) { 2 { "Φόρτιση / AC" } 1 { "Σε μπαταρία" } 3 { "Πλήρης" } default { "Ενεργή" } }
+                $wearTxt = ""
+                if ($stat -and $full -and $stat.DesignedCapacity -gt 0 -and $full.FullChargedCapacity -gt 0) {
+                    $desWh  = [math]::Round($stat.DesignedCapacity / 1000.0, 1)
+                    $fullWh = [math]::Round($full.FullChargedCapacity / 1000.0, 1)
+                    $health = [math]::Min(100, [math]::Max(0, [math]::Round(($full.FullChargedCapacity * 100.0) / $stat.DesignedCapacity, 0)))
+                    $wear   = [math]::Max(0, 100 - $health)
+                    $wearTxt = "  •  Υγεία: $health% (Wear $wear%)  •  $fullWh / $desWh Wh"
+                }
+                $cycTxt = if ($cyc -and $cyc.CycleCount -gt 0) { "  •  Κύκλοι: $($cyc.CycleCount)" } else { "" }
+                & $addRow "Μπαταρία" "Battery $idxB ($acTxt)" "Φόρτιση: $chg$wearTxt$cycTxt"
+                $idxB++
+            }
+        } else {
+            & $addRow "Μπαταρία" "Τροφοδοσία" "Desktop / AC Power (χωρίς εσωτερική μπαταρία)"
+        }
+    } catch { }
+
+    # 8. OS & Local IP
     $os = Get-CimInstance Win32_OperatingSystem -ErrorAction SilentlyContinue
     if ($os) { & $addRow "Windows" "Λειτουργικό" "$($os.Caption) (Build $($os.BuildNumber))" }
     $ips = @(Get-NetIPAddress -AddressFamily IPv4 -ErrorAction SilentlyContinue |
@@ -192,7 +220,7 @@ function Refresh-HardwareSpecs {
 
     $ui.ListHWSpecs.ItemsSource = $rows
     $script:HWState.ReportText = $sb.ToString()
-    $ui.TxtHWStatus.Text = "Εντοπίστηκαν $($rows.Count) στοιχεία υλικού (CPU-Z / GPU-Z / RAM SPD / SSD) — έτοιμο για αντιγραφή!"
+    $ui.TxtHWStatus.Text = "Εντοπίστηκαν $($rows.Count) στοιχεία υλικού (NillySysInfo · CPU/GPU/RAM/SSD/Battery) — έτοιμο για αντιγραφή!"
 }
 
 function Initialize-HardwareSpecsTool {
