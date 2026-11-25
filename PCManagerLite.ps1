@@ -96,6 +96,41 @@ public static class NillyNative {
     [DllImport("dwmapi.dll")]
     private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
 
+    [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
+    public static extern int SetCurrentProcessExplicitAppUserModelID(string AppID);
+
+    [DllImport("user32.dll")]
+    private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    private static extern IntPtr CreateIconFromResourceEx(byte[] pbIconBits, uint cbIconBits, bool fIcon, uint dwVersion, int cxDesired, int cyDesired, uint uFlags);
+
+    public static bool ApplyTaskbarIconFromIcoBytes(IntPtr hwnd, byte[] icoData) {
+        if (hwnd == IntPtr.Zero || icoData == null || icoData.Length < 22) return false;
+        try {
+            int count = BitConverter.ToUInt16(icoData, 4);
+            int bestOff = -1, bestLen = 0, bestDim = -1;
+            for (int i = 0; i < count; i++) {
+                int e = 6 + i * 16;
+                if (e + 16 > icoData.Length) break;
+                int w = icoData[e] == 0 ? 256 : icoData[e];
+                int len = BitConverter.ToInt32(icoData, e + 8);
+                int off = BitConverter.ToInt32(icoData, e + 12);
+                if (off < 0 || len <= 8 || off + len > icoData.Length) continue;
+                bool isPng = (icoData[off] == 0x89 && icoData[off + 1] == 0x50 && icoData[off + 2] == 0x4E && icoData[off + 3] == 0x47);
+                if (isPng && w > bestDim) { bestDim = w; bestOff = off; bestLen = len; }
+            }
+            if (bestOff < 0) return false;
+            byte[] png = new byte[bestLen];
+            Buffer.BlockCopy(icoData, bestOff, png, 0, bestLen);
+            IntPtr hBig = CreateIconFromResourceEx(png, (uint)png.Length, true, 0x00030000, 48, 48, 0);
+            IntPtr hSmall = CreateIconFromResourceEx(png, (uint)png.Length, true, 0x00030000, 16, 16, 0);
+            if (hBig != IntPtr.Zero) SendMessage(hwnd, 0x0080, (IntPtr)1, hBig);
+            if (hSmall != IntPtr.Zero) SendMessage(hwnd, 0x0080, (IntPtr)0, hSmall);
+            return (hBig != IntPtr.Zero);
+        } catch { return false; }
+    }
+
     public static void EnableDarkTitleBar(IntPtr hwnd) {
         if (hwnd == IntPtr.Zero) return;
         int useDark = 1;
@@ -146,6 +181,7 @@ public static class NillyNative {
 "@ -ErrorAction SilentlyContinue
 
 [void][NillyNative]::SetProcessDPIAware()
+try { [void][NillyNative]::SetCurrentProcessExplicitAppUserModelID("NillyGraphics.PCManagerLite") } catch {}
 
 $script:WindowTitle = "Nilly PC Manager & Tools v$AppVersion — $AppAuthor"
 $script:SingleInstanceMutex = $null
@@ -2442,16 +2478,29 @@ if (-not $TestOnly) {
 $reader = New-Object System.Xml.XmlNodeReader $xaml
 $window = [Windows.Markup.XamlReader]::Load($reader)
 
-# Apply custom icon
+# Apply custom icon from RAM (0ms disk lock + crisp Windows 11 Taskbar & Titlebar icon!)
 $icoPath = Join-Path $PSScriptRoot "PCManagerLite.ico"
+$script:IcoBytes = $null
 if (Test-Path $icoPath) {
-    try { $window.Icon = [Windows.Media.Imaging.BitmapFrame]::Create([Uri]::new($icoPath)) } catch {}
+    try {
+        $script:IcoBytes = [System.IO.File]::ReadAllBytes($icoPath)
+        $msIco = New-Object System.IO.MemoryStream(,$script:IcoBytes)
+        $bmpIco = New-Object System.Windows.Media.Imaging.BitmapImage
+        $bmpIco.BeginInit()
+        $bmpIco.CacheOption = [System.Windows.Media.Imaging.BitmapCacheOption]::OnLoad
+        $bmpIco.StreamSource = $msIco
+        $bmpIco.EndInit()
+        $bmpIco.Freeze()
+        $msIco.Dispose()
+        $window.Icon = $bmpIco
+    } catch {}
 }
 
-# Native Windows 11 Dark Titlebar
+# Native Windows 11 Dark Titlebar + Explicit Win32 Taskbar Icon (replaces blue PowerShell taskbar icon!)
 $window.Add_SourceInitialized({
     $hwnd = (New-Object System.Windows.Interop.WindowInteropHelper($window)).Handle
     [NillyNative]::EnableDarkTitleBar($hwnd)
+    if ($script:IcoBytes) { [void][NillyNative]::ApplyTaskbarIconFromIcoBytes($hwnd, $script:IcoBytes) }
 })
 
 # Responsive sidebar adjustment on narrow vs wide windows
