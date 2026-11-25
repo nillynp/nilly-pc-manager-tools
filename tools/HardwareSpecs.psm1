@@ -238,6 +238,25 @@ function Initialize-HardwareSpecsTool {
             } catch {}
         }
     })
+    if ($UiMap.BtnHWSendNote) {
+        $UiMap.BtnHWSendNote.Add_Click({
+            if (-not $script:HWState.ReportText) { return }
+            $noteExe = Join-Path $env:LOCALAPPDATA "NillySuite\NillyNotePro\NillyNotePro.exe"
+            if (-not (Test-Path $noteExe)) {
+                $alt = Join-Path (Split-Path -Parent $PSScriptRoot) "..\NillyNotePro\NillyNotePro.exe"
+                if (Test-Path $alt) { $noteExe = (Resolve-Path $alt).Path }
+            }
+            if (Test-Path $noteExe) {
+                $tmp = Join-Path $env:TEMP ("NillySysInfo_" + (Get-Date -Format "yyyyMMdd_HHmmss") + ".txt")
+                [System.IO.File]::WriteAllText($tmp, $script:HWState.ReportText, (New-Object System.Text.UTF8Encoding($false)))
+                Start-Process -FilePath $noteExe -ArgumentList "`"$tmp`"" -WorkingDirectory (Split-Path -Parent $noteExe)
+                $script:HWState.Ui.TxtHWStatus.Text = "↗ Η αναφορά υλικού & μπαταρίας εστάλη στο NillyNote Pro!"
+            } else {
+                [System.Windows.Clipboard]::SetDataObject($script:HWState.ReportText, $true)
+                $script:HWState.Ui.TxtHWStatus.Text = "✓ Αντιγράφηκε στο Clipboard (βάλε NillyNote Pro για άμεσο άνοιγμα)."
+            }
+        })
+    }
 
     Refresh-HardwareSpecs
 }

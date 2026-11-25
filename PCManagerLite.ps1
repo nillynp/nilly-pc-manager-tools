@@ -22,7 +22,7 @@ param(
 )
 
 $ErrorActionPreference = "SilentlyContinue"
-$AppVersion = "4.4"
+$AppVersion = "4.5"
 $AppAuthor  = "created by Nilly graphics (Sotiris Christos)"
 $AppWebsite = "https://nillygraphics.com/"
 $AppRepoApi = "https://api.github.com/repos/nillynp/nilly-pc-manager-tools/releases/latest"
@@ -1725,6 +1725,7 @@ if (-not $TestOnly) {
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
                         <Button x:Name="BtnHWCopy" Content="Copy Specs" Style="{StaticResource PrimaryButton}" Margin="0,0,8,0" Padding="14,8"/>
+                        <Button x:Name="BtnHWSendNote" Content="↗ NillyNote" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0" Padding="12,8"/>
                         <Button x:Name="BtnHWRefresh" Content="Ανανέωση" Style="{StaticResource SecondaryButton}"/>
                     </StackPanel>
                 </DockPanel>
@@ -2549,7 +2550,7 @@ $ctrlNames = @(
     'ZoneFLDrop','BtnFLBrowse','BtnFLScan','TxtFLPath','ListFLLocks','BtnFLKill','TxtFLStatus',
     'BtnAOTUnpinAll','BtnAOTRefresh','ListAOTWindows','BtnAOTToggle','TxtAOTStatus',
     'BtnHubRefresh','BtnHubCleanRam','TxtHubRamInfo','BtnHubCleanFF','TxtHubFFInfo','CardHubBackup','BtnHubRunBackup','TxtHubBackupInfo','CardHubGPhonor','BtnHubToggleGPhonor','TxtHubGPhonorInfo','TxtHubStatus',
-    'BtnHWCopy','BtnHWRefresh','ListHWSpecs','TxtHWStatus',
+    'BtnHWCopy','BtnHWSendNote','BtnHWRefresh','ListHWSpecs','TxtHWStatus',
     'BtnPdfBuild','ZonePdfDrop','BtnPdfBrowse','BtnPdfClear','CmbPdfPage','CmbPdfQuality','BtnPdfUp','BtnPdfDown','ListPdfFiles','TxtPdfStatus',
     'BtnQNSaveScratch','TxtQNScratch','TxtQNSnipTitle','TxtQNSnipBody','BtnQNAddSnip','ListQNSnippets','BtnQNCopySnip','BtnQNDelSnip','TxtQNStatus',
     'CmbPDPreset','TxtPDWidth','TxtPDHeight','CmbPDUnit','CmbPDDpi','CmbPDBleed','BtnPDSwap','BtnPDCopy','ValPDPixels','ValPDMm','ValPDBleed','ValPDRatio','TxtPDScaleW','TxtPDScaleRes','TxtPDStatus',
