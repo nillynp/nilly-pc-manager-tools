@@ -22,7 +22,7 @@ param(
 )
 
 $ErrorActionPreference = "SilentlyContinue"
-$AppVersion = "4.6.1"
+$AppVersion = "4.6.2"
 $AppAuthor  = "created by Nilly graphics (Sotiris Christos)"
 $AppWebsite = "https://nillygraphics.com/"
 $AppRepoApi = "https://api.github.com/repos/nillynp/nilly-pc-manager-tools/releases/latest"

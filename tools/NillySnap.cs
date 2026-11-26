@@ -141,7 +141,7 @@ namespace NillySnap {
             AddToolBtn(flow, DrawTool.Rect,      "▢ Πλαίσιο", "Πλαίσιο (R)", 74);
             AddToolBtn(flow, DrawTool.Pen,       "✎ Στυλό",   "Ελεύθερη σχεδίαση (P)", 68);
             AddToolBtn(flow, DrawTool.Highlight, "▮ Marker",  "Μαρκαδόρος (H)", 70);
-            AddToolBtn(flow, DrawTool.Blur,      "▦ Blur",    "Θόλωμα / Απόκρυψη ευαίσθητων στοιχείων (B)", 60);
+            AddToolBtn(flow, DrawTool.Blur,      "Blur",      "Θόλωμα / Απόκρυψη ευαίσθητων στοιχείων (B)", 56);
 
             Color[] palette = new Color[] {
                 Color.FromArgb(244, 63, 94),  // Red
@@ -168,7 +168,7 @@ namespace NillySnap {
 
             Button btnUndo = MakeBtn("↶ Undo", "Αναίρεση (Ctrl+Z)", 60, Color.FromArgb(28, 36, 51), Color.FromArgb(226, 232, 240), delegate { DoUndo(); });
             Button btnCopy = MakeBtn("✓ Copy", "Αντιγραφή PNG & Κλείσιμο (Enter / Ctrl+C)", 68, Color.FromArgb(56, 189, 248), Color.FromArgb(7, 34, 53), delegate { DoCopyAndClose(); });
-            Button btnSave = MakeBtn("💾 PNG",  "Αποθήκευση PNG (Ctrl+S)", 62, Color.FromArgb(16, 185, 129), Color.FromArgb(3, 34, 25), delegate { DoSaveAndClose(); });
+            Button btnSave = MakeBtn("PNG",     "Αποθήκευση PNG (Ctrl+S)", 54, Color.FromArgb(252, 150, 31), Color.FromArgb(20, 22, 26), delegate { DoSaveAndClose(); });
             Button btnEsc  = MakeBtn("✕",      "Ακύρωση (Esc)", 30, Color.FromArgb(52, 24, 33), Color.FromArgb(253, 164, 175), delegate { this.Close(); });
 
             flow.Controls.Add(btnUndo);
