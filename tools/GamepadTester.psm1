@@ -212,7 +212,7 @@ function Initialize-GamepadTesterTool {
         $bc = [Windows.Media.BrushConverter]::new()
         $script:GPBrushGreen = $bc.ConvertFromString('#22C55E')
         $script:GPBrushAmber = $bc.ConvertFromString('#F59E0B')
-        $script:GPBrushMuted = $bc.ConvertFromString('#94A3B8')
+        $script:GPBrushMuted = $bc.ConvertFromString('#8B919A')
         $script:GPBrushOffBg = $bc.ConvertFromString('#131924')
         $script:GPBrushOffBd = $bc.ConvertFromString('#243045')
         $script:GPBrushOnBg  = $bc.ConvertFromString('#2563EB')
