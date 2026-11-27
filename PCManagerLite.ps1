@@ -22,7 +22,7 @@ param(
 )
 
 $ErrorActionPreference = "SilentlyContinue"
-$AppVersion = "4.6.2"
+$AppVersion = "4.6.3"
 $AppAuthor  = "created by Nilly graphics (Sotiris Christos)"
 $AppWebsite = "https://nillygraphics.com/"
 $AppRepoApi = "https://api.github.com/repos/nillynp/nilly-pc-manager-tools/releases/latest"
@@ -197,18 +197,18 @@ if (-not $TestOnly) {
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Nilly PC Manager &amp; Tools v4.6 — created by Nilly graphics (Sotiris Christos)"
+        Title="Nilly PC Manager &amp; Tools v4.6.3 — created by Nilly graphics (Sotiris Christos)"
         Height="700" Width="880"
         MinHeight="600" MinWidth="740"
         WindowStartupLocation="CenterScreen"
-        Background="#141519"
-        Foreground="#F1F5F9"
+        Background="#1D1F20"
+        Foreground="#F2F4F7"
         FontFamily="Segoe UI">
 
     <Window.Resources>
         <Style x:Key="NavButton" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#94A3B8"/>
+            <Setter Property="Foreground" Value="#9AA0A8"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="Padding" Value="13,10"/>
@@ -218,13 +218,13 @@ if (-not $TestOnly) {
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}">
                             <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="bd" Property="Background" Value="#22252E"/>
-                                <Setter Property="Foreground" Value="#F8FAFC"/>
+                                <Setter TargetName="bd" Property="Background" Value="#27292B"/>
+                                <Setter Property="Foreground" Value="#F2F4F7"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -285,20 +285,20 @@ if (-not $TestOnly) {
         </Style>
 
         <Style x:Key="SecondaryButton" TargetType="Button">
-            <Setter Property="Background" Value="#22252E"/>
-            <Setter Property="Foreground" Value="#E2E8F0"/>
+            <Setter Property="Background" Value="#27292B"/>
+            <Setter Property="Foreground" Value="#F2F4F7"/>
             <Setter Property="FontSize" Value="12.5"/>
             <Setter Property="Padding" Value="13,8"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="bd" Background="{TemplateBinding Background}" BorderBrush="#363B48" BorderThickness="1" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}" BorderBrush="#36393D" BorderThickness="1" CornerRadius="6" Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="bd" Property="Background" Value="#2B2F3B"/>
+                                <Setter TargetName="bd" Property="Background" Value="#303336"/>
                                 <Setter TargetName="bd" Property="BorderBrush" Value="#FC961F"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -308,18 +308,18 @@ if (-not $TestOnly) {
         </Style>
 
         <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource SecondaryButton}">
-            <Setter Property="Background" Value="#341821"/>
-            <Setter Property="Foreground" Value="#FDA4AF"/>
+            <Setter Property="Background" Value="#2E1C20"/>
+            <Setter Property="Foreground" Value="#F06876"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="bd" Background="{TemplateBinding Background}" BorderBrush="#7F1D1D" BorderThickness="1" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}" BorderBrush="#74303A" BorderThickness="1" CornerRadius="6" Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="bd" Property="Background" Value="#4C1D2B"/>
-                                <Setter TargetName="bd" Property="BorderBrush" Value="#F92672"/>
+                                <Setter TargetName="bd" Property="Background" Value="#3E1E24"/>
+                                <Setter TargetName="bd" Property="BorderBrush" Value="#F06876"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -328,8 +328,8 @@ if (-not $TestOnly) {
         </Style>
 
         <Style x:Key="CardButton" TargetType="Button">
-            <Setter Property="Background" Value="#1A1C22"/>
-            <Setter Property="Foreground" Value="#F1F5F9"/>
+            <Setter Property="Background" Value="#222426"/>
+            <Setter Property="Foreground" Value="#F2F4F7"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="VerticalContentAlignment" Value="Top"/>
             <Setter Property="Padding" Value="14"/>
@@ -337,12 +337,12 @@ if (-not $TestOnly) {
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="bd" Background="{TemplateBinding Background}" BorderBrush="#303440" BorderThickness="1" CornerRadius="10" Padding="{TemplateBinding Padding}">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}" BorderBrush="#36393D" BorderThickness="1" CornerRadius="8" Padding="{TemplateBinding Padding}">
                             <ContentPresenter/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="bd" Property="Background" Value="#22252E"/>
+                                <Setter TargetName="bd" Property="Background" Value="#27292B"/>
                                 <Setter TargetName="bd" Property="BorderBrush" Value="#FC961F"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -564,32 +564,32 @@ if (-not $TestOnly) {
         </Grid.ColumnDefinitions>
 
         <!-- SIDEBAR -->
-        <Border Grid.Column="0" Background="#17191F" BorderBrush="#22252E" BorderThickness="0,0,1,0">
+        <Border Grid.Column="0" Background="#181A1B" BorderBrush="#36393D" BorderThickness="0,0,1,0">
             <DockPanel LastChildFill="True">
                 <!-- App Brand -->
                 <StackPanel DockPanel.Dock="Top" Margin="16,18,16,12">
                     <DockPanel>
-                        <TextBlock Text="PC Manager &amp; Tools" FontSize="14.5" FontWeight="Bold" Foreground="#F8FAFC" VerticalAlignment="Center"/>
+                        <TextBlock Text="PC Manager &amp; Tools" FontSize="14.5" FontWeight="Bold" Foreground="#F2F4F7" VerticalAlignment="Center"/>
                         <Border Background="#2A2116" BorderBrush="#382B19" BorderThickness="1" CornerRadius="5" Padding="5,2" HorizontalAlignment="Right" VerticalAlignment="Center">
-                            <TextBlock Text="v4.6" FontSize="9.5" FontWeight="Bold" Foreground="#FC961F"/>
+                            <TextBlock Text="v4.6.3" FontSize="9.5" FontWeight="Bold" Foreground="#FC961F"/>
                         </Border>
                     </DockPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
                         <Ellipse Width="7" Height="7" Fill="#A6E22E" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                        <TextBlock Text="0 MB background RAM" FontSize="11" Foreground="#94A3B8"/>
+                        <TextBlock Text="0 MB background RAM" FontSize="11" Foreground="#9AA0A8"/>
                     </StackPanel>
                 </StackPanel>
 
                 <!-- Bottom Safe Badge + Nilly Graphics SEO Footer -->
                 <StackPanel DockPanel.Dock="Bottom" Margin="12,8,12,14">
-                    <Border Background="#1A1C22" CornerRadius="8" Padding="9" BorderBrush="#2A2116" BorderThickness="1" Margin="0,0,0,8">
+                    <Border Background="#222426" CornerRadius="8" Padding="9" BorderBrush="#36393D" BorderThickness="1" Margin="0,0,0,8">
                         <StackPanel>
                             <TextBlock Text="Ασφαλής λειτουργία" FontSize="10.5" FontWeight="SemiBold" Foreground="#A6E22E"/>
-                            <TextBlock Text="Δεν αγγίζει Docker, Documents, Xbox, Phone Link ή WebView2." FontSize="9.8" Foreground="#94A3B8" TextWrapping="Wrap" Margin="0,2,0,0"/>
+                            <TextBlock Text="Δεν αγγίζει Docker, Documents, Xbox, Phone Link ή WebView2." FontSize="9.8" Foreground="#9AA0A8" TextWrapping="Wrap" Margin="0,2,0,0"/>
                         </StackPanel>
                     </Border>
 
-                    <Border Background="#17191F" CornerRadius="8" Padding="10" BorderBrush="#2D2418" BorderThickness="1">
+                    <Border Background="#222426" CornerRadius="8" Padding="10" BorderBrush="#36393D" BorderThickness="1">
                         <StackPanel>
                             <TextBlock Text="created by Nilly graphics" FontSize="10.5" FontWeight="SemiBold" Foreground="#E2E8F0"/>
                             <TextBlock Text="(Sotiris Christos)" FontSize="10" Foreground="#94A3B8" Margin="0,1,0,4"/>
@@ -2478,6 +2478,7 @@ if (-not $TestOnly) {
 
 $reader = New-Object System.Xml.XmlNodeReader $xaml
 $window = [Windows.Markup.XamlReader]::Load($reader)
+$window.Title = $script:WindowTitle
 
 # Apply custom icon from RAM (0ms disk lock + crisp Windows 11 Taskbar & Titlebar icon!)
 $icoPath = Join-Path $PSScriptRoot "PCManagerLite.ico"
@@ -3182,12 +3183,80 @@ $ui.BtnLaunchNillyDoc.Add_Click({
 
 $ui.BtnSidebarSite.Add_Click({ Start-Process $AppWebsite })
 $ui.BtnAboutSite.Add_Click({ Start-Process $AppWebsite })
+function Invoke-PCManagerSelfUpdate {
+    param([string]$TargetTag)
+    if (Test-Path (Join-Path $PSScriptRoot '.git')) {
+        $ui.TxtUpdateStatus.Text = "Νέα έκδοση $TargetTag διαθέσιμη — άνοιγμα GitHub (φάκελος Git)."
+        Start-Process $AppRelUrl
+        return
+    }
+    try {
+        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12 -bor 3072
+        $ui.TxtUpdateStatus.Text = "Έλεγχος SHA-256 & λήψη $TargetTag..."
+        $window.Dispatcher.Invoke([Action]{}, [Windows.Threading.DispatcherPriority]::Render)
+        $rel = Invoke-RestMethod -Uri $AppRepoApi -Headers @{ 'User-Agent' = "NillyPCManager/$AppVersion" } -TimeoutSec 12 -ErrorAction Stop
+        if ($rel.draft -or $rel.prerelease) { throw "Μη σταθερή έκδοση." }
+        $tag = "$($rel.tag_name)"
+        if ($tag -notmatch '^v[0-9]+(\.[0-9]+){1,2}$') { throw "Μη έγκυρο tag." }
+        $zipName = "Nilly-PC-Manager-Tools-$tag-Portable.zip"
+        $expectedUrl = "https://github.com/nillynp/nilly-pc-manager-tools/releases/download/$tag/$zipName"
+        $asset = $rel.assets | Where-Object { $_.name -eq $zipName -and $_.state -eq 'uploaded' -and $_.browser_download_url -eq $expectedUrl } | Select-Object -First 1
+        if (-not $asset -or "$($asset.digest)" -notmatch '^sha256:([0-9a-f]{64})$') { throw "Απουσιάζει επαληθεύσιμο SHA-256." }
+        $expectedSha = $Matches[1]
+
+        $tmpDir = Join-Path $env:TEMP ("NillyPCUpd-" + [Guid]::NewGuid().ToString("N"))
+        New-Item -ItemType Directory -Force -Path $tmpDir | Out-Null
+        $zipFile = Join-Path $tmpDir 'pkg.zip'
+        Invoke-WebRequest -Uri $expectedUrl -OutFile $zipFile -Headers @{ 'User-Agent' = "NillyPCManager/$AppVersion" } -UseBasicParsing -TimeoutSec 25
+        $actualSha = (Get-FileHash -Path $zipFile -Algorithm SHA256).Hash.ToLowerInvariant()
+        if ($actualSha -ne $expectedSha) { Remove-Item -Recurse -Force $tmpDir -ErrorAction SilentlyContinue; throw "Αποτυχία ελέγχου SHA-256." }
+
+        $applyPs1 = Join-Path $tmpDir 'apply.ps1'
+        $swapCode = @'
+param($myPid,$zip,$appDir,$tag)
+for($i=0;$i -lt 60;$i++){ if(-not (Get-Process -Id $myPid -ErrorAction SilentlyContinue)){break}; Start-Sleep -Milliseconds 150 }
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+$za = [System.IO.Compression.ZipFile]::OpenRead($zip)
+try {
+  $pref = $null; $shared = $true
+  foreach($e in $za.Entries){ $fn=$e.FullName -replace '\\','/'; $sl=$fn.IndexOf('/'); if($sl -le 0){$shared=$false;break}; $p=$fn.Substring(0,$sl+1); if(-not $pref){$pref=$p}elseif(-not $pref.Equals($p,[StringComparison]::OrdinalIgnoreCase)){$shared=$false;break} }
+  $rootFull = [System.IO.Path]::GetFullPath($appDir).TrimEnd('\') + '\'
+  foreach($e in $za.Entries){
+    $rel = $e.FullName -replace '\\','/'
+    if($shared -and $pref -and $rel.StartsWith($pref,[StringComparison]::OrdinalIgnoreCase)){ $rel=$rel.Substring($pref.Length) }
+    if([string]::IsNullOrEmpty($rel) -or $rel.EndsWith('/') -or $rel.Contains(':')){ continue }
+    $dst = [System.IO.Path]::GetFullPath((Join-Path $appDir ($rel -replace '/','\')))
+    if(-not $dst.StartsWith($rootFull,[StringComparison]::OrdinalIgnoreCase)){ continue }
+    $par = Split-Path -Parent $dst; if($par){ New-Item -ItemType Directory -Force -Path $par | Out-Null }
+    for($k=0;$k -lt 5;$k++){ try { [System.IO.Compression.ZipFileExtensions]::ExtractToFile($e,$dst,$true); break } catch { Start-Sleep -Milliseconds 250 } }
+  }
+} finally { $za.Dispose() }
+if($tag){ Set-Content -LiteralPath (Join-Path $appDir '.nilly_version') -Value $tag -Encoding UTF8 -ErrorAction SilentlyContinue }
+$vbs = Join-Path $appDir 'Launch_PCManagerLite.vbs'
+if(Test-Path $vbs){ Start-Process -FilePath 'wscript.exe' -ArgumentList "`"$vbs`"" -WorkingDirectory $appDir }
+Start-Sleep -Milliseconds 400
+Remove-Item -LiteralPath (Split-Path $zip) -Recurse -Force -ErrorAction SilentlyContinue
+'@
+        [System.IO.File]::WriteAllText($applyPs1, $swapCode, (New-Object System.Text.UTF8Encoding($false)))
+        Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList "-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$applyPs1`" $PID `"$zipFile`" `"$PSScriptRoot`" `"$tag`""
+        $window.Close()
+    } catch {
+        $ui.TxtUpdateStatus.Text = "Σφάλμα ενημέρωσης: $($_.Exception.Message)"
+    }
+}
+
+$script:PendingUpdateTag = $null
 $ui.BtnCheckUpdate.Add_Click({
     $ui.TxtUpdateStatus.Visibility = 'Visible'
+    $pending = if ($ui.BtnCheckUpdate.Tag) { "$($ui.BtnCheckUpdate.Tag)" } else { $script:PendingUpdateTag }
+    if ($pending) {
+        Invoke-PCManagerSelfUpdate -TargetTag $pending
+        return
+    }
     $ui.TxtUpdateStatus.Text = "Έλεγχος ενημερώσεων στο GitHub..."
     $window.Dispatcher.Invoke([Action]{}, [Windows.Threading.DispatcherPriority]::Render)
     try {
-        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
+        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12 -bor 3072
         $rel = Invoke-RestMethod -Uri $AppRepoApi -Headers @{ 'User-Agent' = "NillyPCManager/$AppVersion" } -TimeoutSec 6 -ErrorAction Stop
         $latestTag = "$($rel.tag_name)".TrimStart('v','V')
         $curVer = $null; $latVer = $null
@@ -3198,14 +3267,73 @@ $ui.BtnCheckUpdate.Add_Click({
             $hasNew = $true
         }
         if ($hasNew) {
-            $ui.TxtUpdateStatus.Text = "Νέα έκδοση διαθέσιμη: v$latestTag (τρέχεις v$AppVersion)! Άνοιγμα σελίδας λήψης..."
-            Start-Process $AppRelUrl
+            $script:PendingUpdateTag = "v$latestTag"
+            $ui.BtnCheckUpdate.Content = "↑ Ενημέρωση v$latestTag"
+            $ui.TxtUpdateStatus.Text = "Νέα έκδοση διαθέσιμη: v$latestTag (τρέχεις v$AppVersion). Γίνεται SHA-256 ενημέρωση..."
+            Invoke-PCManagerSelfUpdate -TargetTag "v$latestTag"
         } else {
             $ui.TxtUpdateStatus.Text = "Είσαι ενημερωμένος! Έχεις την πιο πρόσφατη έκδοση (v$AppVersion)."
         }
     } catch {
         $ui.TxtUpdateStatus.Text = "Δεν βρέθηκε δημοσιευμένη ενημέρωση ή δεν υπάρχει σύνδεση (τρέχεις v$AppVersion)."
     }
+})
+
+# Silent 1x/24h shared-cache update check on background thread (0 ms startup impact, even offline!)
+$window.Add_ContentRendered({
+    try {
+        $bgVer = $AppVersion
+        $bgDisp = $window.Dispatcher
+        $bgBtn = $ui.BtnCheckUpdate
+        $bgTxt = $ui.TxtUpdateStatus
+        $rs = [System.Management.Automation.Runspaces.RunspaceFactory]::CreateRunspace()
+        $rs.Open()
+        $ps = [PowerShell]::Create()
+        $ps.Runspace = $rs
+        [void]$ps.AddScript({
+            param($curVerStr, $disp, $btn, $txt)
+            try {
+                Start-Sleep -Milliseconds 1800
+                $suiteDir = Join-Path $env:LOCALAPPDATA 'NillySuite'
+                $cachePath = Join-Path $suiteDir '.nillyhub_catalog.json'
+                $catText = $null
+                if (Test-Path $cachePath) {
+                    $ageH = ([DateTime]::UtcNow - (Get-Item $cachePath).LastWriteTimeUtc).TotalHours
+                    if ($ageH -lt 24) {
+                        $t = [System.IO.File]::ReadAllText($cachePath, [System.Text.Encoding]::UTF8)
+                        if ($t.IndexOf('"latestVersion"') -ge 0) { $catText = $t }
+                    }
+                }
+                if (-not $catText) {
+                    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12 -bor 3072
+                    $req = [System.Net.HttpWebRequest]::Create('https://raw.githubusercontent.com/nillynp/nillyhub/main/catalog.json')
+                    $req.UserAgent = "NillyPCManager/$curVerStr"
+                    $req.Timeout = 5000; $req.ReadWriteTimeout = 5000
+                    $resp = $req.GetResponse()
+                    $sr = New-Object System.IO.StreamReader($resp.GetResponseStream(), [System.Text.Encoding]::UTF8)
+                    $catText = $sr.ReadToEnd()
+                    $sr.Dispose(); $resp.Dispose()
+                    if ($catText -and $catText.Length -lt 262144) {
+                        New-Item -ItemType Directory -Force -Path $suiteDir | Out-Null
+                        [System.IO.File]::WriteAllText($cachePath, $catText, (New-Object System.Text.UTF8Encoding($false)))
+                    }
+                }
+                if ($catText -and ($catText -match '"repo"\s*:\s*"nilly-pc-manager-tools"[^\}]{0,500}?"latestVersion"\s*:\s*"v([0-9]+\.[0-9]+(?:\.[0-9]+)?)"')) {
+                    $remStr = $Matches[1]
+                    $cv = $null; $rv = $null
+                    if ([Version]::TryParse($curVerStr, [ref]$cv) -and [Version]::TryParse($remStr, [ref]$rv) -and ($rv -gt $cv)) {
+                        $disp.BeginInvoke([Action]{
+                            $btn.Tag = "v$remStr"
+                            $btn.Content = "↑ Ενημέρωση v$remStr"
+                            $txt.Visibility = 'Visible'
+                            $txt.Text = "Νέα έκδοση v$remStr διαθέσιμη (τρέχεις v$curVerStr) — πάτα «↑ Ενημέρωση v$remStr»."
+                        }) | Out-Null
+                    }
+                }
+            } catch {}
+        }).AddArgument($bgVer).AddArgument($bgDisp).AddArgument($bgBtn).AddArgument($bgTxt)
+        [void]$ps.BeginInvoke()
+    } catch {}
 })
 
 $ui.BtnRefreshHome.Add_Click({ Refresh-HomeStats })
